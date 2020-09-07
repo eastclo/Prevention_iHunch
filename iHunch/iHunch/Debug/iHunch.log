@@ -1,2 +1,8 @@
-﻿  iHunch.cpp
+﻿  moc iHunch.h
+  moc setupPose.h
+  iHunch.cpp
+  main.cpp
+  setupPose.cpp
+  moc_iHunch.cpp
+  moc_setupPose.cpp
   iHunch.vcxproj -> C:\Users\UserK\source\repos\eastclo\Prevention_iHunch\iHunch\Debug\iHunch.exe
