@@ -175,6 +175,7 @@ public:
         iHunchClass->setStatusBar(statusBar);
 
         retranslateUi(iHunchClass);
+        QObject::connect(pushButton, SIGNAL(clicked()), iHunchClass, SLOT(setPose()));
 
         QMetaObject::connectSlotsByName(iHunchClass);
     } // setupUi

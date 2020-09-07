@@ -67,3 +67,9 @@ void iHunch::popupslot()
         QIcon("gb.png"),
         2000);
 }
+
+void iHunch::setPose()
+{
+    setuppose = new setupPose(this);
+    setuppose->show();
+}
