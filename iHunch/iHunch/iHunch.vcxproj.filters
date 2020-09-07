@@ -44,6 +44,9 @@
     <ClCompile Include="popupc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="setupPose.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -59,9 +62,15 @@
     <QtMoc Include="popupc.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="setupPose.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="popupc.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="setupPose.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

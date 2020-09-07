@@ -87,14 +87,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="popupc.cpp" />
+    <ClCompile Include="setupPose.cpp" />
     <QtRcc Include="iHunch.qrc" />
     <QtUic Include="iHunch.ui" />
     <QtMoc Include="iHunch.h" />
     <ClCompile Include="iHunch.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="popupc.ui" />
+    <QtUic Include="setupPose.ui" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="setupPose.h" />
     <QtMoc Include="popupc.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
