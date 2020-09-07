@@ -8,4 +8,5 @@ setupPose::setupPose(QWidget *parent)
 
 setupPose::~setupPose()
 {
+	delete ui;
 }
