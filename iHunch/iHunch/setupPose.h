@@ -1,6 +1,10 @@
 #pragma once
 
 #include <QDialog>
+#include <QCamera>
+#include <QCameraViewfinder>
+#include <QCameraImageCapture>
+#include <QVBoxLayout>
 #include "ui_setupPose.h"
 
 QT_BEGIN_NAMESPACE
@@ -14,7 +18,21 @@ class setupPose : public QDialog
 public:
 	setupPose(QWidget *parent = Q_NULLPTR);
 	~setupPose();
+	void initCamera();
+	void cameraDeviceSearch();
 
 private:
 	Ui::setupPose* ui;
+	QCamera* myCamera;
+	QCameraViewfinder* myViewfinder;
+	QCameraImageCapture* myCapture;
+	QList<QByteArray> camDevNameLists;
+
+private slots:
+	void onStartBtn();
+	void onStopBtn();
+	void onCaptureBtn();
+	void camError(QCamera::Error error);
+	void imageCapture(int pid, QImage pPriview);
+
 };

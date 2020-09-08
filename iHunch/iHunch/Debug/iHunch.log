@@ -1,8 +1,3 @@
-﻿  moc iHunch.h
-  moc setupPose.h
-  iHunch.cpp
-  main.cpp
-  setupPose.cpp
-  moc_iHunch.cpp
-  moc_setupPose.cpp
+﻿  setupPose.cpp
+C:\Users\UserK\source\repos\eastclo\Prevention_iHunch\iHunch\iHunch\setupPose.cpp(81,21): warning C4129: 'C': 문자 이스케이프 시퀀스를 인식할 수 없습니다.
   iHunch.vcxproj -> C:\Users\UserK\source\repos\eastclo\Prevention_iHunch\iHunch\Debug\iHunch.exe

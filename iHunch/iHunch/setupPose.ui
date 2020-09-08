@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>500</height>
+    <width>616</width>
+    <height>539</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -39,31 +39,121 @@
     <string>초기 자세 설정</string>
    </property>
   </widget>
-  <widget class="QGraphicsView" name="graphicsView">
+  <widget class="QPushButton" name="startBtn">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>50</y>
-     <width>461</width>
-     <height>361</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>420</x>
-     <y>460</y>
-     <width>156</width>
+     <x>240</x>
+     <y>60</y>
+     <width>75</width>
      <height>23</height>
     </rect>
    </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   <property name="text">
+    <string>start</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>211</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stopBtn">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>60</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>stop</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="captureBtn">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>60</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>capture</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="camOut" native="true">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>481</width>
+     <height>371</height>
+    </rect>
    </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>startBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>setupPose</receiver>
+   <slot>onStartBtn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>277</x>
+     <y>71</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>311</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stopBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>setupPose</receiver>
+   <slot>onStopBtn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>352</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>captureBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>setupPose</receiver>
+   <slot>onCaptureBtn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>477</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>512</x>
+     <y>95</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onStartBtn()</slot>
+  <slot>onStopBtn()</slot>
+  <slot>onCaptureBtn()</slot>
+ </slots>
 </ui>
