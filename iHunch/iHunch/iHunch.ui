@@ -257,27 +257,14 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>380</y>
-      <width>101</width>
-      <height>51</height>
+      <x>450</x>
+      <y>360</y>
+      <width>131</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
      <string>측정 시작</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>380</y>
-      <width>101</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>측정 종료</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_9">
@@ -313,7 +300,7 @@ p, li { white-space: pre-wrap; }
      </property>
     </item>
    </widget>
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QWidget" name="modeAlarm" native="true">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -420,8 +407,42 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboBox</sender>
+   <signal>activated(int)</signal>
+   <receiver>iHunchClass</receiver>
+   <slot>modeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>71</x>
+     <y>417</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>145</x>
+     <y>453</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>iHunchClass</receiver>
+   <slot>mybtn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>495</x>
+     <y>418</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>525</x>
+     <y>390</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setPose()</slot>
+  <slot>modeChanged(int)</slot>
+  <slot>mybtn()</slot>
  </slots>
 </ui>

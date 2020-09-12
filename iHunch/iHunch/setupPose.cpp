@@ -7,6 +7,8 @@ setupPose::setupPose(QWidget *parent)
 	this->initCamera();
 	this->cameraDeviceSearch();
 
+	this->onStartBtn();
+
 }
 
 setupPose::~setupPose()
@@ -88,4 +90,10 @@ void setupPose::imageCapture(int pid, QImage pPriview)
 	Q_UNUSED(pid);
 
 	qDebug() << "IMAGE CAPTURE SIZE (WIDTH X HEIGHT) : " << pPriview.byteCount();
+}
+
+void setupPose::closeEvent(QCloseEvent* event)
+{
+	myCamera->stop();
+	QWidget::closeEvent(event);
 }

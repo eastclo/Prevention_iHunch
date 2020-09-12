@@ -32,6 +32,16 @@ iHunch::iHunch(QWidget *parent)
     ui->mainToolBar->hide();
     QStatusBar* myStatusBar = ui->statusBar;
     myStatusBar->showMessage("Developed by asd", 0);
+
+
+    QWidget* modeAlarm = ui->modeAlarm;
+    modeAlarm->hide();
+
+    //효과음관련
+    m_player = new QMediaPlayer();
+    m_player->setMedia(QUrl::fromLocalFile("effect sound.mp3"));
+    m_player->setVolume(50);
+
 }
 
 iHunch::~iHunch()
@@ -65,11 +75,40 @@ void iHunch::popupslot()
     m_trayicon->showMessage(
         QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("안좋은 자세가 유지되고 있어요."),
         QIcon("gb.png"),
-        2000);
+        500);
 }
 
 void iHunch::setPose()
 {
     setuppose = new setupPose(this);
     setuppose->show();
+}
+
+void iHunch::modeChanged(int mode)
+{
+    QComboBox* modeBox = ui->comboBox;
+    QWidget* modeAlarm = ui->modeAlarm;
+
+    if (modeBox->currentIndex() == 0) {
+        modeAlarm->hide();
+    }
+    else if (modeBox->currentIndex() == 1) {
+        modeAlarm->show();
+    }
+}
+
+void iHunch::mybtn()
+{
+    QPushButton* btn = ui->pushButton_2;
+    if (started == false) {
+        started = true;
+        btn->setText(QString::fromLocal8Bit("측정 종료"));
+
+        //효과음 관련
+        m_player->play();
+    }
+    else if (started == true) {
+        started = false;
+        btn->setText(QString::fromLocal8Bit("측정 시작"));
+    }
 }

@@ -8,7 +8,11 @@
 #include <QWidget>
 #include <QMenu>
 #include <QStyle>
+#include <Windows.h>
+#include <QMultimedia>
 #include "setupPose.h"
+#include <QMediaPlayer>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class iHunchClass; }
@@ -31,6 +35,13 @@ private:
     //트레이아이콘 클래스 인스턴스
     QSystemTrayIcon* m_trayicon;
     setupPose* setuppose;
+    //시작버튼
+    bool started = false;
+
+    //효과음
+    QString m_fname;
+    QMediaPlayer* m_player;
+    qint64 m_duration;
 
 public slots:
     //시스템 트레이 아이콘 클릭 이벤트로부터 시그널을 처리하는 slot함수
@@ -38,4 +49,7 @@ public slots:
     void popupslot();
     //자세 설정 창 띄우기
     void setPose();
+    void modeChanged(int mode);
+    //시작버튼
+    void mybtn();
 };
