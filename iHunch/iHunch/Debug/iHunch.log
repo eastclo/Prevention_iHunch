@@ -1,8 +1,19 @@
-﻿  moc iHunch.h
+﻿  Reading Qt configuration (C:\Qt\5.15.0\msvc2019\bin\qmake.exe)
+  uic iHunch.ui
+  uic popupc.ui
+  uic setupPose.ui
+  rcc iHunch.qrc
+  moc iHunch.h
+  moc setupPose.h
+  moc popupc.h
+  getSkeleton.cpp
+  popupc.cpp
+  setupPose.cpp
   iHunch.cpp
   main.cpp
+C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\setupPose.cpp(78,21): warning C4129: 'C': 문자 이스케이프 시퀀스를 인식할 수 없습니다.
   qrc_iHunch.cpp
+  moc_iHunch.cpp
   moc_setupPose.cpp
   moc_popupc.cpp
-  moc_iHunch.cpp
   iHunch.vcxproj -> C:\Users\golde\source\repos\Prevention_iHunch\iHunch\Debug\iHunch.exe

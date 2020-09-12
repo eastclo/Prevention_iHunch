@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iHunch", "iHunch\iHunch.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "caller", "caller\caller.vcxproj", "{500CDC79-8738-4769-AD47-BFBE3FA7CAEB}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "alphaPose", "alphaPose\alphaPose.pyproj", "{33C0D06A-44C0-41BC-9A5E-527E3579E641}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "alphaPose", "alphaPose\alphaPose.pyproj", "{1D38F4A7-9C69-4D7C-8B35-517FC16F2F17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,12 +38,12 @@ Global
 		{500CDC79-8738-4769-AD47-BFBE3FA7CAEB}.Release|x64.Build.0 = Release|x64
 		{500CDC79-8738-4769-AD47-BFBE3FA7CAEB}.Release|x86.ActiveCfg = Release|Win32
 		{500CDC79-8738-4769-AD47-BFBE3FA7CAEB}.Release|x86.Build.0 = Release|Win32
-		{33C0D06A-44C0-41BC-9A5E-527E3579E641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33C0D06A-44C0-41BC-9A5E-527E3579E641}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{33C0D06A-44C0-41BC-9A5E-527E3579E641}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{33C0D06A-44C0-41BC-9A5E-527E3579E641}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33C0D06A-44C0-41BC-9A5E-527E3579E641}.Release|x64.ActiveCfg = Release|Any CPU
-		{33C0D06A-44C0-41BC-9A5E-527E3579E641}.Release|x86.ActiveCfg = Release|Any CPU
+		{1D38F4A7-9C69-4D7C-8B35-517FC16F2F17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D38F4A7-9C69-4D7C-8B35-517FC16F2F17}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1D38F4A7-9C69-4D7C-8B35-517FC16F2F17}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1D38F4A7-9C69-4D7C-8B35-517FC16F2F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D38F4A7-9C69-4D7C-8B35-517FC16F2F17}.Release|x64.ActiveCfg = Release|Any CPU
+		{1D38F4A7-9C69-4D7C-8B35-517FC16F2F17}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

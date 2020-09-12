@@ -49,7 +49,7 @@ int main(void)
     /*******************************************************
     ************** webcam파일 폴더로 경로 지정 ***************
     ********************************************************/
-    PyRun_SimpleString("sys.path.append('C:/Users/golde/source/repos/Prevention_iHunch/iHunch/alphaPose/AlphaPose')");
+    PyRun_SimpleString("sys.path.append('C:/Users/golde/source/repos/Prevention_iHunch/iHunch/alphaPose/alphapose-pytorch')");
 
     pName = PyUnicode_FromString("webcam");
 
