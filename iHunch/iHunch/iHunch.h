@@ -7,7 +7,9 @@
 #include <QAction>
 #include <QWidget>
 #include <QMenu>
+#include <QMovie>
 #include <QStyle>
+#include <QProcess>
 #include <Windows.h>
 #include <QMultimedia>
 #include "setupPose.h"

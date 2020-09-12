@@ -1,14 +1,30 @@
 #include "setupPose.h"
 
 setupPose::setupPose(QWidget *parent)
-	: QDialog(parent), ui(new Ui::setupPose)
+	: QDialog(parent, Qt::FramelessWindowHint), ui(new Ui::setupPose)
 {
 	ui->setupUi(this);
 	this->initCamera();
 	this->cameraDeviceSearch();
 
 	this->onStartBtn();
+	
+	QComboBox* comboBox = ui->comboBox;
+	QPushButton* startBtn = ui->startBtn;
+	QPushButton* stopBtn = ui->stopBtn;
+	QPushButton* captureBtn = ui->captureBtn;
 
+	comboBox->hide();
+	startBtn->hide();
+	stopBtn->hide();
+	captureBtn->hide();
+
+	//window drag and drop move
+	justOneCount = 0;
+	mouseX = this->geometry().x();
+	mouseY = this->geometry().y();
+	absY = this->geometry().y();
+	absX = this->geometry().x();
 }
 
 setupPose::~setupPose()
@@ -92,8 +108,33 @@ void setupPose::imageCapture(int pid, QImage pPriview)
 	qDebug() << "IMAGE CAPTURE SIZE (WIDTH X HEIGHT) : " << pPriview.byteCount();
 }
 
-void setupPose::closeEvent(QCloseEvent* event)
+void setupPose::initPoseBtn()
 {
-	myCamera->stop();
-	QWidget::closeEvent(event);
+
+
+}
+
+void setupPose::mouseMoveEvent(QMouseEvent* mouse)
+{
+	if (this->isMaximized() == true) //�ִ�ȭ �Ǿ��������?����
+		return;
+
+	if (mouse->button() == Qt::RightButton) //������Ŭ���������?����
+		return;
+
+	mouseX = QCursor::pos().x(); //���콺 ������ǥ
+	mouseY = QCursor::pos().y();
+
+	if (justOneCount == 0)
+	{
+		absX = mouse->pos().x(); //���콺 ������?����
+		absY = mouse->pos().y();
+		justOneCount++; //1�̵Ǹ� �� ������ �������� ����
+	}
+	this->move(mouseX - absX, mouseY - absY); //������ǥ���� �����ǥ��?���� �̵��ϴ� ����
+}
+
+void setupPose::mouseReleaseEvent(QMouseEvent*)
+{
+	justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��?
 }

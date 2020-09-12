@@ -7,7 +7,7 @@ extern bool endSignal;
 extern PROCESS_INFORMATION ProcessInfo;
 
 iHunch::iHunch(QWidget *parent)
-    : QMainWindow(parent, Qt::FramelessWindowHint | Qt::WindowFlags()), ui(new Ui::iHunchClass)
+    : QMainWindow(parent, Qt::FramelessWindowHint), ui(new Ui::iHunchClass)
 {
     ui->setupUi(this);
     this->setWindowTitle("Turtle Neck");
@@ -77,7 +77,7 @@ void iHunch::alramMessage()
     popup_check = popup_box->isChecked();
     sound_check = sound_box->isChecked();
 
-    if (popup_check == true) {
+    if (popup_check != true) {
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         m_trayicon->showMessage(
             QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("������ �ڼ��� �����ǰ� �־��."),
@@ -85,7 +85,7 @@ void iHunch::alramMessage()
             500);
     }
 
-    if (sound_check == true) {
+    if (sound_check != true) {
         m_player->play();
     }
 }
@@ -97,9 +97,9 @@ void iHunch::iconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 
 void iHunch::setPose()
-{
+{   
     setuppose = new setupPose(this);
-    setuppose->show();
+    setuppose->show();  
 }
 void iHunch::modeChanged(int mode)
 {
@@ -190,4 +190,3 @@ void iHunch::mouseReleaseEvent(QMouseEvent*)
 {
     justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��
 }
-
