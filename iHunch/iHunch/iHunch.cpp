@@ -6,6 +6,8 @@ iHunch::iHunch(QWidget *parent)
     ui->setupUi(this);
     this->setWindowTitle("Turtle Neck");
 
+    /*********************************************************/
+    //트레이아이콘
     m_trayicon = new QSystemTrayIcon(this);
     m_trayicon->setIcon(QIcon("gb.png"));
     m_trayicon->setToolTip("Turtle Neck");
@@ -13,13 +15,10 @@ iHunch::iHunch(QWidget *parent)
     QMenu* menu = new QMenu(this);
     QAction* viewWindow = new QAction(QString::fromLocal8Bit("열기"), this);
     QAction* quitAction = new QAction(QString::fromLocal8Bit("종료"), this);
-    QAction* event1 = new QAction(QString::fromLocal8Bit("이벤트1"), this);
 
     connect(viewWindow, SIGNAL(triggered()), this, SLOT(showNormal()));
     connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(event1, SIGNAL(triggered()), this, SLOT(popupslot()));
 
-    menu->addAction(event1);
     menu->addAction(viewWindow);
     menu->addAction(quitAction);
 
@@ -28,7 +27,10 @@ iHunch::iHunch(QWidget *parent)
 
     connect(m_trayicon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
         this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-
+    //트레이아이콘
+    /*********************************************************/
+    
+    //기본 ui 추가설정
     ui->mainToolBar->hide();
     QStatusBar* myStatusBar = ui->statusBar;
     myStatusBar->showMessage("Developed by asd", 0);
@@ -49,6 +51,27 @@ iHunch::~iHunch()
     delete ui;
 }
 
+void iHunch::alramMessage()
+{
+    QCheckBox* popup_box = ui->popup_checkbox;
+    QCheckBox* sound_box = ui->soundAlram_checkbox;
+
+    popup_check = popup_box->isChecked();
+    sound_check = sound_box->isChecked();
+
+    if (popup_check == true) {
+        QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
+        m_trayicon->showMessage(
+            QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("안좋은 자세가 유지되고 있어요."),
+            QIcon("gb.png"),
+            500);
+    }
+
+    if (sound_check == true) {
+        m_player->play();
+    }
+}
+
 void iHunch::closeEvent(QCloseEvent* event)
 {
     if (this->isVisible())
@@ -67,15 +90,6 @@ void iHunch::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if (reason == QSystemTrayIcon::DoubleClick)
         this->show();
-}
-
-void iHunch::popupslot()
-{
-    QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
-    m_trayicon->showMessage(
-        QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("안좋은 자세가 유지되고 있어요."),
-        QIcon("gb.png"),
-        500);
 }
 
 void iHunch::setPose()
@@ -104,11 +118,10 @@ void iHunch::mybtn()
         started = true;
         btn->setText(QString::fromLocal8Bit("측정 종료"));
 
-        //효과음 관련
-        m_player->play();
     }
     else if (started == true) {
         started = false;
         btn->setText(QString::fromLocal8Bit("측정 시작"));
+
     }
 }

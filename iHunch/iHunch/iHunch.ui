@@ -337,7 +337,7 @@ p, li { white-space: pre-wrap; }
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QCheckBox" name="soundAlram_checkbox">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -350,7 +350,7 @@ p, li { white-space: pre-wrap; }
        <string>경고음</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_2">
+     <widget class="QCheckBox" name="popup_checkbox">
       <property name="geometry">
        <rect>
         <x>75</x>
