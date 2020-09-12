@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_iHunch_t {
-    QByteArrayData data[11];
-    char stringdata0[116];
+    QByteArrayData data[17];
+    char stringdata0[187];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,22 +33,30 @@ struct qt_meta_stringdata_iHunch_t {
 static const qt_meta_stringdata_iHunch_t qt_meta_stringdata_iHunch = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "iHunch"
-QT_MOC_LITERAL(1, 7, 8), // "getAlarm"
-QT_MOC_LITERAL(2, 16, 0), // ""
-QT_MOC_LITERAL(3, 17, 13), // "iconActivated"
-QT_MOC_LITERAL(4, 31, 33), // "QSystemTrayIcon::ActivationRe..."
-QT_MOC_LITERAL(5, 65, 6), // "reason"
-QT_MOC_LITERAL(6, 72, 7), // "setPose"
-QT_MOC_LITERAL(7, 80, 11), // "modeChanged"
-QT_MOC_LITERAL(8, 92, 4), // "mode"
-QT_MOC_LITERAL(9, 97, 5), // "mybtn"
-QT_MOC_LITERAL(10, 103, 12) // "alramMessage"
+QT_MOC_LITERAL(1, 7, 13), // "iconActivated"
+QT_MOC_LITERAL(2, 21, 0), // ""
+QT_MOC_LITERAL(3, 22, 33), // "QSystemTrayIcon::ActivationRe..."
+QT_MOC_LITERAL(4, 56, 6), // "reason"
+QT_MOC_LITERAL(5, 63, 7), // "setPose"
+QT_MOC_LITERAL(6, 71, 11), // "modeChanged"
+QT_MOC_LITERAL(7, 83, 4), // "mode"
+QT_MOC_LITERAL(8, 88, 5), // "mybtn"
+QT_MOC_LITERAL(9, 94, 11), // "minimum_Btn"
+QT_MOC_LITERAL(10, 106, 9), // "close_Btn"
+QT_MOC_LITERAL(11, 116, 14), // "mouseMoveEvent"
+QT_MOC_LITERAL(12, 131, 12), // "QMouseEvent*"
+QT_MOC_LITERAL(13, 144, 5), // "mouse"
+QT_MOC_LITERAL(14, 150, 17), // "mouseReleaseEvent"
+QT_MOC_LITERAL(15, 168, 5), // "event"
+QT_MOC_LITERAL(16, 174, 12) // "alramMessage"
 
     },
-    "iHunch\0getAlarm\0\0iconActivated\0"
+    "iHunch\0iconActivated\0\0"
     "QSystemTrayIcon::ActivationReason\0"
     "reason\0setPose\0modeChanged\0mode\0mybtn\0"
-    "alramMessage"
+    "minimum_Btn\0close_Btn\0mouseMoveEvent\0"
+    "QMouseEvent*\0mouse\0mouseReleaseEvent\0"
+    "event\0alramMessage"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,31 +66,33 @@ static const uint qt_meta_data_iHunch[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
-
- // signals: name, argc, parameters, tag, flags
-       1,    0,   44,    2, 0x06 /* Public */,
+       0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   45,    2, 0x0a /* Public */,
-       6,    0,   48,    2, 0x0a /* Public */,
-       7,    1,   49,    2, 0x0a /* Public */,
-       9,    0,   52,    2, 0x0a /* Public */,
-      10,    0,   53,    2, 0x0a /* Public */,
-
- // signals: parameters
-    QMetaType::Void,
+       1,    1,   59,    2, 0x0a /* Public */,
+       5,    0,   62,    2, 0x0a /* Public */,
+       6,    1,   63,    2, 0x0a /* Public */,
+       8,    0,   66,    2, 0x0a /* Public */,
+       9,    0,   67,    2, 0x0a /* Public */,
+      10,    0,   68,    2, 0x0a /* Public */,
+      11,    1,   69,    2, 0x0a /* Public */,
+      14,    1,   72,    2, 0x0a /* Public */,
+      16,    0,   75,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 4,    5,
+    QMetaType::Void, 0x80000000 | 3,    4,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,    8,
+    QMetaType::Void, QMetaType::Int,    7,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 12,   15,
     QMetaType::Void,
 
        0        // eod
@@ -94,22 +104,16 @@ void iHunch::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         auto *_t = static_cast<iHunch *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->getAlarm(); break;
-        case 1: _t->iconActivated((*reinterpret_cast< QSystemTrayIcon::ActivationReason(*)>(_a[1]))); break;
-        case 2: _t->setPose(); break;
-        case 3: _t->modeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 4: _t->mybtn(); break;
-        case 5: _t->alramMessage(); break;
+        case 0: _t->iconActivated((*reinterpret_cast< QSystemTrayIcon::ActivationReason(*)>(_a[1]))); break;
+        case 1: _t->setPose(); break;
+        case 2: _t->modeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->mybtn(); break;
+        case 4: _t->minimum_Btn(); break;
+        case 5: _t->close_Btn(); break;
+        case 6: _t->mouseMoveEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 7: _t->mouseReleaseEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 8: _t->alramMessage(); break;
         default: ;
-        }
-    } else if (_c == QMetaObject::IndexOfMethod) {
-        int *result = reinterpret_cast<int *>(_a[0]);
-        {
-            using _t = void (iHunch::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&iHunch::getAlarm)) {
-                *result = 0;
-                return;
-            }
         }
     }
 }
@@ -143,21 +147,15 @@ int iHunch::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 9)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 9;
     }
     return _id;
-}
-
-// SIGNAL 0
-void iHunch::getAlarm()
-{
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

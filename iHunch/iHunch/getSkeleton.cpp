@@ -21,7 +21,7 @@ double stdPoseRate = 5;    //기준이 되는 초기자세 비율
 
 RecordTime recordedTime;    //자세와 시간기록
 double healthySec, unhealthySec; //좋은, 나쁜자세 총 시간
-double alarmInterval = 3; //알람 울릴 시간 간격
+double alarmInterval = 5; //알람 울릴 시간 간격
 
 int startFix(void)
 {
@@ -121,7 +121,7 @@ int ConnectClient(HANDLE hNamePipe)
         );
 
         _stscanf(Message, _T("%d %d %d"), &n, &x, &y);
-     
+
         if (n == -1 && x == -1 && y == -1) {
             operatorQueue(&cur, 0);
             cur = Points();
@@ -184,7 +184,7 @@ void judgePose() {
 
         Points cur;
         operatorQueue(&cur, 1); //현재 자세 좌표값 가져오기
-        if (cur.length(cur.lEye, cur.rEye) == 0) continue;
+        if (cur.lEye.x == -1 || cur.lShoulder.x == -1) continue;
         
         curStatus = judge(cur); //자세 판단
         curTime = clock(); //현재 시간
@@ -239,7 +239,12 @@ void operatorQueue(Points *ret, bool how)
 
 bool judge(Points cur) {
     double curRate = cur.length(cur.lShoulder, cur.rShoulder) / cur.length(cur.lEye, cur.rEye);
-    if (stdPoseRate * 1.1 > curRate && curRate > stdPoseRate * 0.9)
+    if (stdPoseRate * 1.2 > curRate && curRate > stdPoseRate * 0.8)
         return GOOD;
     return BAD;
+}
+
+int setSTDPose()
+{
+
 }

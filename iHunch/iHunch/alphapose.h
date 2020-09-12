@@ -51,3 +51,4 @@ void checkEndSignal(bool sign);
 void judgePose();
 void operatorQueue(Points *ret, bool how);
 bool judge(Points cur);
+int setSTDPose();

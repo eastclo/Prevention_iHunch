@@ -52,9 +52,11 @@ webcam = args.webcam
 mode = args.mode
 if not os.path.exists(args.outputpath):
     os.mkdir(args.outputpath)
+
 # Load input video
 data_loader = WebcamLoader(webcam).start()
 (fourcc,fps,frameSize) = data_loader.videoinfo()
+
 # Load detection loader
 print('Loading YOLO model..')
 sys.stdout.flush()
@@ -135,7 +137,7 @@ def run():
                 if(n == 17):
                     print('목' + ': ' + str(cor_x) + ', ' + str(cor_y))
                     ret.append([n, cor_x, cor_y])
-                # writer.save(boxes, scores, hm, pt1, pt2, orig_img, im_name.split('/')[-1])
+        writer.save(boxes, scores, hm, pt1, pt2, orig_img, im_name.split('/')[-1])
         ckpt_time, post_time = getTime(ckpt_time)
         runtime_profile['pn'].append(post_time)
     if args.profile:

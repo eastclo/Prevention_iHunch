@@ -186,6 +186,7 @@ def vis_frame(frame, im_res, format='coco'):
         kp_preds = torch.cat((kp_preds, torch.unsqueeze((kp_preds[5,:]+kp_preds[6,:])/2,0)))
         kp_scores = torch.cat((kp_scores, torch.unsqueeze((kp_scores[5,:]+kp_scores[6,:])/2,0)))
         # Draw keypoints
+        tmp = []
         for n in range(kp_scores.shape[0]):
             if kp_scores[n] <= 0.05:
                 continue
@@ -196,25 +197,26 @@ def vis_frame(frame, im_res, format='coco'):
             # Now create a mask of logo and create its inverse mask also
             transparency = float(max(0, min(1, kp_scores[n])))
             img = cv2.addWeighted(bg, transparency, img, 1-transparency, 0)
+            if(n == 1):
+                tmp.append([cor_x, cor_y])
+            if(n == 2):
+                tmp.append([cor_x, cor_y])
+            if(n == 5):
+                tmp.append([cor_x, cor_y])
+            if(n == 6):
+                tmp.append([cor_x, cor_y])
         # Draw limbs
-        for i, (start_p, end_p) in enumerate(l_pair):
-            if start_p in part_line and end_p in part_line:
-                start_xy = part_line[start_p]
-                end_xy = part_line[end_p]
-                bg = img.copy()
-
-                X = (start_xy[0], end_xy[0])
-                Y = (start_xy[1], end_xy[1])
-                mX = np.mean(X)
-                mY = np.mean(Y)
-                length = ((Y[0] - Y[1]) ** 2 + (X[0] - X[1]) ** 2) ** 0.5
-                angle = math.degrees(math.atan2(Y[0] - Y[1], X[0] - X[1]))
-                stickwidth = (kp_scores[start_p] + kp_scores[end_p]) + 1
-                polygon = cv2.ellipse2Poly((int(mX),int(mY)), (int(length/2), stickwidth), int(angle), 0, 360, 1)
-                cv2.fillConvexPoly(bg, polygon, line_color[i])
-                #cv2.line(bg, start_xy, end_xy, line_color[i], (2 * (kp_scores[start_p] + kp_scores[end_p])) + 1)
-                transparency = float(max(0, min(1, 0.5*(kp_scores[start_p] + kp_scores[end_p]))))
-                img = cv2.addWeighted(bg, transparency, img, 1-transparency, 0)
+        ex = tmp[0][0] - tmp[1][0]
+        ey = tmp[0][1] - tmp[1][1]
+        sx = tmp[2][0] - tmp[3][0]
+        sy = tmp[2][1] - tmp[2][1]
+        el = math.sqrt(ex**2 + ey**2)
+        sl = math.sqrt(sx**2 + sy**2)
+        
+        if((4 <= sl / el) and (sl / el <= 6)):
+            img = cv2.putText(img, '비율 :' + str(sl/el), (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+        else:
+            img = cv2.putText(img, '비율 :' + str(sl/el), (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
     img = cv2.resize(img,(width,height),interpolation=cv2.INTER_CUBIC)
     return img
 
