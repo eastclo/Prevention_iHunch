@@ -1,14 +1,23 @@
 #include "setupPose.h"
 
 setupPose::setupPose(QWidget *parent)
-	: QDialog(parent), ui(new Ui::setupPose)
+	: QDialog(parent, Qt::FramelessWindowHint), ui(new Ui::setupPose)
 {
 	ui->setupUi(this);
 	this->initCamera();
 	this->cameraDeviceSearch();
 
 	this->onStartBtn();
+	
+	QComboBox* comboBox = ui->comboBox;
+	QPushButton* startBtn = ui->startBtn;
+	QPushButton* stopBtn = ui->stopBtn;
+	QPushButton* captureBtn = ui->captureBtn;
 
+	comboBox->hide();
+	startBtn->hide();
+	stopBtn->hide();
+	captureBtn->hide();
 }
 
 setupPose::~setupPose()
@@ -96,4 +105,9 @@ void setupPose::closeEvent(QCloseEvent* event)
 {
 	myCamera->stop();
 	QWidget::closeEvent(event);
+}
+
+void setupPose::test()
+{
+//	w.alramMessage();
 }

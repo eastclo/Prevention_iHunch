@@ -39,4 +39,5 @@ private slots:
 	void onCaptureBtn();
 	void camError(QCamera::Error error);
 	void imageCapture(int pid, QImage pPriview);
+	void test();
 };

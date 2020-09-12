@@ -39,11 +39,31 @@
     <string>초기 자세 설정</string>
    </property>
   </widget>
+  <widget class="QWidget" name="camOut" native="true">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>481</width>
+     <height>371</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>10</y>
+     <width>76</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
   <widget class="QPushButton" name="startBtn">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>60</y>
+     <x>180</x>
+     <y>20</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -52,21 +72,11 @@
     <string>start</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>60</y>
-     <width>211</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="stopBtn">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>60</y>
+     <x>180</x>
+     <y>30</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -78,8 +88,8 @@
   <widget class="QPushButton" name="captureBtn">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>60</y>
+     <x>180</x>
+     <y>40</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -88,14 +98,17 @@
     <string>capture</string>
    </property>
   </widget>
-  <widget class="QWidget" name="camOut" native="true">
+  <widget class="QPushButton" name="testBtn">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>110</y>
-     <width>481</width>
-     <height>371</height>
+     <x>280</x>
+     <y>30</y>
+     <width>181</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>test</string>
    </property>
   </widget>
  </widget>
@@ -109,12 +122,12 @@
    <slot>onStartBtn()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>277</x>
-     <y>71</y>
+     <x>551</x>
+     <y>156</y>
     </hint>
     <hint type="destinationlabel">
-     <x>311</x>
-     <y>91</y>
+     <x>511</x>
+     <y>171</y>
     </hint>
    </hints>
   </connection>
@@ -125,12 +138,12 @@
    <slot>onStopBtn()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>352</x>
-     <y>69</y>
+     <x>547</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
-     <x>406</x>
-     <y>97</y>
+     <x>514</x>
+     <y>247</y>
     </hint>
    </hints>
   </connection>
@@ -141,12 +154,28 @@
    <slot>onCaptureBtn()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>477</x>
-     <y>72</y>
+     <x>581</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
-     <x>512</x>
-     <y>95</y>
+     <x>570</x>
+     <y>254</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>testBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>setupPose</receiver>
+   <slot>test()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>357</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>398</x>
+     <y>60</y>
     </hint>
    </hints>
   </connection>
@@ -155,5 +184,6 @@
   <slot>onStartBtn()</slot>
   <slot>onStopBtn()</slot>
   <slot>onCaptureBtn()</slot>
+  <slot>test()</slot>
  </slots>
 </ui>
