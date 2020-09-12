@@ -43,13 +43,30 @@ private:
     //알람 체크박스 체크 되어있는지
     bool sound_check;
     bool popup_check;
+    //창 drag and drop 이동
+    int mouseX;
+    int mouseY;
+    int absX;
+    int absY;
+    int justOneCount;
 
 public slots:
     //시스템 트레이 아이콘 클릭 이벤트로부터 시그널을 처리하는 slot함수
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
     //자세 설정 창 띄우기
     void setPose();
     void modeChanged(int mode);
+
     //시작버튼
     void mybtn();
+
+    //새로만든 최소화, 닫기버튼
+    void minimum_Btn();
+    void close_Btn();
+
+    //창 drag and drop 이동
+    void mouseMoveEvent(QMouseEvent* mouse);
+    void mouseReleaseEvent(QMouseEvent* event);
+
 };

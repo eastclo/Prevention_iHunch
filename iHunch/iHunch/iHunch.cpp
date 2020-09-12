@@ -1,7 +1,7 @@
 #include "iHunch.h"
 
 iHunch::iHunch(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::iHunchClass)
+    : QMainWindow(parent, Qt::FramelessWindowHint | Qt::WindowFlags()), ui(new Ui::iHunchClass)
 {
     ui->setupUi(this);
     this->setWindowTitle("Turtle Neck");
@@ -46,6 +46,16 @@ iHunch::iHunch(QWidget *parent)
     m_player->setMedia(QUrl::fromLocalFile("effect sound.mp3"));
     m_player->setVolume(50);
 
+    //타이틀바
+    QWidget* myTitleBar = ui->myTitleBar;
+    myTitleBar->setStyleSheet("QWidget {background : rgb(255,255,255); }");
+
+    //창 drag and drop 이동
+    justOneCount = 0;
+    mouseX = this->geometry().x();
+    mouseY = this->geometry().y();
+    absY = this->geometry().y();
+    absX = this->geometry().x();
 }
 
 iHunch::~iHunch()
@@ -124,3 +134,45 @@ void iHunch::mybtn()
 
     }
 }
+
+void iHunch::minimum_Btn() {
+    this->showMinimized();
+}
+
+void iHunch::close_Btn() {
+    if (this->isVisible())
+    {
+        this->hide();
+
+        m_trayicon->showMessage(
+            QString::fromLocal8Bit("프로그램 실행중"), QString::fromLocal8Bit("프로그램이 백그라운드에서 실행중"),
+            QIcon("gb.png"),
+            500);
+    }
+}
+
+void iHunch::mouseMoveEvent(QMouseEvent* mouse)
+{
+    if (this->isMaximized() == true) //최대화 되어있을경우 무시
+        return;
+
+    if (mouse->button() == Qt::RightButton) //오른쪽클릭했을경우 무시
+        return;
+
+    mouseX = QCursor::pos().x(); //마우스 절대좌표
+    mouseY = QCursor::pos().y();
+
+    if (justOneCount == 0)
+    {
+        absX = mouse->pos().x(); //마우스 상대좌표 저장
+        absY = mouse->pos().y();
+        justOneCount++; //1이되면 이 블록을 연산하지 않음
+    }
+    this->move(mouseX - absX, mouseY - absY); //절대좌표에서 상대좌표를 빼서 이동하는 원리
+}
+
+void iHunch::mouseReleaseEvent(QMouseEvent*)
+{
+    justOneCount = 0; //마우스를 클릭 해제하면 다시 0으로하여 반복사용가능
+}
+
