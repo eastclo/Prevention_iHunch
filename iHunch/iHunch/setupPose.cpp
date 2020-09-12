@@ -1,5 +1,7 @@
 #include "setupPose.h"
 
+extern bool measureStartBtn;
+
 setupPose::setupPose(QWidget *parent)
 	: QDialog(parent, Qt::FramelessWindowHint), ui(new Ui::setupPose)
 {
@@ -110,16 +112,15 @@ void setupPose::imageCapture(int pid, QImage pPriview)
 
 void setupPose::initPoseBtn()
 {
-
-
+	measureStartBtn = true;
 }
 
 void setupPose::mouseMoveEvent(QMouseEvent* mouse)
 {
-	if (this->isMaximized() == true) //�ִ�ȭ �Ǿ��������?����
+	if (this->isMaximized() == true) //�ִ�ȭ �Ǿ��������?����
 		return;
 
-	if (mouse->button() == Qt::RightButton) //������Ŭ���������?����
+	if (mouse->button() == Qt::RightButton) //������Ŭ���������?����
 		return;
 
 	mouseX = QCursor::pos().x(); //���콺 ������ǥ
@@ -131,10 +132,10 @@ void setupPose::mouseMoveEvent(QMouseEvent* mouse)
 		absY = mouse->pos().y();
 		justOneCount++; //1�̵Ǹ� �� ������ �������� ����
 	}
-	this->move(mouseX - absX, mouseY - absY); //������ǥ���� �����ǥ��?���� �̵��ϴ� ����
+	this->move(mouseX - absX, mouseY - absY); //������ǥ���� �����ǥ��?���� �̵��ϴ� ����
 }
 
 void setupPose::mouseReleaseEvent(QMouseEvent*)
 {
-	justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��?
+	justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��?
 }

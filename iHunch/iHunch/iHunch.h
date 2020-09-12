@@ -27,7 +27,7 @@ class iHunch : public QMainWindow
 public:
     iHunch(QWidget *parent = Q_NULLPTR);
     ~iHunch();
-    //��� Ȯ�� ����
+    //���?Ȯ�� ����
     int modeflag;
     //�˶� ȣ���Լ�
  //   void alramMessage();
@@ -37,6 +37,9 @@ private:
     //Ʈ���̾����� Ŭ���� �ν��Ͻ�
     QSystemTrayIcon* m_trayicon;
     setupPose* setuppose;
+    QComboBox* timeIntervalComboBox;
+    QComboBox* unHealthComboBox;
+    QSlider* poseFixSlider;
 
     //���۹�ư
     bool started = false;
@@ -63,7 +66,7 @@ public slots:
     //���۹�ư
     void mybtn();
 
-    //���θ��� �ּ�ȭ, �ݱ��ư
+    //���θ��� �ּ�ȭ, �ݱ���?
     void minimum_Btn();
     void close_Btn();
 
@@ -72,4 +75,5 @@ public slots:
     void mouseReleaseEvent(QMouseEvent* event);
 
     void alramMessage();
+
 };

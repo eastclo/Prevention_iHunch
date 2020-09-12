@@ -247,7 +247,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>170</x>
       <y>370</y>
-      <width>162</width>
+      <width>261</width>
       <height>91</height>
      </rect>
     </property>
@@ -306,6 +306,47 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
+    <widget class="QComboBox" name="alarmIntervalComboBox">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>60</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="currentText">
+      <string>5</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>5</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>7</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>10</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>30</y>
+       <width>101</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>재 알람 시간(초)</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
@@ -324,7 +365,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>교정 감도 설정</string>
     </property>
-    <widget class="QSlider" name="horizontalSlider">
+    <widget class="QSlider" name="poseFixDegreeSlider">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -337,10 +378,16 @@ p, li { white-space: pre-wrap; }
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>5</number>
+      <number>100</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="tickPosition">
+      <enum>QSlider::TicksBelow</enum>
+     </property>
+     <property name="tickInterval">
+      <number>10</number>
      </property>
     </widget>
     <widget class="QLabel" name="label_4">
@@ -359,7 +406,7 @@ p, li { white-space: pre-wrap; }
       <set>Qt::AlignCenter</set>
      </property>
      <property name="buddy">
-      <cstring>horizontalSlider</cstring>
+      <cstring>poseFixDegreeSlider</cstring>
      </property>
     </widget>
     <widget class="QLabel" name="label_5">
@@ -378,7 +425,7 @@ p, li { white-space: pre-wrap; }
       <set>Qt::AlignCenter</set>
      </property>
      <property name="buddy">
-      <cstring>horizontalSlider</cstring>
+      <cstring>poseFixDegreeSlider</cstring>
      </property>
     </widget>
    </widget>
@@ -482,6 +529,72 @@ p, li { white-space: pre-wrap; }
       </size>
      </property>
     </widget>
+   </widget>
+   <widget class="QComboBox" name="unHealthComboBox">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>150</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="currentText">
+     <string> 3초 지속시</string>
+    </property>
+    <item>
+     <property name="text">
+      <string> 3초 지속시</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string> 4초 지속시</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string> 5초 지속시</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string> 6초 지속시</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string> 7초 지속시</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string> 8초 지속시</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string> 9초 지속시</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>10초 지속시</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>149</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>안 좋은 자세</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
