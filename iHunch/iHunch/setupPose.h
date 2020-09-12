@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QDialog>
+#include <QMessageBox>
 #include <QCamera>
 #include <QCameraViewfinder>
 #include <QCameraImageCapture>
@@ -21,6 +22,10 @@ public:
 	void initCamera();
 	void cameraDeviceSearch();
 
+protected:
+	//À§Á¬Ã¢ÀÌ ´ÝÇûÀ»¶§
+	void closeEvent(QCloseEvent* event);
+
 private:
 	Ui::setupPose* ui;
 	QCamera* myCamera;
@@ -34,5 +39,4 @@ private slots:
 	void onCaptureBtn();
 	void camError(QCamera::Error error);
 	void imageCapture(int pid, QImage pPriview);
-
 };

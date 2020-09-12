@@ -8,7 +8,11 @@
 #include <QWidget>
 #include <QMenu>
 #include <QStyle>
+#include <Windows.h>
+#include <QMultimedia>
 #include "setupPose.h"
+#include <QMediaPlayer>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class iHunchClass; }
@@ -21,25 +25,31 @@ class iHunch : public QMainWindow
 public:
     iHunch(QWidget *parent = Q_NULLPTR);
     ~iHunch();
-
-protected:
-    //ÃÖ¼ÒÈ­ µÇ¾úÀ» ‹š ¶Ç´Â À§Á¬ Ã¢ÀÌ ´ÝÇûÀ» ¶§ È£Ãâ
-    void closeEvent(QCloseEvent* event);
+    //ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    int modeflag;
+    //ï¿½Ë¶ï¿½ È£ï¿½ï¿½ï¿½Ô¼ï¿½
+    void alramMessage();
 
 private:
     Ui::iHunchClass* ui;
-    //Æ®·¹ÀÌ¾ÆÀÌÄÜ Å¬·¡½º ÀÎ½ºÅÏ½º
+    //Æ®ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½
     QSystemTrayIcon* m_trayicon;
     setupPose* setuppose;
 
-public slots:
-    //½Ã½ºÅÛ Æ®·¹ÀÌ ¾ÆÀÌÄÜ Å¬¸¯ ÀÌº¥Æ®·ÎºÎÅÍ ½Ã±×³ÎÀ» Ã³¸®ÇÏ´Â slotÇÔ¼ö
-    void iconActivated(QSystemTrayIcon::ActivationReason reason);
-    void popupslot();
-    //ÀÚ¼¼ ¼³Á¤ Ã¢ ¶ç¿ì±â
-    void setPose();
+    //ï¿½ï¿½ï¿½Û¹ï¿½Æ°
+    bool started = false;
+    //È¿ï¿½ï¿½ï¿½ï¿½
+    QMediaPlayer* m_player;
+    //ï¿½Ë¶ï¿½ Ã¼Å©ï¿½Ú½ï¿½ Ã¼Å© ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ï¿½ï¿½
+    bool sound_check;
+    bool popup_check;
 
-    //½ÃÀÛ¹öÆ°
-    void startBtn();
-    void endBtn();
+public slots:
+    //ï¿½Ã½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ã±×³ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ slotï¿½Ô¼ï¿½
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+    //ï¿½Ú¼ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¢ ï¿½ï¿½ï¿½ï¿½
+    void setPose();
+    void modeChanged(int mode);
+    //ï¿½ï¿½ï¿½Û¹ï¿½Æ°
+    void mybtn();
 };

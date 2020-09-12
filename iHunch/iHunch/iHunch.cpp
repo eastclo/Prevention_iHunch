@@ -12,20 +12,19 @@ iHunch::iHunch(QWidget *parent)
     ui->setupUi(this);
     this->setWindowTitle("Turtle Neck");
 
+    /*********************************************************/
+    //Æ®ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½
     m_trayicon = new QSystemTrayIcon(this);
     m_trayicon->setIcon(QIcon("gb.png"));
     m_trayicon->setToolTip("Turtle Neck");
 
     QMenu* menu = new QMenu(this);
-    QAction* viewWindow = new QAction(QString::fromLocal8Bit("¿­±â"), this);
-    QAction* quitAction = new QAction(QString::fromLocal8Bit("Á¾·á"), this);
-    QAction* event1 = new QAction(QString::fromLocal8Bit("ÀÌº¥Æ®1"), this);
+    QAction* viewWindow = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½"), this);
+    QAction* quitAction = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½"), this);
 
     connect(viewWindow, SIGNAL(triggered()), this, SLOT(showNormal()));
     connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(event1, SIGNAL(triggered()), this, SLOT(popupslot()));
 
-    menu->addAction(event1);
     menu->addAction(viewWindow);
     menu->addAction(quitAction);
 
@@ -34,10 +33,25 @@ iHunch::iHunch(QWidget *parent)
 
     connect(m_trayicon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
         this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-
+    //Æ®ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½
+    /*********************************************************/
+    
+    //ï¿½âº» ui ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½
     ui->mainToolBar->hide();
     QStatusBar* myStatusBar = ui->statusBar;
     myStatusBar->showMessage("Developed by asd", 0);
+
+
+    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    QWidget* modeAlarm = ui->modeAlarm;
+    modeAlarm->hide();
+    modeflag = 0;
+
+    //È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    m_player = new QMediaPlayer();
+    m_player->setMedia(QUrl::fromLocalFile("effect sound.mp3"));
+    m_player->setVolume(50);
+
 }
 
 iHunch::~iHunch()
@@ -45,17 +59,24 @@ iHunch::~iHunch()
     delete ui;
 }
 
-void iHunch::closeEvent(QCloseEvent* event)
+void iHunch::alramMessage()
 {
-    if (this->isVisible())
-    {
-        event->ignore();
-        this->hide();
+    QCheckBox* popup_box = ui->popup_checkbox;
+    QCheckBox* sound_box = ui->soundAlram_checkbox;
 
+    popup_check = popup_box->isChecked();
+    sound_check = sound_box->isChecked();
+
+    if (popup_check == true) {
+        QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         m_trayicon->showMessage(
-            QString::fromLocal8Bit("ÇÁ·Î±×·¥ ½ÇÇàÁß"), QString::fromLocal8Bit("ÇÁ·Î±×·¥ÀÌ ¹é±×¶ó¿îµå¿¡¼­ ½ÇÇàÁß"),
+            QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö¾ï¿½ï¿½."),
             QIcon("gb.png"),
-            2000);
+            500);
+    }
+
+    if (sound_check == true) {
+        m_player->play();
     }
 }
 
@@ -65,32 +86,53 @@ void iHunch::iconActivated(QSystemTrayIcon::ActivationReason reason)
         this->show();
 }
 
-void iHunch::popupslot()
-{
-    QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
-    m_trayicon->showMessage(
-        QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("¾ÈÁÁÀº ÀÚ¼¼°¡ À¯ÁöµÇ°í ÀÖ¾î¿ä."),
-        QIcon("gb.png"),
-        2000);
-}
-
 void iHunch::setPose()
 {
     setuppose = new setupPose(this);
     setuppose->show();
 }
-
-void iHunch::startBtn()
+void iHunch::modeChanged(int mode)
 {
+    QComboBox* modeBox = ui->comboBox;
+    QWidget* modeAlarm = ui->modeAlarm;
+
+    if (modeBox->currentIndex() == 0) {
+        modeAlarm->hide();
+        modeflag = 0;
+    }
+    else if (modeBox->currentIndex() == 1) {
+        modeAlarm->show();
+        modeflag = 1;
+    }
+}
+
+void iHunch::mybtn()
+{
+    QPushButton* btn = ui->pushButton_2;
+    if (started == false) {
     endSignal = false;
     thread t(startFix);
     t.detach();
-}
+        started = true;
+        btn->setText(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"));
 
-void iHunch::endBtn()
-{
+        if (this->isVisible())
+        {
+            this->hide();
+
+            m_trayicon->showMessage(
+                QString::fromLocal8Bit("ï¿½ï¿½ï¿½Î±×·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"), QString::fromLocal8Bit("ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½×¶ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"),
+                QIcon("gb.png"),
+                500);
+        }
+    }
+    else if (started == true) {
     checkEndSignal(true);
     TerminateProcess(ProcessInfo.hProcess, 0);
     CloseHandle(ProcessInfo.hProcess);
     CloseHandle(ProcessInfo.hThread);
+        started = false;
+        btn->setText(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"));
+
+    }
 }
