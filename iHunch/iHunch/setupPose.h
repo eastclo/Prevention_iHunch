@@ -6,6 +6,9 @@
 #include <QCameraViewfinder>
 #include <QCameraImageCapture>
 #include <QVBoxLayout>
+#include <QAbstractVideoSurface>
+#include <QMouseEvent>
+#include <Windows.h>
 #include "ui_setupPose.h"
 
 QT_BEGIN_NAMESPACE
@@ -22,10 +25,6 @@ public:
 	void initCamera();
 	void cameraDeviceSearch();
 
-protected:
-	//À§Á¬Ã¢ÀÌ ´ÝÇûÀ»¶§
-	void closeEvent(QCloseEvent* event);
-
 private:
 	Ui::setupPose* ui;
 	QCamera* myCamera;
@@ -33,11 +32,22 @@ private:
 	QCameraImageCapture* myCapture;
 	QList<QByteArray> camDevNameLists;
 
+	//window drag and drop move
+	int mouseX;
+	int mouseY;
+	int absX;
+	int absY;
+	int justOneCount;
+
 private slots:
 	void onStartBtn();
 	void onStopBtn();
 	void onCaptureBtn();
 	void camError(QCamera::Error error);
 	void imageCapture(int pid, QImage pPriview);
-	void test();
+	void initPoseBtn();
+
+	//window drag and drop move
+	void mouseMoveEvent(QMouseEvent* mouse);
+	void mouseReleaseEvent(QMouseEvent* event);
 };
