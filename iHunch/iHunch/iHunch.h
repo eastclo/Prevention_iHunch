@@ -43,18 +43,31 @@ private:
     //�˶� üũ�ڽ� üũ �Ǿ��ִ���
     bool sound_check;
     bool popup_check;
+    //â drag and drop �̵�
+    int mouseX;
+    int mouseY;
+    int absX;
+    int absY;
+    int justOneCount;
 
 public slots:
     //�ý��� Ʈ���� ������ Ŭ�� �̺�Ʈ�κ��� �ñ׳��� ó���ϴ� slot�Լ�
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
     //�ڼ� ���� â ����
     void setPose();
     void modeChanged(int mode);
+
     //���۹�ư
     void mybtn();
 
-    void alramMessage();
+    //���θ��� �ּ�ȭ, �ݱ��ư
+    void minimum_Btn();
+    void close_Btn();
 
-signals:
-    void getAlarm();
+    //â drag and drop �̵�
+    void mouseMoveEvent(QMouseEvent* mouse);
+    void mouseReleaseEvent(QMouseEvent* event);
+
+    void alramMessage();
 };

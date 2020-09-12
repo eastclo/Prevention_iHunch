@@ -7,7 +7,7 @@ extern bool endSignal;
 extern PROCESS_INFORMATION ProcessInfo;
 
 iHunch::iHunch(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::iHunchClass)
+    : QMainWindow(parent, Qt::FramelessWindowHint | Qt::WindowFlags()), ui(new Ui::iHunchClass)
 {
     ui->setupUi(this);
     this->setWindowTitle("Turtle Neck");
@@ -52,8 +52,16 @@ iHunch::iHunch(QWidget *parent)
     m_player->setMedia(QUrl::fromLocalFile("effect sound.mp3"));
     m_player->setVolume(50);
 
-    connect(this, SIGNAL(getAlarm()), this, SLOT(alramMessage()));
+    //Ÿ��Ʋ��
+    QWidget* myTitleBar = ui->myTitleBar;
+    myTitleBar->setStyleSheet("QWidget {background : rgb(255,255,255); }");
 
+    //â drag and drop �̵�
+    justOneCount = 0;
+    mouseX = this->geometry().x();
+    mouseY = this->geometry().y();
+    absY = this->geometry().y();
+    absX = this->geometry().x();
 }
 
 iHunch::~iHunch()
@@ -141,3 +149,45 @@ void iHunch::mybtn()
 
     }
 }
+
+void iHunch::minimum_Btn() {
+    this->showMinimized();
+}
+
+void iHunch::close_Btn() {
+    if (this->isVisible())
+    {
+        this->hide();
+
+        m_trayicon->showMessage(
+            QString::fromLocal8Bit("���α׷� ������"), QString::fromLocal8Bit("���α׷��� ��׶��忡�� ������"),
+            QIcon("gb.png"),
+            500);
+    }
+}
+
+void iHunch::mouseMoveEvent(QMouseEvent* mouse)
+{
+    if (this->isMaximized() == true) //�ִ�ȭ �Ǿ�������� ����
+        return;
+
+    if (mouse->button() == Qt::RightButton) //������Ŭ��������� ����
+        return;
+
+    mouseX = QCursor::pos().x(); //���콺 ������ǥ
+    mouseY = QCursor::pos().y();
+
+    if (justOneCount == 0)
+    {
+        absX = mouse->pos().x(); //���콺 �����ǥ ����
+        absY = mouse->pos().y();
+        justOneCount++; //1�̵Ǹ� �� ������ �������� ����
+    }
+    this->move(mouseX - absX, mouseY - absY); //������ǥ���� �����ǥ�� ���� �̵��ϴ� ����
+}
+
+void iHunch::mouseReleaseEvent(QMouseEvent*)
+{
+    justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��
+}
+

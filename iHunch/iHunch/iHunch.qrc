@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="iHunch">
+    <file>close_icon.png</file>
+    <file>minimum_icon.png</file>
     <file>gb.png</file>
   </qresource>
 </RCC>
