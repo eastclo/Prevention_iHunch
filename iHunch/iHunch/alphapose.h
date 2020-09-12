@@ -51,4 +51,5 @@ void checkEndSignal(bool sign);
 void judgePose();
 void operatorQueue(Points *ret, bool how);
 bool judge(Points cur);
-int setSTDPose();
+int setSTDPose(); //초기 자세 설정
+int ConnectClient2(HANDLE hNamePipe); //초기 자세 설정

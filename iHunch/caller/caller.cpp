@@ -27,6 +27,8 @@ void sendMessage(int n, int x, int y);
 
 int main(void)
 {
+    //HWND hWndConsole = GetConsoleWindow();
+    //ShowWindow(hWndConsole, SW_HIDE);
     //파이프 서버파트와 연결
     hNamePipe = CreateFile(pipe_name, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
     if (hNamePipe == INVALID_HANDLE_VALUE) {
@@ -56,6 +58,7 @@ int main(void)
 
     // fhmm.py 라는 파일의 이름을 PyObject로 생성
     pModule = PyImport_Import(pName);
+    sendMessage(-2, -1, -1); //import 완료 메시지 전송
     // fhmm.py를 import 한다
     if (pModule != NULL) {
         pFunc = PyObject_GetAttrString(pModule, "run");

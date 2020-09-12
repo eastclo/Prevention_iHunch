@@ -1,5 +1,5 @@
 #include "setupPose.h"
-
+extern bool imported;
 setupPose::setupPose(QWidget *parent)
 	: QDialog(parent, Qt::FramelessWindowHint), ui(new Ui::setupPose)
 {
@@ -82,7 +82,8 @@ void setupPose::onStartBtn()
 	myCapture->setBufferFormat(QVideoFrame::Format_RGB32);
 
 	connect(myCapture, SIGNAL(imageCaptured(int, QImage)), this, SLOT(imageCaptured(int, QImage)));
-
+	
+	while (!imported);
 	myCamera->start();
 }
 

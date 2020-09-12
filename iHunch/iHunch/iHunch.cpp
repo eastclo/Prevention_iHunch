@@ -3,8 +3,10 @@
 
 #define thread std::thread
 
+extern bool imported;
 extern bool endSignal;
 extern PROCESS_INFORMATION ProcessInfo;
+extern bool measureStartBtn;
 
 iHunch::iHunch(QWidget *parent)
     : QMainWindow(parent, Qt::FramelessWindowHint), ui(new Ui::iHunchClass)
@@ -42,7 +44,7 @@ iHunch::iHunch(QWidget *parent)
     myStatusBar->showMessage("Developed by asd", 0);
 
 
-    //��� ���� ����
+    //���?���� ����
     QWidget* modeAlarm = ui->modeAlarm;
     modeAlarm->hide();
     modeflag = 0;
@@ -80,7 +82,7 @@ void iHunch::alramMessage()
     if (popup_check != true) {
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         m_trayicon->showMessage(
-            QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("������ �ڼ��� �����ǰ� �־��."),
+            QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("������ �ڼ��� �����ǰ� �־��?"),
             QIcon("gb.png"),
             500);
     }
@@ -99,6 +101,11 @@ void iHunch::iconActivated(QSystemTrayIcon::ActivationReason reason)
 void iHunch::setPose()
 {   
     setuppose = new setupPose(this);
+    imported = false;
+    measureStartBtn = false;
+
+    thread t(setSTDPose);
+    t.detach();
     setuppose->show();  
 }
 void iHunch::modeChanged(int mode)
@@ -133,7 +140,7 @@ void iHunch::mybtn()
             this->hide();
 
             m_trayicon->showMessage(
-                QString::fromLocal8Bit("���α׷� ������"), QString::fromLocal8Bit("���α׷��� ��׶��忡�� ������"),
+                QString::fromLocal8Bit("���α׷� ������"), QString::fromLocal8Bit("���α׷��� ��׶��忡��?������"),
                 QIcon("gb.png"),
                 500);
         }
@@ -160,7 +167,7 @@ void iHunch::close_Btn() {
         this->hide();
 
         m_trayicon->showMessage(
-            QString::fromLocal8Bit("���α׷� ������"), QString::fromLocal8Bit("���α׷��� ��׶��忡�� ������"),
+            QString::fromLocal8Bit("���α׷� ������"), QString::fromLocal8Bit("���α׷��� ��׶��忡��?������"),
             QIcon("gb.png"),
             500);
     }
@@ -168,10 +175,10 @@ void iHunch::close_Btn() {
 
 void iHunch::mouseMoveEvent(QMouseEvent* mouse)
 {
-    if (this->isMaximized() == true) //�ִ�ȭ �Ǿ�������� ����
+    if (this->isMaximized() == true) //�ִ�ȭ �Ǿ��������?����
         return;
 
-    if (mouse->button() == Qt::RightButton) //������Ŭ��������� ����
+    if (mouse->button() == Qt::RightButton) //������Ŭ���������?����
         return;
 
     mouseX = QCursor::pos().x(); //���콺 ������ǥ
@@ -179,14 +186,14 @@ void iHunch::mouseMoveEvent(QMouseEvent* mouse)
 
     if (justOneCount == 0)
     {
-        absX = mouse->pos().x(); //���콺 �����ǥ ����
+        absX = mouse->pos().x(); //���콺 ������?����
         absY = mouse->pos().y();
         justOneCount++; //1�̵Ǹ� �� ������ �������� ����
     }
-    this->move(mouseX - absX, mouseY - absY); //������ǥ���� �����ǥ�� ���� �̵��ϴ� ����
+    this->move(mouseX - absX, mouseY - absY); //������ǥ���� �����ǥ��?���� �̵��ϴ� ����
 }
 
 void iHunch::mouseReleaseEvent(QMouseEvent*)
 {
-    justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��
+    justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��?
 }
