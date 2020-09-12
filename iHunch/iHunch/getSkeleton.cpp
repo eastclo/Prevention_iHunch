@@ -1,4 +1,5 @@
 #include "alphapose.h"
+#include "iHunch.h"
 
 #ifdef UNICODE
 #define GetCurrentDirectory  GetCurrentDirectoryW
@@ -9,13 +10,18 @@
 
 using namespace std;
 
-bool endSignal; //종료 sign
-PROCESS_INFORMATION ProcessInfo; //프로세스 정보
-std::mutex mtx; //뮤텍스 변수
+extern iHunch* w;
 
-void editChildProccessPath(char* path);
-int ConnectClient(HANDLE hNamePipe);
-void checkEndSignal(bool sign);
+PROCESS_INFORMATION ProcessInfo; //프로세스 정보
+std::mutex mtx1, mtx2; //뮤텍스 변수
+bool endSignal; //종료 sign
+
+queue<Points> poseData; //좌표값 데이터
+double stdPoseRate = 5;    //기준이 되는 초기자세 비율
+
+RecordTime recordedTime;    //자세와 시간기록
+double healthySec, unhealthySec; //좋은, 나쁜자세 총 시간
+double alarmInterval = 3; //알람 울릴 시간 간격
 
 int startFix(void)
 {
@@ -96,11 +102,14 @@ void editChildProccessPath(char* path)
 int ConnectClient(HANDLE hNamePipe)
 {
     TCHAR Message[100];
+    char tmp[100];
     DWORD recvSize;
 
+    Points cur;
     while (1) {
         checkEndSignal(false);
         if (endSignal) break;
+        
         int n, x, y;
         //recvSize -> NULL 포함한 바이트 수
         ReadFile(
@@ -110,33 +119,127 @@ int ConnectClient(HANDLE hNamePipe)
             &recvSize,
             NULL
         );
-        _stscanf(Message, _T("%d %d %d"), &n, &x, &y);
 
-        //TODO: 8개를 읽고 
-        if (n == 0)
-            printf("코(%d, %d)\n", x, y);
-        if (n == 1)
-            printf("왼눈(%d, %d)\n", x, y);
-        if (n == 2)
-            printf("오눈(%d, %d)\n", x, y);
-        if (n == 3)
-            printf("왼귀(%d, %d)\n", x, y);
-        if (n == 4)
-            printf("오귀(%d, %d)\n", x, y);
-        if (n == 5)
-            printf("왼어(%d, %d)\n", x, y);
-        if (n == 6)
-            printf("오어(%d, %d)\n", x, y);
-        if (n == 17)
-            printf("목(%d, %d)\n", x, y);
+        _stscanf(Message, _T("%d %d %d"), &n, &x, &y);
+     
+        if (n == -1 && x == -1 && y == -1) {
+            operatorQueue(&cur, 0);
+            cur = Points();
+        }
+        else {
+            switch (n) {
+            case 0:
+                cur.Nose.x = x;
+                cur.Nose.y = y;
+                break;
+            case 1:
+                cur.lEye.x = x;
+                cur.lEye.y = y;
+                break;
+            case 2:
+                cur.rEye.x = x;
+                cur.rEye.y = y;
+                break;
+            case 3:
+                cur.lEar.x = x;
+                cur.lEar.y = y;
+                break;
+            case 4:
+                cur.rEar.x = x;
+                cur.rEar.y = y;
+                break;
+            case 5:
+                cur.lShoulder.x = x;
+                cur.lShoulder.y = y;
+                break;
+            case 6:
+                cur.rShoulder.x = x;
+                cur.rShoulder.y = y;
+                break;
+            case 17:
+                cur.Neck.x = x;
+                cur.Neck.y = y;
+                break;
+            }
+        }
     }
     return 1;
 }
 
 void checkEndSignal(bool sign)
 {
-    mtx.lock();
+    mtx1.lock();
     if (sign)
         endSignal = true;
-    mtx.unlock();
+    mtx1.unlock();
+}
+
+void judgePose() {
+    bool curStatus;
+    clock_t curTime;
+
+    while (1) {
+        checkEndSignal(false);
+        if (endSignal) break;
+
+        Points cur;
+        operatorQueue(&cur, 1); //현재 자세 좌표값 가져오기
+        if (cur.length(cur.lEye, cur.rEye) == 0) continue;
+        
+        curStatus = judge(cur); //자세 판단
+        curTime = clock(); //현재 시간
+        if (recordedTime.status == -1) {
+            //최초 기록일 때
+            recordedTime.status = curStatus;
+            recordedTime.prev = curTime;
+            recordedTime.alarmed = curTime;
+        }
+        else if (recordedTime.status != curStatus) {
+            //자세가 달라졌을 때
+            
+            if (recordedTime.status == GOOD)
+                healthySec += (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
+            else
+                unhealthySec += (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
+            
+            recordedTime.status = curStatus;
+            recordedTime.prev = curTime;
+        }
+        else { //자세가 계속 같을 경우
+            if (recordedTime.status == BAD) {
+                double continuedSec = (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
+                double lastAlarmed = (curTime - recordedTime.alarmed) / CLOCKS_PER_SEC;
+
+                //알람 호출한지 5초 이내이고, 알람 울릴 때가 아니라면 스킵
+                if (lastAlarmed < 5 && lastAlarmed < alarmInterval) continue; 
+
+                if (continuedSec > alarmInterval) {
+                    (*w).alramMessage();
+                    recordedTime.alarmed = curTime;
+                }
+            }
+        }
+    }
+}
+
+void operatorQueue(Points *ret, bool how)
+{
+    mtx2.lock();
+    if (how == false) {//enqueue
+        poseData.push(*ret);
+    }
+    else { //dequeue
+        if (!poseData.empty()) {
+            *ret = poseData.front();
+            poseData.pop();
+        }
+    }
+    mtx2.unlock();
+}
+
+bool judge(Points cur) {
+    double curRate = cur.length(cur.lShoulder, cur.rShoulder) / cur.length(cur.lEye, cur.rEye);
+    if (stdPoseRate * 1.1 > curRate && curRate > stdPoseRate * 0.9)
+        return GOOD;
+    return BAD;
 }

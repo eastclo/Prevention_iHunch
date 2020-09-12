@@ -13,6 +13,7 @@
 #include <cstdio>
 #include <windows.h>
 #include <tchar.h>
+#include <vector>
 
 #define PIPE_NAME   "\\\\.\\pipe\\test_pipe"
 
@@ -66,10 +67,12 @@ int main(void)
                 PyObject* tmp, * tmp2;
                 pValue = PyObject_CallObject(pFunc, NULL);
                 // pFunc에 매개변수 전달해서 실행한다
+
                 if (PySequence_Check(pValue)) {
                     int cnt = PySequence_Size(pValue);
                     for (int i = 0; i < cnt; i++) {
                         tmp = PySequence_GetItem(pValue, i);
+                        
                         if (PySequence_Check(tmp)) {
                             tmp2 = PySequence_GetItem(tmp, 0);
                             int n = 0, x, y;
@@ -79,11 +82,11 @@ int main(void)
                                 x = PyLong_AsLong(tmp2);
                                 tmp2 = PySequence_GetItem(tmp, 2);
                                 y = PyLong_AsLong(tmp2);
-                                printf("%d %d %d\n", n, x, y);
                                 sendMessage(n, x, y);   //파이프로 메시지 전송
                             }
                         }
                     }
+                    sendMessage(-1, -1, -1);   //파이프로 구분자 메시지 전송
                 }
             }
         }
@@ -93,7 +96,6 @@ int main(void)
         printf("pModule is null T.T\n");
     }
     Py_Finalize();
-    cout << "\nFTER ========================\n";
 
     CloseHandle(hNamePipe);
     return 0;

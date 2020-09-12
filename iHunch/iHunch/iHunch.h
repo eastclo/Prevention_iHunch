@@ -28,7 +28,7 @@ public:
     //��� Ȯ�� ����
     int modeflag;
     //�˶� ȣ���Լ�
-    void alramMessage();
+ //   void alramMessage();
 
 private:
     Ui::iHunchClass* ui;
@@ -52,4 +52,9 @@ public slots:
     void modeChanged(int mode);
     //���۹�ư
     void mybtn();
+
+    void alramMessage();
+
+signals:
+    void getAlarm();
 };

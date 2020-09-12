@@ -52,6 +52,8 @@ iHunch::iHunch(QWidget *parent)
     m_player->setMedia(QUrl::fromLocalFile("effect sound.mp3"));
     m_player->setVolume(50);
 
+    connect(this, SIGNAL(getAlarm()), this, SLOT(alramMessage()));
+
 }
 
 iHunch::~iHunch()
@@ -111,8 +113,10 @@ void iHunch::mybtn()
     QPushButton* btn = ui->pushButton_2;
     if (started == false) {
     endSignal = false;
-    thread t(startFix);
-    t.detach();
+    thread t1(startFix);
+    t1.detach();
+    thread t2(judgePose);
+    t2.detach();
         started = true;
         btn->setText(QString::fromLocal8Bit("���� ����"));
 
@@ -127,10 +131,11 @@ void iHunch::mybtn()
         }
     }
     else if (started == true) {
-    checkEndSignal(true);
-    TerminateProcess(ProcessInfo.hProcess, 0);
-    CloseHandle(ProcessInfo.hProcess);
-    CloseHandle(ProcessInfo.hThread);
+        checkEndSignal(true);
+        TerminateProcess(ProcessInfo.hProcess, 0);
+        CloseHandle(ProcessInfo.hProcess);
+        CloseHandle(ProcessInfo.hThread);
+
         started = false;
         btn->setText(QString::fromLocal8Bit("���� ����"));
 
