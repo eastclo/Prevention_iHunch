@@ -25,12 +25,10 @@ class iHunch : public QMainWindow
 public:
     iHunch(QWidget *parent = Q_NULLPTR);
     ~iHunch();
+    //모드 확인 변수
+    int modeflag;
     //알람 호출함수
     void alramMessage();
-
-protected:
-    //최소화 되었을 떄 또는 위젯 창이 닫혔을 때 호출
-    void closeEvent(QCloseEvent* event);
 
 private:
     Ui::iHunchClass* ui;

@@ -36,8 +36,10 @@ iHunch::iHunch(QWidget *parent)
     myStatusBar->showMessage("Developed by asd", 0);
 
 
+    //모드 관련 설정
     QWidget* modeAlarm = ui->modeAlarm;
     modeAlarm->hide();
+    modeflag = 0;
 
     //효과음관련
     m_player = new QMediaPlayer();
@@ -72,20 +74,6 @@ void iHunch::alramMessage()
     }
 }
 
-void iHunch::closeEvent(QCloseEvent* event)
-{
-    if (this->isVisible())
-    {
-        event->ignore();
-        this->hide();
-
-        m_trayicon->showMessage(
-            QString::fromLocal8Bit("프로그램 실행중"), QString::fromLocal8Bit("프로그램이 백그라운드에서 실행중"),
-            QIcon("gb.png"),
-            2000);
-    }
-}
-
 void iHunch::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if (reason == QSystemTrayIcon::DoubleClick)
@@ -105,9 +93,11 @@ void iHunch::modeChanged(int mode)
 
     if (modeBox->currentIndex() == 0) {
         modeAlarm->hide();
+        modeflag = 0;
     }
     else if (modeBox->currentIndex() == 1) {
         modeAlarm->show();
+        modeflag = 1;
     }
 }
 
@@ -118,6 +108,15 @@ void iHunch::mybtn()
         started = true;
         btn->setText(QString::fromLocal8Bit("측정 종료"));
 
+        if (this->isVisible())
+        {
+            this->hide();
+
+            m_trayicon->showMessage(
+                QString::fromLocal8Bit("프로그램 실행중"), QString::fromLocal8Bit("프로그램이 백그라운드에서 실행중"),
+                QIcon("gb.png"),
+                500);
+        }
     }
     else if (started == true) {
         started = false;
