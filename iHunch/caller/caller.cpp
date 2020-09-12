@@ -58,8 +58,8 @@ int main(void)
     // fhmm.py를 import 한다
     if (pModule != NULL) {
         pFunc = PyObject_GetAttrString(pModule, "run");
-        int N = 3;
-        while (N--) {
+
+        while (1) {
             if (pFunc && PyCallable_Check(pFunc))
                 // callable한지 확인
             {

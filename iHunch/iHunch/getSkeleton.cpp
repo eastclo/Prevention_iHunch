@@ -2,6 +2,8 @@
 #include <windows.h>
 #include <tchar.h>
 #include <cstring>
+#include <thread>
+#include <mutex>
 
 #ifdef UNICODE
 #define GetCurrentDirectory  GetCurrentDirectoryW
@@ -12,15 +14,16 @@
 
 using namespace std;
 
-bool endSignal;
-PROCESS_INFORMATION ProcessInfo;
+bool endSignal; //종료 sign
+PROCESS_INFORMATION ProcessInfo; //프로세스 정보
+std::mutex mtx; //뮤텍스 변수
 
 void editChildProccessPath(char* path);
 int ConnectClient(HANDLE hNamePipe);
+void checkEndSignal(bool sign);
 
 int startFix(void)
 {
-    endSignal = false;
     //프로세스 관련
     STARTUPINFO StartupInfo = { 0 };
     StartupInfo.cb = sizeof(STARTUPINFO);
@@ -100,7 +103,9 @@ int ConnectClient(HANDLE hNamePipe)
     TCHAR Message[100];
     DWORD recvSize;
 
-    while (endSignal == false) {
+    while (1) {
+        checkEndSignal(false);
+        if (endSignal) break;
         int n, x, y;
         //recvSize -> NULL 포함한 바이트 수
         ReadFile(
@@ -131,4 +136,12 @@ int ConnectClient(HANDLE hNamePipe)
             printf("목(%d, %d)\n", x, y);
     }
     return 1;
+}
+
+void checkEndSignal(bool sign)
+{
+    mtx.lock();
+    if (sign)
+        endSignal = true;
+    mtx.unlock();
 }

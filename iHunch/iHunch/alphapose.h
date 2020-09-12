@@ -6,3 +6,4 @@
 int startFix(void);
 void editChildProccessPath(char* path);
 int ConnectClient(HANDLE hNamePipe);
+void checkEndSignal(bool sign);

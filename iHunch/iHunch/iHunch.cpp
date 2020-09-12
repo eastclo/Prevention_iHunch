@@ -1,4 +1,13 @@
 #include "iHunch.h"
+#include <windows.h>
+#include <tchar.h>
+#include "alphapose.h"
+#include <thread>
+
+#define thread std::thread
+
+extern bool endSignal;
+extern PROCESS_INFORMATION ProcessInfo;
 
 iHunch::iHunch(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::iHunchClass)
@@ -72,4 +81,19 @@ void iHunch::setPose()
 {
     setuppose = new setupPose(this);
     setuppose->show();
+}
+
+void iHunch::startBtn()
+{
+    endSignal = false;
+    thread t(startFix);
+    t.detach();
+}
+
+void iHunch::endBtn()
+{
+    checkEndSignal(true);
+    TerminateProcess(ProcessInfo.hProcess, 0);
+    CloseHandle(ProcessInfo.hProcess);
+    CloseHandle(ProcessInfo.hThread);
 }
