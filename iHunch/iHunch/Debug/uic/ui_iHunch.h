@@ -56,6 +56,7 @@ public:
     QFrame *frame;
     QCheckBox *checkBox;
     QCheckBox *checkBox_2;
+    QLabel *test;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -64,7 +65,7 @@ public:
     {
         if (iHunchClass->objectName().isEmpty())
             iHunchClass->setObjectName(QString::fromUtf8("iHunchClass"));
-        iHunchClass->resize(600, 489);
+        iHunchClass->resize(600, 488);
         iHunchClass->setMinimumSize(QSize(600, 400));
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/iHunch/gb.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -162,6 +163,9 @@ public:
         checkBox_2 = new QCheckBox(frame);
         checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
         checkBox_2->setGeometry(QRect(75, 10, 59, 16));
+        test = new QLabel(centralWidget);
+        test->setObjectName(QString::fromUtf8("test"));
+        test->setGeometry(QRect(380, 260, 111, 81));
         iHunchClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(iHunchClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -176,6 +180,8 @@ public:
 
         retranslateUi(iHunchClass);
         QObject::connect(pushButton, SIGNAL(clicked()), iHunchClass, SLOT(setPose()));
+        QObject::connect(pushButton_2, SIGNAL(clicked()), iHunchClass, SLOT(startBtn()));
+        QObject::connect(pushButton_3, SIGNAL(clicked()), iHunchClass, SLOT(endBtn()));
 
         QMetaObject::connectSlotsByName(iHunchClass);
     } // setupUi
@@ -212,6 +218,7 @@ public:
         label_10->setText(QCoreApplication::translate("iHunchClass", "\354\225\214\353\236\214 \354\204\244\354\240\225", nullptr));
         checkBox->setText(QCoreApplication::translate("iHunchClass", "\352\262\275\352\263\240\354\235\214", nullptr));
         checkBox_2->setText(QCoreApplication::translate("iHunchClass", "\355\214\235\354\227\205\354\260\275", nullptr));
+        test->setText(QCoreApplication::translate("iHunchClass", "oh", nullptr));
     } // retranslateUi
 
 };

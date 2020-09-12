@@ -1,8 +1,5 @@
 #include "iHunch.h"
-#include <windows.h>
-#include <tchar.h>
 #include "alphapose.h"
-#include <thread>
 
 #define thread std::thread
 

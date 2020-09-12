@@ -38,4 +38,8 @@ public slots:
     void popupslot();
     //자세 설정 창 띄우기
     void setPose();
+
+    //시작버튼
+    void startBtn();
+    void endBtn();
 };

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>489</height>
+    <height>488</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -378,6 +378,19 @@ p, li { white-space: pre-wrap; }
      </widget>
     </widget>
    </widget>
+   <widget class="QLabel" name="test">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>260</y>
+      <width>111</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>oh</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -420,8 +433,42 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>iHunchClass</receiver>
+   <slot>startBtn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>395</x>
+     <y>434</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>iHunchClass</receiver>
+   <slot>endBtn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>539</x>
+     <y>430</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>562</x>
+     <y>372</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setPose()</slot>
+  <slot>startBtn()</slot>
+  <slot>endBtn()</slot>
  </slots>
 </ui>

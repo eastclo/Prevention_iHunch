@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\iHunch",
+    "\\iHunch\\iHunch"
   ],
-  "SelectedNode": "\\.gitignore",
+  "SelectedNode": "\\iHunch\\iHunch\\resource.h",
   "PreviewInSolutionExplorer": false
 }

@@ -1,9 +1,4 @@
-#include <iostream>
-#include <windows.h>
-#include <tchar.h>
-#include <cstring>
-#include <thread>
-#include <mutex>
+#include "alphapose.h"
 
 #ifdef UNICODE
 #define GetCurrentDirectory  GetCurrentDirectoryW
