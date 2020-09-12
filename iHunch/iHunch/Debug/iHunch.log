@@ -1,3 +1,4 @@
-﻿  setupPose.cpp
-C:\Users\UserK\source\repos\eastclo\Prevention_iHunch\iHunch\iHunch\setupPose.cpp(81,21): warning C4129: 'C': 문자 이스케이프 시퀀스를 인식할 수 없습니다.
-  iHunch.vcxproj -> C:\Users\UserK\source\repos\eastclo\Prevention_iHunch\iHunch\Debug\iHunch.exe
+﻿  getSkeleton.cpp
+C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\iHunch.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\getSkeleton.cpp(197,50): warning C4805: '!=': 연산에 'int' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+  iHunch.vcxproj -> C:\Users\golde\source\repos\Prevention_iHunch\iHunch\Debug\iHunch.exe

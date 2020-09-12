@@ -1,0 +1,314 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>1d38f4a7-9c69-4d7c-8b35-517fc16f2f17</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>alphaPose</Name>
+    <RootNamespace>alphaPose</RootNamespace>
+    <TestFramework>Pytest</TestFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="alphapose-pytorch\" />
+    <Folder Include="alphapose-pytorch\doc\" />
+    <Folder Include="alphapose-pytorch\examples\" />
+    <Folder Include="alphapose-pytorch\examples\demo\" />
+    <Folder Include="alphapose-pytorch\examples\res\" />
+    <Folder Include="alphapose-pytorch\models\" />
+    <Folder Include="alphapose-pytorch\models\sppe\" />
+    <Folder Include="alphapose-pytorch\models\ssd\" />
+    <Folder Include="alphapose-pytorch\models\yolo\" />
+    <Folder Include="alphapose-pytorch\PoseFlow\" />
+    <Folder Include="alphapose-pytorch\PoseFlow\deepmatching\" />
+    <Folder Include="alphapose-pytorch\SPPE\" />
+    <Folder Include="alphapose-pytorch\SPPE\src\" />
+    <Folder Include="alphapose-pytorch\SPPE\src\models\" />
+    <Folder Include="alphapose-pytorch\SPPE\src\models\layers\" />
+    <Folder Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\" />
+    <Folder Include="alphapose-pytorch\SPPE\src\models\__pycache__\" />
+    <Folder Include="alphapose-pytorch\SPPE\src\utils\" />
+    <Folder Include="alphapose-pytorch\SPPE\src\utils\dataset\" />
+    <Folder Include="alphapose-pytorch\SPPE\src\utils\__pycache__\" />
+    <Folder Include="alphapose-pytorch\SPPE\src\__pycache__\" />
+    <Folder Include="alphapose-pytorch\SPPE\__pycache__\" />
+    <Folder Include="alphapose-pytorch\train_sppe\" />
+    <Folder Include="alphapose-pytorch\train_sppe\data\" />
+    <Folder Include="alphapose-pytorch\train_sppe\data\coco\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\.tensorboard\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\models\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\models\layers\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\predict\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\predict\annot\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\predict\annot\coco-minival-images-newnms\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\utils\" />
+    <Folder Include="alphapose-pytorch\train_sppe\src\utils\dataset\" />
+    <Folder Include="alphapose-pytorch\yolo\" />
+    <Folder Include="alphapose-pytorch\yolo\cfg\" />
+    <Folder Include="alphapose-pytorch\yolo\data\" />
+    <Folder Include="alphapose-pytorch\yolo\__pycache__\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="alphapose-pytorch\doc\alphapose.gif" />
+    <Content Include="alphapose-pytorch\doc\contributors.md" />
+    <Content Include="alphapose-pytorch\doc\crowdpose.gif" />
+    <Content Include="alphapose-pytorch\doc\CrowdPose.md" />
+    <Content Include="alphapose-pytorch\doc\faq.md" />
+    <Content Include="alphapose-pytorch\doc\logo.jpg" />
+    <Content Include="alphapose-pytorch\doc\output.md" />
+    <Content Include="alphapose-pytorch\doc\pose.gif" />
+    <Content Include="alphapose-pytorch\doc\posetrack.gif" />
+    <Content Include="alphapose-pytorch\doc\posetrack2.gif" />
+    <Content Include="alphapose-pytorch\doc\run.md" />
+    <Content Include="alphapose-pytorch\doc\speed_up.md" />
+    <Content Include="alphapose-pytorch\doc\step1.jpg" />
+    <Content Include="alphapose-pytorch\doc\step2.jpg" />
+    <Content Include="alphapose-pytorch\doc\step3.jpg" />
+    <Content Include="alphapose-pytorch\doc\step4.jpg" />
+    <Content Include="alphapose-pytorch\doc\win_install.md" />
+    <Content Include="alphapose-pytorch\examples\demo\1.jpg" />
+    <Content Include="alphapose-pytorch\examples\demo\2.jpg" />
+    <Content Include="alphapose-pytorch\examples\demo\3.jpg" />
+    <Content Include="alphapose-pytorch\examples\list-coco-demo.txt" />
+    <Content Include="alphapose-pytorch\examples\list-coco-minival500.txt" />
+    <Content Include="alphapose-pytorch\examples\res\alphapose-results.json" />
+    <Content Include="alphapose-pytorch\LICENSE" />
+    <Content Include="alphapose-pytorch\models\sppe\.gitkeep" />
+    <Content Include="alphapose-pytorch\models\sppe\duc_se.pth" />
+    <Content Include="alphapose-pytorch\models\ssd\.gitkeep" />
+    <Content Include="alphapose-pytorch\models\yolo\.gitkeep" />
+    <Content Include="alphapose-pytorch\models\yolo\yolov3-spp.weights" />
+    <Content Include="alphapose-pytorch\PoseFlow\alpha-pose-results-sample.json" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\array_types.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\climb1.png" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\climb2.png" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\conv.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\conv.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\conv.o" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\COPYING" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\deepmatching" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\deepmatching-static" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\deepmatching.i" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\deepmatching.m" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\deepmatching_matlab.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\deepmatching_wrap.c" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\deep_matching.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\deep_matching.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\deep_matching.o" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\dino1.jpg" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\dino2.jpg" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\hog.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\hog.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\hog.o" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\image.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\image.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\image.o" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\io.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\io.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\io.o" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\liberty1.png" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\liberty2.png" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\main.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\main.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\main.o" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\Makefile" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\maxfilter.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\maxfilter.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\maxfilter.o" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\pixel_desc.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\pixel_desc.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\pixel_desc.o" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\README.txt" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\std.cpp" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\std.h" />
+    <Content Include="alphapose-pytorch\PoseFlow\deepmatching\std.o" />
+    <Content Include="alphapose-pytorch\PoseFlow\posetrack1.gif" />
+    <Content Include="alphapose-pytorch\PoseFlow\posetrack2.gif" />
+    <Content Include="alphapose-pytorch\PoseFlow\posetrack_data" />
+    <Content Include="alphapose-pytorch\PoseFlow\poseval" />
+    <Content Include="alphapose-pytorch\PoseFlow\README.md" />
+    <Content Include="alphapose-pytorch\PoseFlow\requirements.txt" />
+    <Content Include="alphapose-pytorch\README.md" />
+    <Content Include="alphapose-pytorch\requirements.txt" />
+    <Content Include="alphapose-pytorch\SPPE\.gitattributes" />
+    <Content Include="alphapose-pytorch\SPPE\.gitignore" />
+    <Content Include="alphapose-pytorch\SPPE\LICENSE" />
+    <Content Include="alphapose-pytorch\SPPE\README.md" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\DUC.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\DUC.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\DUC.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\SE_module.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\SE_module.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\SE_module.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\SE_Resnet.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\SE_Resnet.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\SE_Resnet.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\__init__.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\layers\__pycache__\__init__.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\__pycache__\FastPose.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\__pycache__\FastPose.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\__pycache__\FastPose.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\__pycache__\__init__.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\models\__pycache__\__init__.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\dataset\.coco.py.swp" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\__pycache__\eval.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\__pycache__\eval.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\__pycache__\eval.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\__pycache__\img.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\__pycache__\img.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\__pycache__\img.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\__pycache__\__init__.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\utils\__pycache__\__init__.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\__pycache__\main_fast_inference.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\__pycache__\main_fast_inference.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\__pycache__\main_fast_inference.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\__pycache__\__init__.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\src\__pycache__\__init__.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\__pycache__\__init__.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\SPPE\__pycache__\__init__.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\train_sppe\data\coco\coco-minival500_images.txt" />
+    <Content Include="alphapose-pytorch\train_sppe\README.md" />
+    <Content Include="alphapose-pytorch\train_sppe\requirements.txt" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537703645.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537703981.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537704040.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537704067.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537711198.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537712715.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537716834.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537716861.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537716907.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537718129.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537718230.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537718771.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537718831.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537719643.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\.tensorboard\coco\test\events.out.tfevents.1537719983.mvig-14" />
+    <Content Include="alphapose-pytorch\train_sppe\src\install.sh" />
+    <Content Include="alphapose-pytorch\train_sppe\src\predict\annot\coco-minival-images-newnms\index.txt" />
+    <Content Include="alphapose-pytorch\train_sppe\src\predict\annot\coco-minival-images-newnms\score-proposals.txt" />
+    <Content Include="alphapose-pytorch\train_sppe\src\predict\annot\coco-minival-images-newnms\test-dev_images.txt" />
+    <Content Include="alphapose-pytorch\yolo\cfg\tiny-yolo-voc.cfg" />
+    <Content Include="alphapose-pytorch\yolo\cfg\yolo-voc.cfg" />
+    <Content Include="alphapose-pytorch\yolo\cfg\yolo.cfg" />
+    <Content Include="alphapose-pytorch\yolo\cfg\yolov3-spp.cfg" />
+    <Content Include="alphapose-pytorch\yolo\cfg\yolov3.cfg" />
+    <Content Include="alphapose-pytorch\yolo\data\coco.names" />
+    <Content Include="alphapose-pytorch\yolo\data\voc.names" />
+    <Content Include="alphapose-pytorch\yolo\pallete" />
+    <Content Include="alphapose-pytorch\yolo\README.md" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\bbox.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\bbox.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\bbox.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\darknet.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\darknet.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\darknet.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\preprocess.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\preprocess.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\preprocess.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\util.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\util.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\util.cpython-38.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\__init__.cpython-37.pyc" />
+    <Content Include="alphapose-pytorch\yolo\__pycache__\__init__.cpython-38.pyc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="alphapose-pytorch\dataloader.py" />
+    <Compile Include="alphapose-pytorch\dataloader_webcam.py" />
+    <Compile Include="alphapose-pytorch\demo.py" />
+    <Compile Include="alphapose-pytorch\fn.py" />
+    <Compile Include="alphapose-pytorch\matching.py" />
+    <Compile Include="alphapose-pytorch\online_demo.py" />
+    <Compile Include="alphapose-pytorch\opt.py" />
+    <Compile Include="alphapose-pytorch\PoseFlow\deepmatching\deepmatching.py" />
+    <Compile Include="alphapose-pytorch\PoseFlow\deepmatching\rescore.py" />
+    <Compile Include="alphapose-pytorch\PoseFlow\deepmatching\viz.py" />
+    <Compile Include="alphapose-pytorch\PoseFlow\matching.py" />
+    <Compile Include="alphapose-pytorch\PoseFlow\tracker-baseline.py" />
+    <Compile Include="alphapose-pytorch\PoseFlow\tracker-general.py" />
+    <Compile Include="alphapose-pytorch\PoseFlow\utils.py" />
+    <Compile Include="alphapose-pytorch\pPose_nms.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\main_fast_inference.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\FastPose.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\hg-prm.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\hgPRM.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\layers\DUC.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\layers\PRM.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\layers\Residual.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\layers\Resnet.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\layers\SE_module.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\layers\SE_Resnet.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\layers\util_models.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\layers\__init__.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\models\__init__.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\opt.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\utils\dataset\coco.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\utils\dataset\fuse.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\utils\dataset\mpii.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\utils\dataset\__init__.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\utils\eval.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\utils\img.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\utils\pose.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\utils\__init__.py" />
+    <Compile Include="alphapose-pytorch\SPPE\src\__init__.py" />
+    <Compile Include="alphapose-pytorch\SPPE\__init__.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\evaluation.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\models\FastPose.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\models\layers\DUC.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\models\layers\SE_module.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\models\layers\SE_Resnet.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\opt.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\predict\annot\coco_minival.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\predict\img.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\predict\opt.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\predict\p_poseNMS.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\train.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\utils\dataset\coco.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\utils\dataset\__init__.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\utils\eval.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\utils\img.py" />
+    <Compile Include="alphapose-pytorch\train_sppe\src\utils\pose.py" />
+    <Compile Include="alphapose-pytorch\video_demo.py" />
+    <Compile Include="alphapose-pytorch\webcam.py" />
+    <Compile Include="alphapose-pytorch\yolo\bbox.py" />
+    <Compile Include="alphapose-pytorch\yolo\cam_demo.py" />
+    <Compile Include="alphapose-pytorch\yolo\darknet.py" />
+    <Compile Include="alphapose-pytorch\yolo\detect.py" />
+    <Compile Include="alphapose-pytorch\yolo\preprocess.py" />
+    <Compile Include="alphapose-pytorch\yolo\util.py" />
+    <Compile Include="alphapose-pytorch\yolo\video_demo.py" />
+    <Compile Include="alphapose-pytorch\yolo\video_demo_half.py" />
+    <Compile Include="alphapose-pytorch\yolo\__init__.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

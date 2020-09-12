@@ -1,4 +1,10 @@
 #include "iHunch.h"
+#include "alphapose.h"
+
+#define thread std::thread
+
+extern bool endSignal;
+extern PROCESS_INFORMATION ProcessInfo;
 
 iHunch::iHunch(QWidget *parent)
     : QMainWindow(parent, Qt::FramelessWindowHint), ui(new Ui::iHunchClass)
@@ -7,14 +13,14 @@ iHunch::iHunch(QWidget *parent)
     this->setWindowTitle("Turtle Neck");
 
     /*********************************************************/
-    //Æ®·¹ÀÌ¾ÆÀÌÄÜ
+    //Æ®ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½
     m_trayicon = new QSystemTrayIcon(this);
     m_trayicon->setIcon(QIcon("gb.png"));
     m_trayicon->setToolTip("Turtle Neck");
 
     QMenu* menu = new QMenu(this);
-    QAction* viewWindow = new QAction(QString::fromLocal8Bit("¿­±â"), this);
-    QAction* quitAction = new QAction(QString::fromLocal8Bit("Á¾·á"), this);
+    QAction* viewWindow = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½"), this);
+    QAction* quitAction = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½"), this);
 
     connect(viewWindow, SIGNAL(triggered()), this, SLOT(showNormal()));
     connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -27,30 +33,30 @@ iHunch::iHunch(QWidget *parent)
 
     connect(m_trayicon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
         this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-    //Æ®·¹ÀÌ¾ÆÀÌÄÜ
+    //Æ®ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½
     /*********************************************************/
     
-    //±âº» ui Ãß°¡¼³Á¤
+    //ï¿½âº» ui ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½
     ui->mainToolBar->hide();
     QStatusBar* myStatusBar = ui->statusBar;
     myStatusBar->showMessage("Developed by asd", 0);
 
 
-    //¸ðµå °ü·Ã ¼³Á¤
+    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     QWidget* modeAlarm = ui->modeAlarm;
     modeAlarm->hide();
     modeflag = 0;
 
-    //È¿°úÀ½°ü·Ã
+    //È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     m_player = new QMediaPlayer();
     m_player->setMedia(QUrl::fromLocalFile("effect sound.mp3"));
     m_player->setVolume(50);
 
-    //Å¸ÀÌÆ²¹Ù
+    //Å¸ï¿½ï¿½Æ²ï¿½ï¿½
     QWidget* myTitleBar = ui->myTitleBar;
     myTitleBar->setStyleSheet("QWidget {background : rgb(255,255,255); }");
 
-    //Ã¢ drag and drop ÀÌµ¿
+    //Ã¢ drag and drop ï¿½Ìµï¿½
     justOneCount = 0;
     mouseX = this->geometry().x();
     mouseY = this->geometry().y();
@@ -74,7 +80,7 @@ void iHunch::alramMessage()
     if (popup_check != true) {
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         m_trayicon->showMessage(
-            QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("¾ÈÁÁÀº ÀÚ¼¼°¡ À¯ÁöµÇ°í ÀÖ¾î¿ä."),
+            QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö¾ï¿½ï¿½."),
             QIcon("gb.png"),
             500);
     }
@@ -95,7 +101,6 @@ void iHunch::setPose()
     setuppose = new setupPose(this);
     setuppose->show();  
 }
-
 void iHunch::modeChanged(int mode)
 {
     QComboBox* modeBox = ui->comboBox;
@@ -115,22 +120,32 @@ void iHunch::mybtn()
 {
     QPushButton* btn = ui->pushButton_2;
     if (started == false) {
+    endSignal = false;
+    thread t1(startFix);
+    t1.detach();
+    thread t2(judgePose);
+    t2.detach();
         started = true;
-        btn->setText(QString::fromLocal8Bit("ÃøÁ¤ Á¾·á"));
+        btn->setText(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"));
 
         if (this->isVisible())
         {
             this->hide();
 
             m_trayicon->showMessage(
-                QString::fromLocal8Bit("ÇÁ·Î±×·¥ ½ÇÇàÁß"), QString::fromLocal8Bit("ÇÁ·Î±×·¥ÀÌ ¹é±×¶ó¿îµå¿¡¼­ ½ÇÇàÁß"),
+                QString::fromLocal8Bit("ï¿½ï¿½ï¿½Î±×·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"), QString::fromLocal8Bit("ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½×¶ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"),
                 QIcon("gb.png"),
                 500);
         }
     }
     else if (started == true) {
+        checkEndSignal(true);
+        TerminateProcess(ProcessInfo.hProcess, 0);
+        CloseHandle(ProcessInfo.hProcess);
+        CloseHandle(ProcessInfo.hThread);
+
         started = false;
-        btn->setText(QString::fromLocal8Bit("ÃøÁ¤ ½ÃÀÛ"));
+        btn->setText(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"));
 
     }
 }
@@ -145,7 +160,7 @@ void iHunch::close_Btn() {
         this->hide();
 
         m_trayicon->showMessage(
-            QString::fromLocal8Bit("ÇÁ·Î±×·¥ ½ÇÇàÁß"), QString::fromLocal8Bit("ÇÁ·Î±×·¥ÀÌ ¹é±×¶ó¿îµå¿¡¼­ ½ÇÇàÁß"),
+            QString::fromLocal8Bit("ï¿½ï¿½ï¿½Î±×·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"), QString::fromLocal8Bit("ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½×¶ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"),
             QIcon("gb.png"),
             500);
     }
@@ -153,25 +168,25 @@ void iHunch::close_Btn() {
 
 void iHunch::mouseMoveEvent(QMouseEvent* mouse)
 {
-    if (this->isMaximized() == true) //ÃÖ´ëÈ­ µÇ¾îÀÖÀ»°æ¿ì ¹«½Ã
+    if (this->isMaximized() == true) //ï¿½Ö´ï¿½È­ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         return;
 
-    if (mouse->button() == Qt::RightButton) //¿À¸¥ÂÊÅ¬¸¯ÇßÀ»°æ¿ì ¹«½Ã
+    if (mouse->button() == Qt::RightButton) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         return;
 
-    mouseX = QCursor::pos().x(); //¸¶¿ì½º Àý´ëÁÂÇ¥
+    mouseX = QCursor::pos().x(); //ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥
     mouseY = QCursor::pos().y();
 
     if (justOneCount == 0)
     {
-        absX = mouse->pos().x(); //¸¶¿ì½º »ó´ëÁÂÇ¥ ÀúÀå
+        absX = mouse->pos().x(); //ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
         absY = mouse->pos().y();
-        justOneCount++; //1ÀÌµÇ¸é ÀÌ ºí·ÏÀ» ¿¬»êÇÏÁö ¾ÊÀ½
+        justOneCount++; //1ï¿½ÌµÇ¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
-    this->move(mouseX - absX, mouseY - absY); //Àý´ëÁÂÇ¥¿¡¼­ »ó´ëÁÂÇ¥¸¦ »©¼­ ÀÌµ¿ÇÏ´Â ¿ø¸®
+    this->move(mouseX - absX, mouseY - absY); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
 }
 
 void iHunch::mouseReleaseEvent(QMouseEvent*)
 {
-    justOneCount = 0; //¸¶¿ì½º¸¦ Å¬¸¯ ÇØÁ¦ÇÏ¸é ´Ù½Ã 0À¸·ÎÇÏ¿© ¹Ýº¹»ç¿ë°¡´É
+    justOneCount = 0; //ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ù½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ýºï¿½ï¿½ï¿½ë°¡ï¿½ï¿½
 }

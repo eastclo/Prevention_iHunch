@@ -27,25 +27,25 @@ class iHunch : public QMainWindow
 public:
     iHunch(QWidget *parent = Q_NULLPTR);
     ~iHunch();
-    //¸ðµå È®ÀÎ º¯¼ö
+    //ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     int modeflag;
-    //¾Ë¶÷ È£ÃâÇÔ¼ö
-    void alramMessage();
+    //ï¿½Ë¶ï¿½ È£ï¿½ï¿½ï¿½Ô¼ï¿½
+ //   void alramMessage();
 
 private:
     Ui::iHunchClass* ui;
-    //Æ®·¹ÀÌ¾ÆÀÌÄÜ Å¬·¡½º ÀÎ½ºÅÏ½º
+    //Æ®ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½
     QSystemTrayIcon* m_trayicon;
     setupPose* setuppose;
 
-    //½ÃÀÛ¹öÆ°
+    //ï¿½ï¿½ï¿½Û¹ï¿½Æ°
     bool started = false;
-    //È¿°úÀ½
+    //È¿ï¿½ï¿½ï¿½ï¿½
     QMediaPlayer* m_player;
-    //¾Ë¶÷ Ã¼Å©¹Ú½º Ã¼Å© µÇ¾îÀÖ´ÂÁö
+    //ï¿½Ë¶ï¿½ Ã¼Å©ï¿½Ú½ï¿½ Ã¼Å© ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ï¿½ï¿½
     bool sound_check;
     bool popup_check;
-    //Ã¢ drag and drop ÀÌµ¿
+    //Ã¢ drag and drop ï¿½Ìµï¿½
     int mouseX;
     int mouseY;
     int absX;
@@ -53,22 +53,23 @@ private:
     int justOneCount;
 
 public slots:
-    //½Ã½ºÅÛ Æ®·¹ÀÌ ¾ÆÀÌÄÜ Å¬¸¯ ÀÌº¥Æ®·ÎºÎÅÍ ½Ã±×³ÎÀ» Ã³¸®ÇÏ´Â slotÇÔ¼ö
+    //ï¿½Ã½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ã±×³ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï´ï¿½ slotï¿½Ô¼ï¿½
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
-    //ÀÚ¼¼ ¼³Á¤ Ã¢ ¶ç¿ì±â
+    //ï¿½Ú¼ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¢ ï¿½ï¿½ï¿½ï¿½
     void setPose();
     void modeChanged(int mode);
 
-    //½ÃÀÛ¹öÆ°
+    //ï¿½ï¿½ï¿½Û¹ï¿½Æ°
     void mybtn();
 
-    //»õ·Î¸¸µç ÃÖ¼ÒÈ­, ´Ý±â¹öÆ°
+    //ï¿½ï¿½ï¿½Î¸ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½È­, ï¿½Ý±ï¿½ï¿½Æ°
     void minimum_Btn();
     void close_Btn();
 
-    //Ã¢ drag and drop ÀÌµ¿
+    //Ã¢ drag and drop ï¿½Ìµï¿½
     void mouseMoveEvent(QMouseEvent* mouse);
     void mouseReleaseEvent(QMouseEvent* event);
 
+    void alramMessage();
 };
