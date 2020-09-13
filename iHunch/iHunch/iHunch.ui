@@ -206,7 +206,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
     <property name="text">
-     <string>측정 시작</string>
+     <string>  측정 시작</string>
     </property>
     <property name="icon">
      <iconset resource="iHunch.qrc">

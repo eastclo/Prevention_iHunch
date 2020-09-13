@@ -73,7 +73,7 @@ void setupPose::mouseReleaseEvent(QMouseEvent*)
 
 void setupPose::initPoseBtn()
 {
-//	if (imported == true) {
+	if (imported == true) {
 		measureStartBtn = true;
 	}
 	else if (imported == false) {

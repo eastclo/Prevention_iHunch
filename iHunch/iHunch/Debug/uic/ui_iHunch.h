@@ -126,6 +126,10 @@ public:
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
         pushButton_2->setGeometry(QRect(440, 380, 131, 71));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/iHunch/play.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_2->setIcon(icon1);
+        pushButton_2->setIconSize(QSize(32, 32));
         label_9 = new QLabel(centralWidget);
         label_9->setObjectName(QString::fromUtf8("label_9"));
         label_9->setGeometry(QRect(10, 370, 91, 21));
@@ -190,17 +194,17 @@ public:
         closeBtn->setGeometry(QRect(570, 10, 20, 20));
         closeBtn->setFocusPolicy(Qt::TabFocus);
         closeBtn->setStyleSheet(QString::fromUtf8("border: none;"));
-        QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/iHunch/close_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        closeBtn->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/iHunch/close_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        closeBtn->setIcon(icon2);
         minBtn = new QPushButton(myTitleBar);
         minBtn->setObjectName(QString::fromUtf8("minBtn"));
         minBtn->setGeometry(QRect(540, 10, 20, 20));
         minBtn->setFocusPolicy(Qt::TabFocus);
         minBtn->setStyleSheet(QString::fromUtf8("border: none;"));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/iHunch/minimum_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        minBtn->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/iHunch/minimum_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        minBtn->setIcon(icon3);
         label_3 = new QLabel(myTitleBar);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(40, 10, 101, 16));
@@ -270,7 +274,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Gulim'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0\354\213\234\352\260\204 0\353\266\204 0\354\264\210</p></body></html>", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("iHunchClass", "\354\270\241\354\240\225 \354\213\234\354\236\221", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("iHunchClass", "  \354\270\241\354\240\225 \354\213\234\354\236\221", nullptr));
         label_9->setText(QCoreApplication::translate("iHunchClass", "\353\252\250\353\223\234 \354\204\244\354\240\225", nullptr));
         comboBox->setItemText(0, QCoreApplication::translate("iHunchClass", "\352\264\200\354\260\260 \353\252\250\353\223\234", nullptr));
         comboBox->setItemText(1, QCoreApplication::translate("iHunchClass", "\352\265\220\354\240\225 \353\252\250\353\223\234", nullptr));

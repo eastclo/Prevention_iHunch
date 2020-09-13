@@ -49,11 +49,6 @@ iHunch::iHunch(QWidget* parent)
 	QStatusBar* myStatusBar = ui->statusBar;
 	myStatusBar->showMessage("Developed by asd", 0);
 
-	//모드 관련 설정
-    QWidget* modeAlarm = ui->modeAlarm;
-    modeAlarm->hide();
-    modeflag = 0;
-
 	//효과음관련
 	m_player = new QMediaPlayer();
 	m_player->setMedia(QUrl::fromLocalFile("effect sound.mp3"));
@@ -119,9 +114,9 @@ void iHunch::timeCalculator()
 		min = 0;
 		hour = 0;
 	}
-	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("�� "))
-		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("�� "))
-	.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("��"));
+	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("시 "))
+		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("분 "))
+	.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("초"));
 	fullTime->setText(calcul_time);
 
 	//badtime
@@ -145,9 +140,9 @@ void iHunch::timeCalculator()
 		hour = 0;
 	}
 	calcul_time = "";
-	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("�� "))
-		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("�� "))
-		.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("��"));
+	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("시 "))
+		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("분 "))
+		.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("초"));
 	badTime->setText(calcul_time);
 
 	//pose ratio
@@ -215,7 +210,7 @@ void iHunch::mybtn()
 	QPushButton* initPoseBtn = ui->pushButton;
 	if (started == false) {
 
-		btn->setText(QString::fromLocal8Bit("측정 종료"));
+		btn->setText(QString::fromLocal8Bit("  측정 종료"));
 		initPoseBtn->setEnabled(false);
 		int temp = timeIntervalComboBox->currentIndex();
 		switch (temp) {
@@ -262,7 +257,7 @@ void iHunch::mybtn()
 		CloseHandle(ProcessInfo.hThread);
 
 		started = false;
-		btn->setText(QString::fromLocal8Bit("측정 시작"));
+		btn->setText(QString::fromLocal8Bit("  측정 시작"));
 
 		QPixmap pixmap("play.png");
 		QIcon ButtonIcon(pixmap);
