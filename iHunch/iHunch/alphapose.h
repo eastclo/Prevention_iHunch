@@ -44,7 +44,7 @@ class Points {
 public:
 	Point Nose, rEye, lEye, lEar, rEar, lShoulder, rShoulder, Neck;
 	Points() : Nose(), rEye(), lEye(), lEar(), rEar(), lShoulder(), rShoulder(), Neck() {}
-	Points(Point Nose, Point rEye, Point lEye, Point lEar, Point rEar, Point lSoulder, Point rShoulder, Point Neck)
+	Points(Point Nose, Point rEye, Point lEye, Point lEar, Point rEar, Point lShoulder, Point rShoulder, Point Neck)
 		: Nose(Nose), rEye(rEye), lEye(lEye), lEar(lEar), rEar(rEar), lShoulder(lShoulder), rShoulder(rShoulder), Neck(Neck) {}
 
 	int length(Point A, Point B) {

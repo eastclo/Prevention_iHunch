@@ -18,7 +18,7 @@ iHunch::iHunch(QWidget* parent)
 {
 	ui->setupUi(this);
 	this->setWindowTitle("Turtle Neck");
-
+	this->setGeometry(QRect(1250,100,600,520));
 	/*********************************************************/
 	//트레이아이콘
 	m_trayicon = new QSystemTrayIcon(this);
@@ -77,9 +77,7 @@ iHunch::iHunch(QWidget* parent)
 	QPushButton* startBtn = ui->pushButton_2;
 	startBtn->setIcon(ButtonIcon);
 	startBtn->setIconSize(QSize(32,32));
-
 	over = new overlay();
-	over->show();
 }
 
 iHunch::~iHunch()
@@ -149,7 +147,7 @@ void iHunch::timeCalculator()
 	badTime->setText(calcul_time);
 
 	//pose ratio
-	ratio = unhealthySec / (healthySec + unhealthySec);
+	ratio = unhealthySec / (healthySec + unhealthySec) * 100;
 	poseRatio->setValue(ratio);
 }
 
@@ -242,7 +240,7 @@ void iHunch::mybtn()
 				QIcon("gb.png"),
 				500);
 		}
-
+		over->show();
 		QPixmap pixmap("pause.png");
 		QIcon ButtonIcon(pixmap);
 		btn->setIcon(ButtonIcon);
@@ -266,6 +264,7 @@ void iHunch::mybtn()
 		QIcon ButtonIcon(pixmap);
 		btn->setIcon(ButtonIcon);
 		btn->setIconSize(QSize(32, 32));
+		over->hide();
 	}
 }
 

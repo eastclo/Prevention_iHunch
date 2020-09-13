@@ -1,8 +1,27 @@
-<<<<<<< HEAD
-﻿  getSkeleton.cpp
-C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\iHunch.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-=======
-﻿  overlay.cpp
->>>>>>> JINU
+﻿  Reading Qt configuration (C:\Qt\5.15.0\msvc2019\bin\qmake.exe)
+  uic iHunch.ui
+  uic overlay.ui
+  uic popupc.ui
+  uic setupPose.ui
+  rcc iHunch.qrc
+  moc iHunch.h
+  moc setupPose.h
+  moc popupc.h
+  moc overlay.h
+  getSkeleton.cpp
+  overlay.cpp
+  popupc.cpp
+  setupPose.cpp
+  iHunch.cpp
+  main.cpp
+C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\iHunch.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오. (소스 파일 컴파일 중 main.cpp)
+C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\iHunch.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오. (소스 파일 컴파일 중 iHunch.cpp)
+C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\iHunch.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오. (소스 파일 컴파일 중 getSkeleton.cpp)
+  qrc_iHunch.cpp
+  moc_iHunch.cpp
+  moc_setupPose.cpp
+  moc_popupc.cpp
+  moc_overlay.cpp
+C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\iHunch.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오. (소스 파일 컴파일 중 Debug\moc\moc_iHunch.cpp)
 LINK : warning LNK4044: '/utf-8' 옵션을 인식할 수 없습니다. 무시됩니다.
   iHunch.vcxproj -> C:\Users\golde\source\repos\Prevention_iHunch\iHunch\Debug\iHunch.exe

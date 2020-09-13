@@ -12,10 +12,11 @@ class overlay : public QWidget
 	Q_OBJECT
 
 public:
-	void overlayColorChange(int mode);
 	overlay(QWidget *parent = Q_NULLPTR);
 	~overlay();
 
 private:
 	Ui::overlay* ui;
+public slots:
+	void overlayColorChange(int mode);
 };

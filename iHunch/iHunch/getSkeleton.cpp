@@ -229,13 +229,13 @@ void judgePose() {
             recordedTime.prev = curTime;
             recordedTime.alarmed = curTime;
             
-            w->debugOverlay->setStyleSheet("background-color: lime");
+            w->over->overlayColorChange(1);
         }
         else {
-            if(curStatus)
-                w->debugOverlay->setStyleSheet("background-color: lime");
+            if(curStatus == GOOD)
+                w->over->overlayColorChange(1);
             else
-                w->debugOverlay->setStyleSheet("background-color: red");
+                w->over->overlayColorChange(0);
 
             if (recordedTime.status != curStatus) {
                 //자세가 달라졌을 때
@@ -382,6 +382,8 @@ int ConnectClient2(HANDLE hNamePipe)
     int cnt = 0;
     double eyesDist = 0, shouldersDist = 0;
     isError = false;
+    stdPoseRate = 0;    //기준이 되는 초기자세 비율
+    stdPosePoints = Points();
 
     ReadFile(
         hNamePipe,
@@ -422,11 +424,8 @@ int ConnectClient2(HANDLE hNamePipe)
         _stscanf(Message, _T("%d %d %d"), &n, &x, &y);
 
         if (n == -1 && x == -1 && y == -1) {
-            if (cur.lShoulder.x == -1 || cur.lShoulder.y == -1 || cur.rShoulder.x == -1 ||
-                cur.rShoulder.y == -1 || cur.lEye.x == -1 || cur.lEye.y == -1 ||
-                cur.rEye.x == -1 || cur.rEye.y == -1)
-                isError = true;
-            else {
+            if (cur.isPointExist(cur.Nose) && cur.isPointExist(cur.Neck) && cur.isPointExist(cur.lEye) && cur.isPointExist(cur.rEye) &&
+                cur.isPointExist(cur.lEar) && cur.isPointExist(cur.rEar) && cur.isPointExist(cur.lShoulder) && cur.isPointExist(cur.rShoulder)) {
                 eyesDist = cur.length(cur.lEye, cur.rEye);
                 shouldersDist = cur.length(cur.lShoulder, cur.rShoulder);
                 if (cnt > 14) {
@@ -434,11 +433,17 @@ int ConnectClient2(HANDLE hNamePipe)
                     stdPoseRate += shouldersDist / eyesDist;
                 }
             }
+            else
+                isError = true;
             cnt++;
             cur = Points();
         }
         else {
             switch (n) {
+            case 0:
+                cur.Nose.x = x;
+                cur.Nose.y = y;
+                break;
             case 1:
                 cur.lEye.x = x;
                 cur.lEye.y = y;
@@ -446,6 +451,14 @@ int ConnectClient2(HANDLE hNamePipe)
             case 2:
                 cur.rEye.x = x;
                 cur.rEye.y = y;
+                break;
+            case 3:
+                cur.lEar.x = x;
+                cur.lEar.y = y;
+                break;
+            case 4:
+                cur.rEar.x = x;
+                cur.rEar.y = y;
                 break;
             case 5:
                 cur.lShoulder.x = x;
@@ -455,9 +468,20 @@ int ConnectClient2(HANDLE hNamePipe)
                 cur.rShoulder.x = x;
                 cur.rShoulder.y = y;
                 break;
+            case 17:
+                cur.Neck.x = x;
+                cur.Neck.y = y;
+                break;
             }
         }
     }
+    stdPoseRate /= 3;
+    stdPosePoints = stdPosePoints / 3;
+
+    if (abs(stdPosePoints.lEar.y - stdPosePoints.rEar.y) > 30)
+        isError = true;
+    if (abs(stdPosePoints.lShoulder.y - stdPosePoints.rShoulder.y) > 30)
+        isError = true;
 
     if (isError) {
         //버튼 활성화
@@ -471,8 +495,6 @@ int ConnectClient2(HANDLE hNamePipe)
         return 1;
     }
 
-    stdPoseRate /= 3;
-    stdPosePoints = stdPosePoints / 3;
     TerminateProcess(ProcessInfo.hProcess, 0);
     CloseHandle(ProcessInfo.hProcess);
     CloseHandle(ProcessInfo.hThread);

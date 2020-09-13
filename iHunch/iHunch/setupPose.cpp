@@ -79,7 +79,9 @@ void setupPose::initPoseBtn()
 		measureStartBtn = true;
 	}
 	else if (imported == false) {
-		//임포트 안돼있으므로 새로운 창띄우기
+		QLabel* info_text = ui->infomtxt;
+		//임포트 안돼있으므로 새로운 창띄우기if(imported)
+		info_text->setText(QString::fromLocal8Bit("모듈임포트 중입니다"));
 	}
 }
 
