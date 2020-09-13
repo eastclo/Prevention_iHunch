@@ -32,6 +32,7 @@ setupPose::setupPose(QWidget *parent)
 
 	count = ui->count;
 
+	this->onStartBtn();
 }
 
 setupPose::~setupPose()
@@ -92,6 +93,7 @@ void setupPose::onStartBtn()
 
 
 	initBtn->setEnabled(true); 
+	myCamera->start();
 	
 }
 
@@ -159,13 +161,4 @@ void setupPose::setCount(int count)
 	//if complete immediate end
 
 	//else not complete re shoot
-}
-
-void setupPose::threadStarted()
-{
-	this->show();
-
-	while (!imported); {
-		myCamera->start();
-	}
 }

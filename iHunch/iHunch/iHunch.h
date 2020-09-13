@@ -76,6 +76,4 @@ public slots:
 
     void alramMessage();
 
-signals:
-    void threadStart();
 };
