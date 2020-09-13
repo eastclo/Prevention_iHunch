@@ -15,7 +15,7 @@ public:
 	overlay(QWidget *parent = Q_NULLPTR);
 	~overlay();
 
-private:
+public:
 	Ui::overlay* ui;
 public slots:
 	void overlayColorChange(int mode);

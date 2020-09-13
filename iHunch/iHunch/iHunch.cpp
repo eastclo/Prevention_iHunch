@@ -240,6 +240,7 @@ void iHunch::mybtn()
 				QIcon("gb.png"),
 				500);
 		}
+		over->ui->label->setText(QString::fromLocal8Bit("자세판단"));
 		over->show();
 		QPixmap pixmap("pause.png");
 		QIcon ButtonIcon(pixmap);

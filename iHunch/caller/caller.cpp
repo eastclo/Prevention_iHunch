@@ -27,8 +27,8 @@ void sendMessage(int n, int x, int y);
 
 int main(void)
 {
-    //HWND hWndConsole = GetConsoleWindow();
-    //ShowWindow(hWndConsole, SW_HIDE);
+    HWND hWndConsole = GetConsoleWindow();
+    ShowWindow(hWndConsole, SW_HIDE);
     //파이프 서버파트와 연결
     hNamePipe = CreateFile(pipe_name, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
     if (hNamePipe == INVALID_HANDLE_VALUE) {
