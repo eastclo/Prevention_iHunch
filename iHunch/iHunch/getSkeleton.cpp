@@ -1,4 +1,4 @@
-#include "alphapose.h"
+ï»¿#include "alphapose.h"
 #include "iHunch.h"
 #include "setupPose.h"
 
@@ -13,35 +13,35 @@ using namespace std;
 
 extern iHunch* w;
 
-PROCESS_INFORMATION ProcessInfo; //ÇÁ·Î¼¼½º Á¤º¸
-std::mutex mtx1, mtx2; //¹ÂÅØ½º º¯¼ö
-bool endSignal; //Á¾·á sign
-bool imported; //import Ã¼Å©
-bool measureStartBtn; //ÃÊ±â ÀÚ¼¼ ÃøÁ¤ ¹öÆ°
+PROCESS_INFORMATION ProcessInfo; //í”„ë¡œì„¸ìŠ¤ ì •ë³´
+std::mutex mtx1, mtx2; //ë®¤í…ìŠ¤ ë³€ìˆ˜
+bool endSignal; //ì¢…ë£Œ sign
+bool imported; //import ì²´í¬
+bool measureStartBtn; //ì´ˆê¸° ìì„¸ ì¸¡ì • ë²„íŠ¼
 int timer = 11;
 
-queue<Points> poseData; //ÁÂÇ¥°ª µ¥ÀÌÅÍ
-double stdPoseRate;    //±âÁØÀÌ µÇ´Â ÃÊ±âÀÚ¼¼ ºñÀ²
+queue<Points> poseData; //ì¢Œí‘œê°’ ë°ì´í„°
+double stdPoseRate;    //ê¸°ì¤€ì´ ë˜ëŠ” ì´ˆê¸°ìì„¸ ë¹„ìœ¨
 
-RecordTime recordedTime;    //ÀÚ¼¼¿Í ½Ã°£±â·Ï
-double healthySec, unhealthySec; //ÁÁÀº, ³ª»ÛÀÚ¼¼ ÃÑ ½Ã°£
-int alarmInterval; //Àç¾Ë¶÷ °£°İ
-int alarmStart; //¾È ÁÁÀº ÀÚ¼¼ nÃÊ Áö¼Ó½Ã ¾Ë¶÷
-int fixDegree; //±³Á¤°­µµ
+RecordTime recordedTime;    //ìì„¸ì™€ ì‹œê°„ê¸°ë¡
+double healthySec, unhealthySec; //ì¢‹ì€, ë‚˜ìœìì„¸ ì´ ì‹œê°„
+int alarmInterval; //ì¬ì•ŒëŒ ê°„ê²©
+int alarmStart; //ì•ˆ ì¢‹ì€ ìì„¸ nì´ˆ ì§€ì†ì‹œ ì•ŒëŒ
+int fixDegree; //êµì •ê°•ë„
 bool measuring;
 bool measureError;
 
 int startFix(void)
 {
-    //ÇÁ·Î¼¼½º °ü·Ã
+    //í”„ë¡œì„¸ìŠ¤ ê´€ë ¨
     STARTUPINFO StartupInfo = { 0 };
     StartupInfo.cb = sizeof(STARTUPINFO);
 
-    //ÆÄÀÌÇÁ °ü·Ã
+    //íŒŒì´í”„ ê´€ë ¨
     HANDLE hNamePipe;
     TCHAR pipe_name[] = _T(PIPE_NAME);
 
-    //ÆÄÀÌÇÁ »ı¼º
+    //íŒŒì´í”„ ìƒì„±
     hNamePipe = CreateNamedPipe(
         pipe_name,
         PIPE_ACCESS_DUPLEX,
@@ -59,30 +59,30 @@ int startFix(void)
         return -1;
     }
 
-    //alphapose ½ÇÇàÇÒ ÇÁ·Î¼¼½º °æ·Î °¡Á®¿À±â
-    TCHAR path[128]; //À¯´ÏÄÚµå ¹®ÀÚ¿­
+    //alphapose ì‹¤í–‰í•  í”„ë¡œì„¸ìŠ¤ ê²½ë¡œ ê°€ì ¸ì˜¤ê¸°
+    TCHAR path[128]; //ìœ ë‹ˆì½”ë“œ ë¬¸ìì—´
     char cpath[128];
-    GetCurrentDirectory(128, path); //cwd°æ·Î
+    GetCurrentDirectory(128, path); //cwdê²½ë¡œ
     WideCharToMultiByte(CP_ACP, 0, path, 128, cpath, 128, NULL, NULL); //TCHAR to char
-    editChildProccessPath(cpath); //½ÇÇàÆÄÀÏ °æ·Î·Î ¸¸µê
+    editChildProccessPath(cpath); //ì‹¤í–‰íŒŒì¼ ê²½ë¡œë¡œ ë§Œë“¦
     MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, cpath, 128, path, 128); //char to TCHAR
 
-    //ÀÚ½Ä ÇÁ·Î¼¼½º »ı¼º
+    //ìì‹ í”„ë¡œì„¸ìŠ¤ ìƒì„±
     CreateProcess(
-        path, //°æ·Î
+        path, //ê²½ë¡œ
         NULL,
         NULL, NULL,
-        FALSE, //ºÎ¸ğÇÁ·Î¼¼½º Áß »ó¼Ó °¡´ÉÇÑ ÇÚµé »ó¼Ó
+        FALSE, //ë¶€ëª¨í”„ë¡œì„¸ìŠ¤ ì¤‘ ìƒì† ê°€ëŠ¥í•œ í•¸ë“¤ ìƒì†
         0,
         NULL, NULL,
         &StartupInfo,
-        &ProcessInfo //ÇÁ·Î¼¼½º Á¤º¸
+        &ProcessInfo //í”„ë¡œì„¸ìŠ¤ ì •ë³´
     );
 
-    //ÆÄÀÌÇÁ ¿¬°á
+    //íŒŒì´í”„ ì—°ê²°
     while (1)
     {
-        //»ı¼ºÇÑ Named PipeÀÇ ÇÚµéÀ» ´©±º°¡ ¾ò¾î°¥ ¶§±îÁö ´ë±â  
+        //ìƒì„±í•œ Named Pipeì˜ í•¸ë“¤ì„ ëˆ„êµ°ê°€ ì–»ì–´ê°ˆ ë•Œê¹Œì§€ ëŒ€ê¸°  
         if (!(ConnectNamedPipe(hNamePipe, NULL))) {
             CloseHandle(hNamePipe);
             return -1;
@@ -98,7 +98,7 @@ int startFix(void)
     return 0;
 }
 
-//path¸¦ alphapose ½ÇÇàÇÒ ÇÁ·Î¼¼½ºÀÇ ½ÇÇàÆÄÀÏ °æ·Î·Î ¸¸µê
+//pathë¥¼ alphapose ì‹¤í–‰í•  í”„ë¡œì„¸ìŠ¤ì˜ ì‹¤í–‰íŒŒì¼ ê²½ë¡œë¡œ ë§Œë“¦
 void editChildProccessPath(char* path)
 {
     int len = strlen(path) - 1;
@@ -119,7 +119,7 @@ int ConnectClient(HANDLE hNamePipe)
         if (endSignal) break;
         
         int n, x, y;
-        //recvSize -> NULL Æ÷ÇÔÇÑ ¹ÙÀÌÆ® ¼ö
+        //recvSize -> NULL í¬í•¨í•œ ë°”ì´íŠ¸ ìˆ˜
         ReadFile(
             hNamePipe,
             Message,
@@ -129,7 +129,7 @@ int ConnectClient(HANDLE hNamePipe)
         );
 
         _stscanf(Message, _T("%d %d %d"), &n, &x, &y);
-        if (n == -2) continue;  //¸ğµâ import ¿Ï·á ¸Ş½ÃÁö
+        if (n == -2) continue;  //ëª¨ë“ˆ import ì™„ë£Œ ë©”ì‹œì§€
         if (n == -1 && x == -1 && y == -1) {
             operatorQueue(&cur, 0);
             cur = Points();
@@ -187,24 +187,24 @@ void judgePose() {
     clock_t curTime;
 
     while (1) {
-        //TODO : ±âÅ¸ ¿¹¿ÜÃ³¸®
+        //TODO : ê¸°íƒ€ ì˜ˆì™¸ì²˜ë¦¬
         checkEndSignal(false);
         if (endSignal) break;
 
         Points cur;
-        operatorQueue(&cur, 1); //ÇöÀç ÀÚ¼¼ ÁÂÇ¥°ª °¡Á®¿À±â
+        operatorQueue(&cur, 1); //í˜„ì¬ ìì„¸ ì¢Œí‘œê°’ ê°€ì ¸ì˜¤ê¸°
         if (cur.lEye.x == -1 || cur.lShoulder.x == -1) continue;
         
-        curStatus = judge(cur); //ÀÚ¼¼ ÆÇ´Ü
-        curTime = clock(); //ÇöÀç ½Ã°£
+        curStatus = judge(cur); //ìì„¸ íŒë‹¨
+        curTime = clock(); //í˜„ì¬ ì‹œê°„
         if (recordedTime.status == -1) {
-            //ÃÖÃÊ ±â·ÏÀÏ ¶§
+            //ìµœì´ˆ ê¸°ë¡ì¼ ë•Œ
             recordedTime.status = curStatus;
             recordedTime.prev = curTime;
             recordedTime.alarmed = curTime;
         }
         else if (recordedTime.status != curStatus) {
-            //ÀÚ¼¼°¡ ´Ş¶óÁ³À» ¶§
+            //ìì„¸ê°€ ë‹¬ë¼ì¡Œì„ ë•Œ
             
             if (recordedTime.status == GOOD)
                 healthySec += (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
@@ -214,12 +214,12 @@ void judgePose() {
             recordedTime.status = curStatus;
             recordedTime.prev = curTime;
         }
-        else { //ÀÚ¼¼°¡ °è¼Ó °°À» °æ¿ì
+        else { //ìì„¸ê°€ ê³„ì† ê°™ì„ ê²½ìš°
             if (recordedTime.status == BAD) {
                 double continuedSec = (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
                 double lastAlarmed = (curTime - recordedTime.alarmed) / CLOCKS_PER_SEC;
 
-                //Àç¾Ë¶÷½Ã°£ µÇÁö ¾Ê¾Ò°Å³ª, ¾Ë¶÷ ¿ï¸± ¶§°¡ ¾Æ´Ï¶ó¸é ½ºÅµ
+                //ì¬ì•ŒëŒì‹œê°„ ë˜ì§€ ì•Šì•˜ê±°ë‚˜, ì•ŒëŒ ìš¸ë¦´ ë•Œê°€ ì•„ë‹ˆë¼ë©´ ìŠ¤í‚µ
                 if (lastAlarmed < alarmInterval) continue; 
 
                 if (continuedSec > alarmStart) {
@@ -248,7 +248,7 @@ void operatorQueue(Points *ret, bool how)
 
 bool judge(Points cur) {
     double curRate = cur.length(cur.lShoulder, cur.rShoulder) / cur.length(cur.lEye, cur.rEye);
-    //TODO fixDegree¿Í ¿¬µ¿µÇ°Ô º¯°æ
+    //TODO fixDegreeì™€ ì—°ë™ë˜ê²Œ ë³€ê²½
     if (stdPoseRate * 1.1 > curRate && curRate > stdPoseRate * 0.9)
         return GOOD;
     return BAD;
@@ -256,15 +256,15 @@ bool judge(Points cur) {
 
 int setSTDPose()
 {
-    //ÇÁ·Î¼¼½º °ü·Ã
+    //í”„ë¡œì„¸ìŠ¤ ê´€ë ¨
     STARTUPINFO StartupInfo = { 0 };
     StartupInfo.cb = sizeof(STARTUPINFO);
 
-    //ÆÄÀÌÇÁ °ü·Ã
+    //íŒŒì´í”„ ê´€ë ¨
     HANDLE hNamePipe;
     TCHAR pipe_name[] = _T(PIPE_NAME);
 
-    //ÆÄÀÌÇÁ »ı¼º
+    //íŒŒì´í”„ ìƒì„±
     hNamePipe = CreateNamedPipe(
         pipe_name,
         PIPE_ACCESS_DUPLEX,
@@ -282,10 +282,10 @@ int setSTDPose()
         return -1;
     }
 
-    //alphapose ½ÇÇàÇÒ ÇÁ·Î¼¼½º °æ·Î °¡Á®¿À±â
-    TCHAR path[128]; //À¯´ÏÄÚµå ¹®ÀÚ¿­
+    //alphapose ì‹¤í–‰í•  í”„ë¡œì„¸ìŠ¤ ê²½ë¡œ ê°€ì ¸ì˜¤ê¸°
+    TCHAR path[128]; //ìœ ë‹ˆì½”ë“œ ë¬¸ìì—´
     char cpath[128];
-    GetCurrentDirectory(128, path); //cwd°æ·Î
+    GetCurrentDirectory(128, path); //cwdê²½ë¡œ
     WideCharToMultiByte(CP_ACP, 0, path, 128, cpath, 128, NULL, NULL); //TCHAR to char
     int len = strlen(cpath) - 1;
     char* pp = cpath + len;
@@ -293,22 +293,22 @@ int setSTDPose()
     strcpy(pp + 1, "\\x64\\Debug\\caller2.exe");
     MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, cpath, 128, path, 128); //char to TCHAR
 
-    //ÀÚ½Ä ÇÁ·Î¼¼½º »ı¼º
+    //ìì‹ í”„ë¡œì„¸ìŠ¤ ìƒì„±
     CreateProcess(
-        path, //°æ·Î
+        path, //ê²½ë¡œ
         NULL,
         NULL, NULL,
-        FALSE, //ºÎ¸ğÇÁ·Î¼¼½º Áß »ó¼Ó °¡´ÉÇÑ ÇÚµé »ó¼Ó
+        FALSE, //ë¶€ëª¨í”„ë¡œì„¸ìŠ¤ ì¤‘ ìƒì† ê°€ëŠ¥í•œ í•¸ë“¤ ìƒì†
         0,
         NULL, NULL,
         &StartupInfo,
-        &ProcessInfo //ÇÁ·Î¼¼½º Á¤º¸
+        &ProcessInfo //í”„ë¡œì„¸ìŠ¤ ì •ë³´
     );
 
-    //ÆÄÀÌÇÁ ¿¬°á
+    //íŒŒì´í”„ ì—°ê²°
     while (1)
     {
-        //»ı¼ºÇÑ Named PipeÀÇ ÇÚµéÀ» ´©±º°¡ ¾ò¾î°¥ ¶§±îÁö ´ë±â  
+        //ìƒì„±í•œ Named Pipeì˜ í•¸ë“¤ì„ ëˆ„êµ°ê°€ ì–»ì–´ê°ˆ ë•Œê¹Œì§€ ëŒ€ê¸°  
         if (!(ConnectNamedPipe(hNamePipe, NULL))) {
             CloseHandle(hNamePipe);
             return -1;
@@ -347,12 +347,12 @@ int ConnectClient2(HANDLE hNamePipe)
     );
     _stscanf(Message, _T("%d %d %d"), &n, &x, &y);
 
-    imported = true; //import ¿Ï·á
+    imported = true; //import ì™„ë£Œ
 
     while (1) {
-        while (!measureStartBtn); //ÃÊ±â ÀÚ¼¼ ÃøÁ¤ ¹öÆ°ÀÌ ´­¸®¸é ´ÙÀ½´Ü°è·Î
+        while (!measureStartBtn); //ì´ˆê¸° ìì„¸ ì¸¡ì • ë²„íŠ¼ì´ ëˆŒë¦¬ë©´ ë‹¤ìŒë‹¨ê³„ë¡œ
 
-        //½ÃÀÛ ¹öÆ° ½ÅÈ£ ¼Û½Å
+        //ì‹œì‘ ë²„íŠ¼ ì‹ í˜¸ ì†¡ì‹ 
         WriteFile(
             hNamePipe,
             Message,
@@ -364,10 +364,10 @@ int ConnectClient2(HANDLE hNamePipe)
         thread t(sendText);
         t.detach();
 
-        //3Àå Æò±ÕÄ¡ ±¸ÇÏ±â
+        //3ì¥ í‰ê· ì¹˜ êµ¬í•˜ê¸°
         while(cnt < 20) {
             int n, x, y;
-            //recvSize -> NULL Æ÷ÇÔÇÑ ¹ÙÀÌÆ® ¼ö
+            //recvSize -> NULL í¬í•¨í•œ ë°”ì´íŠ¸ ìˆ˜
             ReadFile(
                 hNamePipe,
                 Message,
@@ -411,8 +411,8 @@ int ConnectClient2(HANDLE hNamePipe)
             }
         }
         if (isError) {
-            w->setuppose->textChanged("´Ù½Ã ½ÃµµÇØÁÖ¼¼¿ä.");
-            //¹öÆ° È°¼ºÈ­
+            w->setuppose->textChanged("ë‹¤ì‹œ ì‹œë„í•´ì£¼ì„¸ìš”.");
+            //ë²„íŠ¼ í™œì„±í™”
             timer = 11;
             measureStartBtn = false;
             stdPoseRate = 0;
@@ -430,7 +430,7 @@ int ConnectClient2(HANDLE hNamePipe)
     CloseHandle(ProcessInfo.hProcess);
     CloseHandle(ProcessInfo.hThread);
 
-    //ÃøÁ¤Ã¢ ´İ´Â ÇÔ¼ö È£Ãâ
+    //ì¸¡ì •ì°½ ë‹«ëŠ” í•¨ìˆ˜ í˜¸ì¶œ
  //   delete w->setuppose;
     w->closeSignal();
 

@@ -1,4 +1,4 @@
-#include "setupPose.h"
+﻿#include "setupPose.h"
 #include "alphapose.h"
 
 extern bool measureStartBtn;
@@ -48,27 +48,27 @@ setupPose::~setupPose()
 
 void setupPose::mouseMoveEvent(QMouseEvent* mouse)
 {
-	if (this->isMaximized() == true) //�ִ�ȭ �Ǿ��������?����
+	if (this->isMaximized() == true) //최대화 되어있을경우 무시
 		return;
 
-	if (mouse->button() == Qt::RightButton) //������Ŭ���������?����
+	if (mouse->button() == Qt::RightButton) //오른쪽클릭했을경우 무시
 		return;
 
-	mouseX = QCursor::pos().x(); //���콺 ������ǥ
+	mouseX = QCursor::pos().x(); //마우스 절대좌표
 	mouseY = QCursor::pos().y();
 
 	if (justOneCount == 0)
 	{
-		absX = mouse->pos().x(); //���콺 ������?����
+		absX = mouse->pos().x(); //마우스 상대좌표 저장
 		absY = mouse->pos().y();
-		justOneCount++; //1�̵Ǹ� �� ������ �������� ����
+		justOneCount++; //1이되면 이 블록을 연산하지 않음
 	}
-	this->move(mouseX - absX, mouseY - absY); //������ǥ���� �����ǥ��?���� �̵��ϴ� ����
+	this->move(mouseX - absX, mouseY - absY); //절대좌표에서 상대좌표를 빼서 이동하는 원리
 }
 
 void setupPose::mouseReleaseEvent(QMouseEvent*)
 {
-	justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��?
+	justOneCount = 0; //마우스를 클릭 해제하면 다시 0으로하여 반복사용가능
 }
 
 void setupPose::initPoseBtn()
@@ -77,14 +77,14 @@ void setupPose::initPoseBtn()
 		measureStartBtn = true;
 	}
 	else if (imported == false) {
-		//����Ʈ �ȵ������Ƿ� ���ο� â����
+		//임포트 안돼있으므로 새로운 창띄우기
 	}
 }
 
 void setupPose::textChanged(string arr)
 {
 	QLabel* info_text = ui->infomtxt;
-	//���� ���ڿ� qt���� ��밡���ϰ� ��ȯ�� ����
+	//받은 문자열 qt에서 사용가능하게 변환후 세팅
 	info_text->setText(QString::fromStdString(arr));
 }
 

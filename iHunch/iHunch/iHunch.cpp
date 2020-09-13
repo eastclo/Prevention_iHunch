@@ -1,4 +1,4 @@
-#include "iHunch.h"
+﻿#include "iHunch.h"
 #include "alphapose.h"
 
 #define thread std::thread
@@ -19,14 +19,14 @@ iHunch::iHunch(QWidget* parent)
 	this->setWindowTitle("Turtle Neck");
 
 	/*********************************************************/
-	//Ʈ���̾�����
+	//트레이아이콘
 	m_trayicon = new QSystemTrayIcon(this);
 	m_trayicon->setIcon(QIcon("gb.png"));
 	m_trayicon->setToolTip("Turtle Neck");
 
 	QMenu* menu = new QMenu(this);
-	QAction* viewWindow = new QAction(QString::fromLocal8Bit("����"), this);
-	QAction* quitAction = new QAction(QString::fromLocal8Bit("����"), this);
+	QAction* viewWindow = new QAction(QString::fromLocal8Bit("열기"), this);
+	QAction* quitAction = new QAction(QString::fromLocal8Bit("닫기"), this);
 
 	connect(viewWindow, SIGNAL(triggered()), this, SLOT(showNormal()));
 	connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -39,36 +39,36 @@ iHunch::iHunch(QWidget* parent)
 
 	connect(m_trayicon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
 		this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-	//Ʈ���̾�����
+	//트레이아이콘
 	/*********************************************************/
 
-	//�⺻ ui �߰�����
+	//기본 ui 추가설정
 	ui->mainToolBar->hide();
 	QStatusBar* myStatusBar = ui->statusBar;
 	myStatusBar->showMessage("Developed by asd", 0);
 
-    //���?���� ����
+	//모드 관련 설정
     QWidget* modeAlarm = ui->modeAlarm;
     modeAlarm->hide();
     modeflag = 0;
 
-	//ȿ��������
+	//효과음관련
 	m_player = new QMediaPlayer();
 	m_player->setMedia(QUrl::fromLocalFile("effect sound.mp3"));
 	m_player->setVolume(50);
 
-	//Ÿ��Ʋ��
+	//타이틀바
 	QWidget* myTitleBar = ui->myTitleBar;
 	myTitleBar->setStyleSheet("QWidget {background : rgb(255,255,255); }");
 
-	//â drag and drop �̵�
+	//창 drag and drop 이동
 	justOneCount = 0;
 	mouseX = this->geometry().x();
 	mouseY = this->geometry().y();
 	absY = this->geometry().y();
 	absX = this->geometry().x();
 
-	//
+
 	timeIntervalComboBox = ui->alarmIntervalComboBox;
 	unHealthComboBox = ui->unHealthComboBox;
 	poseFixSlider = ui->poseFixDegreeSlider;
@@ -91,7 +91,7 @@ void iHunch::alramMessage()
     if (popup_check == true) {
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         m_trayicon->showMessage(
-            QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("������ �ڼ��� �����ǰ� �־��?"),
+            QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("안좋은 자세가 유지되고 있어요."),
             QIcon("gb.png"),
             500);
     }
@@ -140,7 +140,7 @@ void iHunch::mybtn()
 	QPushButton* initPoseBtn = ui->pushButton;
 	if (started == false) {
 
-		btn->setText(QString::fromLocal8Bit("���� ����"));
+		btn->setText(QString::fromLocal8Bit("측정 종료"));
 		initPoseBtn->setEnabled(false);
 		int temp = timeIntervalComboBox->currentIndex();
 		switch (temp) {
@@ -166,7 +166,7 @@ void iHunch::mybtn()
 			this->hide();
 
 			m_trayicon->showMessage(
-				QString::fromLocal8Bit("���α׷� ������"), QString::fromLocal8Bit("���α׷��� ��׶��忡��?������"),
+				QString::fromLocal8Bit("프로그램 실행중"), QString::fromLocal8Bit("프로그램이 백그라운드에서 실행중"),
 				QIcon("gb.png"),
 				500);
 		}
@@ -182,7 +182,7 @@ void iHunch::mybtn()
 		CloseHandle(ProcessInfo.hThread);
 
 		started = false;
-		btn->setText(QString::fromLocal8Bit("���� ����"));
+		btn->setText(QString::fromLocal8Bit("측정 시작"));
 
 	}
 }
@@ -197,7 +197,7 @@ void iHunch::close_Btn() {
 		this->hide();
 
         m_trayicon->showMessage(
-            QString::fromLocal8Bit("���α׷� ������"), QString::fromLocal8Bit("���α׷��� ��׶��忡��?������"),
+            QString::fromLocal8Bit("프로그램 실행중"), QString::fromLocal8Bit("프로그램이 백그라운드에서 실행중"),
             QIcon("gb.png"),
             500);
     }
@@ -205,25 +205,25 @@ void iHunch::close_Btn() {
 
 void iHunch::mouseMoveEvent(QMouseEvent* mouse)
 {
-    if (this->isMaximized() == true) //�ִ�ȭ �Ǿ��������?����
+    if (this->isMaximized() == true) //최대화 되어있을경우 무시
         return;
 
-    if (mouse->button() == Qt::RightButton) //������Ŭ���������?����
+    if (mouse->button() == Qt::RightButton) //오른쪽클릭했을경우 무시
         return;
 
-	mouseX = QCursor::pos().x(); //���콺 ������ǥ
+	mouseX = QCursor::pos().x(); //마우스 절대좌표
 	mouseY = QCursor::pos().y();
 
     if (justOneCount == 0)
     {
-        absX = mouse->pos().x(); //���콺 ������?����
+        absX = mouse->pos().x(); ///마우스 상대좌표 저장
         absY = mouse->pos().y();
-        justOneCount++; //1�̵Ǹ� �� ������ �������� ����
+        justOneCount++; //1이되면 이 블록을 연산하지 않음
     }
-    this->move(mouseX - absX, mouseY - absY); //������ǥ���� �����ǥ��?���� �̵��ϴ� ����
+    this->move(mouseX - absX, mouseY - absY); //절대좌표에서 상대좌표를 빼서 이동하는 원리
 }
 
 void iHunch::mouseReleaseEvent(QMouseEvent*)
 {
-    justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��?
+    justOneCount = 0; //마우스를 클릭 해제하면 다시 0으로하여 반복사용가능
 }
