@@ -3,6 +3,7 @@
 
 #define thread std::thread
 
+extern double healthySec, unhealthySec; //ÁÁÀº, ³ª»ÛÀÚ¼¼ ÃÑ ½Ã°£
 extern int alarmInterval;
 extern int alarmStart;
 extern int fixDegree;
@@ -29,6 +30,7 @@ iHunch::iHunch(QWidget* parent)
 	QAction* quitAction = new QAction(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½"), this);
 
 	connect(viewWindow, SIGNAL(triggered()), this, SLOT(showNormal()));
+	connect(viewWindow, SIGNAL(triggered()), this, SLOT(timeCalculator()));
 	connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
 
 	menu->addAction(viewWindow);
@@ -46,11 +48,6 @@ iHunch::iHunch(QWidget* parent)
 	ui->mainToolBar->hide();
 	QStatusBar* myStatusBar = ui->statusBar;
 	myStatusBar->showMessage("Developed by asd", 0);
-
-    //ï¿½ï¿½ï¿?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-    QWidget* modeAlarm = ui->modeAlarm;
-    modeAlarm->hide();
-    modeflag = 0;
 
 	//È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	m_player = new QMediaPlayer();
@@ -73,11 +70,84 @@ iHunch::iHunch(QWidget* parent)
 	unHealthComboBox = ui->unHealthComboBox;
 	poseFixSlider = ui->poseFixDegreeSlider;
 
+	modeChanged(0);
+
+	QPixmap pixmap("play.png");
+	QIcon ButtonIcon(pixmap);
+	QPushButton* startBtn = ui->pushButton_2;
+	startBtn->setIcon(ButtonIcon);
+	startBtn->setIconSize(QSize(32,32));
 }
 
 iHunch::~iHunch()
 {
 	delete ui;
+}
+
+void iHunch::timeCalculator()
+{
+	QString calcul_time;
+	QTextBrowser* fullTime = ui->fullTimeTextBar;
+	QTextBrowser* badTime = ui->badTimeTextBar;
+	QProgressBar* poseRatio = ui->poseRatio;
+	
+	int ratio;
+	int hour, min, sec, temp;
+
+	//fulltime
+	temp = healthySec + unhealthySec;
+	if (temp >= 60) {
+		sec = (int)temp % 60;
+		min = (int)temp / 60;
+		if (min >= 60) {
+			hour = (int)min / 60;
+			min = (int)min % 60;
+		}
+		else {
+			//sec = sec;
+			min = min;
+			hour = 0;
+		}
+	} 
+	else {
+		sec = temp;
+		min = 0;
+		hour = 0;
+	}
+	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("½Ã "))
+		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("ºÐ "))
+	.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("ÃÊ"));
+	fullTime->setText(calcul_time);
+
+	//badtime
+	temp = unhealthySec;
+	if (temp >= 60) {
+		sec = (int)temp % 60;
+		min = (int)temp / 60;
+		if (min >= 60) {
+			hour = (int)min / 60;
+			min = (int)min % 60;
+		}
+		else {
+			//sec = sec;
+			min = min;
+			hour = 0;
+		}
+	}
+	else {
+		sec = temp;
+		min = 0;
+		hour = 0;
+	}
+	calcul_time = "";
+	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("½Ã "))
+		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("ºÐ "))
+		.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("ÃÊ"));
+	badTime->setText(calcul_time);
+
+	//pose ratio
+	ratio = unhealthySec / (healthySec + unhealthySec);
+	poseRatio->setValue(ratio);
 }
 
 void iHunch::alramMessage()
@@ -103,8 +173,22 @@ void iHunch::alramMessage()
 
 void iHunch::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-	if (reason == QSystemTrayIcon::DoubleClick)
+	if (reason == QSystemTrayIcon::DoubleClick) {
+		this->timeCalculator();
 		this->show();
+	}
+}
+
+void iHunch::modeChanged(int mode)
+{
+	QComboBox* modeBox = ui->comboBox;
+
+	if (modeBox->currentIndex() == 0)	{
+		ui->modeAlarm->setEnabled(false);
+	}
+	else if (modeBox->currentIndex() == 1) {
+		ui->modeAlarm->setEnabled(true);
+	}
 }
 
 void iHunch::setPose()
@@ -117,20 +201,6 @@ void iHunch::setPose()
 	setuppose = new setupPose(this);
 	connect(this, SIGNAL(textChanger(char*)), setuppose, SLOT(textChanged(char*)));
 	setuppose->show();
-}
-void iHunch::modeChanged(int mode)
-{
-	QComboBox* modeBox = ui->comboBox;
-	QWidget* modeAlarm = ui->modeAlarm;
-
-	if (modeBox->currentIndex() == 0) {
-		modeAlarm->hide();
-		modeflag = 0;
-	}
-	else if (modeBox->currentIndex() == 1) {
-		modeAlarm->show();
-		modeflag = 1;
-	}
 }
 
 void iHunch::mybtn()
@@ -169,6 +239,11 @@ void iHunch::mybtn()
 				QIcon("gb.png"),
 				500);
 		}
+
+		QPixmap pixmap("pause.png");
+		QIcon ButtonIcon(pixmap);
+		btn->setIcon(ButtonIcon);
+		btn->setIconSize(QSize(32, 32));
 	}
 	else if (started == true) {
 		timeIntervalComboBox->setEnabled(true);
@@ -183,6 +258,10 @@ void iHunch::mybtn()
 		started = false;
 		btn->setText(QString::fromLocal8Bit("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"));
 
+		QPixmap pixmap("play.png");
+		QIcon ButtonIcon(pixmap);
+		btn->setIcon(ButtonIcon);
+		btn->setIconSize(QSize(32, 32));
 	}
 }
 

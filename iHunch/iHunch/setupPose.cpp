@@ -70,13 +70,13 @@ void setupPose::mouseReleaseEvent(QMouseEvent*)
 
 void setupPose::initPoseBtn()
 {
-	if (imported == true) {
+//	if (imported == true) {
 		measureStartBtn = true;
 		//몇초 기다리는지 출력문
-	}
-	else if (imported == false) {
-		//임포트 안돼있으므로 새로운 창띄우기
-	}
+		//	}
+//	else if (imported == false) {
+//		//임포트 안돼있으므로 새로운 창띄우기
+//	}
 }
 
 void setupPose::textChanged(string arr)

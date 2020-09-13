@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="iHunch">
+    <file>play.png</file>
     <file>close_icon.png</file>
     <file>minimum_icon.png</file>
     <file>gb.png</file>

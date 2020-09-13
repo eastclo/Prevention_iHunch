@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_setupPose_t {
     QByteArrayData data[11];
-    char stringdata0[103];
+    char stringdata0[104];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,13 +41,13 @@ QT_MOC_LITERAL(5, 51, 5), // "mouse"
 QT_MOC_LITERAL(6, 57, 17), // "mouseReleaseEvent"
 QT_MOC_LITERAL(7, 75, 5), // "event"
 QT_MOC_LITERAL(8, 81, 11), // "textChanged"
-QT_MOC_LITERAL(9, 93, 5), // "char*"
-QT_MOC_LITERAL(10, 99, 3) // "arr"
+QT_MOC_LITERAL(9, 93, 6), // "string"
+QT_MOC_LITERAL(10, 100, 3) // "arr"
 
     },
     "setupPose\0initPoseBtn\0\0mouseMoveEvent\0"
     "QMouseEvent*\0mouse\0mouseReleaseEvent\0"
-    "event\0textChanged\0char*\0arr"
+    "event\0textChanged\0string\0arr"
 };
 #undef QT_MOC_LITERAL
 
@@ -88,7 +88,7 @@ void setupPose::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 0: _t->initPoseBtn(); break;
         case 1: _t->mouseMoveEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
         case 2: _t->mouseReleaseEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
-        case 3: _t->textChanged((*reinterpret_cast< char*(*)>(_a[1]))); break;
+        case 3: _t->textChanged((*reinterpret_cast< string(*)>(_a[1]))); break;
         default: ;
         }
     }
