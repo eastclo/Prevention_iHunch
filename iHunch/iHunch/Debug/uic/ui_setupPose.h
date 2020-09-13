@@ -11,11 +11,9 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -23,64 +21,40 @@ class Ui_setupPose
 {
 public:
     QLabel *label;
-    QWidget *camOut;
-    QComboBox *comboBox;
-    QPushButton *startBtn;
-    QPushButton *stopBtn;
-    QPushButton *captureBtn;
     QPushButton *initBtn;
     QLabel *info_text;
     QLabel *info_text_2;
     QLabel *info_text_3;
-    QLabel *count;
-    QLabel *errorMessage;
+    QLabel *label_2;
 
     void setupUi(QDialog *setupPose)
     {
         if (setupPose->objectName().isEmpty())
             setupPose->setObjectName(QString::fromUtf8("setupPose"));
-        setupPose->resize(616, 539);
-        setupPose->setMinimumSize(QSize(600, 500));
+        setupPose->resize(420, 300);
+        setupPose->setMinimumSize(QSize(300, 300));
         setupPose->setStyleSheet(QString::fromUtf8("background : rgba(240,248,255,0.99);"));
         label = new QLabel(setupPose);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(20, 10, 141, 41));
+        label->setGeometry(QRect(130, 20, 141, 41));
         QFont font;
         font.setPointSize(15);
         font.setBold(true);
         font.setWeight(75);
         label->setFont(font);
-        camOut = new QWidget(setupPose);
-        camOut->setObjectName(QString::fromUtf8("camOut"));
-        camOut->setGeometry(QRect(60, 100, 400, 300));
-        camOut->setMinimumSize(QSize(400, 300));
-        camOut->setMaximumSize(QSize(400, 300));
-        camOut->setStyleSheet(QString::fromUtf8("background : rgb(0,0,0);"));
-        comboBox = new QComboBox(setupPose);
-        comboBox->setObjectName(QString::fromUtf8("comboBox"));
-        comboBox->setGeometry(QRect(180, 10, 76, 22));
-        startBtn = new QPushButton(setupPose);
-        startBtn->setObjectName(QString::fromUtf8("startBtn"));
-        startBtn->setGeometry(QRect(180, 20, 75, 23));
-        stopBtn = new QPushButton(setupPose);
-        stopBtn->setObjectName(QString::fromUtf8("stopBtn"));
-        stopBtn->setGeometry(QRect(180, 30, 75, 23));
-        captureBtn = new QPushButton(setupPose);
-        captureBtn->setObjectName(QString::fromUtf8("captureBtn"));
-        captureBtn->setGeometry(QRect(180, 40, 75, 23));
         initBtn = new QPushButton(setupPose);
         initBtn->setObjectName(QString::fromUtf8("initBtn"));
-        initBtn->setGeometry(QRect(280, 20, 181, 51));
+        initBtn->setGeometry(QRect(110, 180, 181, 51));
         info_text = new QLabel(setupPose);
         info_text->setObjectName(QString::fromUtf8("info_text"));
-        info_text->setGeometry(QRect(0, 480, 501, 31));
+        info_text->setGeometry(QRect(-40, 140, 501, 31));
         QFont font1;
         font1.setPointSize(11);
         info_text->setFont(font1);
         info_text->setAlignment(Qt::AlignCenter);
         info_text_2 = new QLabel(setupPose);
         info_text_2->setObjectName(QString::fromUtf8("info_text_2"));
-        info_text_2->setGeometry(QRect(10, 420, 501, 31));
+        info_text_2->setGeometry(QRect(-30, 80, 501, 31));
         info_text_2->setFont(font1);
         info_text_2->setLineWidth(2);
         info_text_2->setAlignment(Qt::AlignCenter);
@@ -88,28 +62,19 @@ public:
         info_text_2->setIndent(0);
         info_text_3 = new QLabel(setupPose);
         info_text_3->setObjectName(QString::fromUtf8("info_text_3"));
-        info_text_3->setGeometry(QRect(10, 450, 501, 31));
+        info_text_3->setGeometry(QRect(-30, 110, 501, 31));
         info_text_3->setFont(font1);
         info_text_3->setLineWidth(2);
         info_text_3->setAlignment(Qt::AlignCenter);
         info_text_3->setWordWrap(true);
         info_text_3->setIndent(0);
-        count = new QLabel(setupPose);
-        count->setObjectName(QString::fromUtf8("count"));
-        count->setGeometry(QRect(470, 100, 131, 131));
-        QFont font2;
-        font2.setPointSize(10);
-        count->setFont(font2);
-        count->setWordWrap(true);
-        errorMessage = new QLabel(setupPose);
-        errorMessage->setObjectName(QString::fromUtf8("errorMessage"));
-        errorMessage->setGeometry(QRect(470, 250, 111, 141));
-        errorMessage->setWordWrap(true);
+        label_2 = new QLabel(setupPose);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(40, 250, 331, 31));
+        label_2->setAlignment(Qt::AlignCenter);
+        label_2->setWordWrap(true);
 
         retranslateUi(setupPose);
-        QObject::connect(startBtn, SIGNAL(clicked()), setupPose, SLOT(onStartBtn()));
-        QObject::connect(stopBtn, SIGNAL(clicked()), setupPose, SLOT(onStopBtn()));
-        QObject::connect(captureBtn, SIGNAL(clicked()), setupPose, SLOT(onCaptureBtn()));
         QObject::connect(initBtn, SIGNAL(clicked()), setupPose, SLOT(initPoseBtn()));
 
         QMetaObject::connectSlotsByName(setupPose);
@@ -119,15 +84,11 @@ public:
     {
         setupPose->setWindowTitle(QCoreApplication::translate("setupPose", "setupPose", nullptr));
         label->setText(QCoreApplication::translate("setupPose", "\354\264\210\352\270\260 \354\236\220\354\204\270 \354\204\244\354\240\225", nullptr));
-        startBtn->setText(QCoreApplication::translate("setupPose", "start", nullptr));
-        stopBtn->setText(QCoreApplication::translate("setupPose", "stop", nullptr));
-        captureBtn->setText(QCoreApplication::translate("setupPose", "capture", nullptr));
         initBtn->setText(QCoreApplication::translate("setupPose", "\354\264\210\352\270\260 \354\236\220\354\204\270 \354\264\254\354\230\201", nullptr));
         info_text->setText(QCoreApplication::translate("setupPose", "\354\264\254\354\230\201 \353\262\204\355\212\274\354\235\204 \353\210\204\353\245\264\353\251\264 5\354\264\210 \353\222\244 \354\264\254\354\230\201\353\220\251\353\213\210\353\213\244.", nullptr));
         info_text_2->setText(QCoreApplication::translate("setupPose", "\354\230\254\353\260\224\353\245\270 \354\236\220\354\204\270\353\245\274 \354\267\250\355\225\234 \353\222\244 \354\264\254\354\230\201 \353\262\204\355\212\274\354\235\204 \353\210\214\353\237\254\354\243\274\354\204\270\354\232\224.", nullptr));
         info_text_3->setText(QCoreApplication::translate("setupPose", "\354\226\274\352\265\264\352\263\274 \354\226\221 \354\252\275 \354\226\264\352\271\250\352\260\200 \354\234\204\354\235\230 \355\231\224\353\251\264\354\227\220 \353\202\230\354\230\244\353\251\264 \353\220\251\353\213\210\353\213\244.", nullptr));
-        count->setText(QCoreApplication::translate("setupPose", "3", nullptr));
-        errorMessage->setText(QCoreApplication::translate("setupPose", "\354\227\220\353\237\254 \353\251\224\354\204\270\354\247\200 \354\266\234\353\240\245 \352\263\265\352\260\204", nullptr));
+        label_2->setText(QCoreApplication::translate("setupPose", "\354\235\264 \354\260\275\354\235\200 \354\264\254\354\230\201\354\235\264 \354\231\204\353\243\214\353\220\234 \353\222\244 \354\236\220\353\217\231\354\234\274\353\241\234 \354\242\205\353\243\214\355\225\251\353\213\210\353\213\244.", nullptr));
     } // retranslateUi
 
 };
