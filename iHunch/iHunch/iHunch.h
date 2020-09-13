@@ -21,31 +21,33 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class iHunchClass; }
 QT_END_NAMESPACE
 
+using namespace std;
+
 class iHunch : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    setupPose* setuppose;
     iHunch(QWidget *parent = Q_NULLPTR);
     ~iHunch();
 
 private:
     Ui::iHunchClass* ui;
-    //Ʈ���̾����� Ŭ���� �ν��Ͻ�
+    //트레이아이콘 클래스 인스턴스
     QSystemTrayIcon* m_trayicon;
-    setupPose* setuppose;
     QComboBox* timeIntervalComboBox;
     QComboBox* unHealthComboBox;
     QSlider* poseFixSlider;
 
-    //���۹�ư
+    //시작버튼
     bool started = false;
-    //ȿ����
+    //효과음
     QMediaPlayer* m_player;
-    //�˶� üũ�ڽ� üũ �Ǿ��ִ���
+    //알람 체크박스 체크 되어있는지
     bool sound_check;
     bool popup_check;
-    //â drag and drop �̵�
+    //창 drag and drop 이동
     int mouseX;
     int mouseY;
     int absX;
@@ -54,20 +56,20 @@ private:
 
 
 public slots:
-    //�ý��� Ʈ���� ������ Ŭ�� �̺�Ʈ�κ��� �ñ׳��� ó���ϴ� slot�Լ�
+    //시스템 트레이 아이콘 클릭 이벤트로부터 시그널을 처리하는 slot함수
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
-    //�ڼ� ���� â ����
+    //자세 설정 창 띄우기
     void setPose();
 
-    //���۹�ư
+    //시작버튼
     void mybtn();
 
-    //���θ��� �ּ�ȭ, �ݱ���?
+    //새로만든 최소화, 닫기버튼
     void minimum_Btn();
     void close_Btn();
 
-    //â drag and drop �̵�
+    //창 drag and drop 이동
     void mouseMoveEvent(QMouseEvent* mouse);
     void mouseReleaseEvent(QMouseEvent* event);
 
@@ -79,4 +81,5 @@ public slots:
 
 signals:
     void textChanger(string arr);
+    void closeSignal();
 };

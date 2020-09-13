@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <windows.h>
 #include <tchar.h>
 #include <cstring>
@@ -51,5 +51,6 @@ void checkEndSignal(bool sign);
 void judgePose();
 void operatorQueue(Points *ret, bool how);
 bool judge(Points cur);
-int setSTDPose(); //ÃÊ±â ÀÚ¼¼ ¼³Á¤
-int ConnectClient2(HANDLE hNamePipe); //ÃÊ±â ÀÚ¼¼ ¼³Á¤
+int setSTDPose(); //ì´ˆê¸° ìì„¸ ì„¤ì •
+int ConnectClient2(HANDLE hNamePipe); //ì´ˆê¸° ìì„¸ ì„¤ì •
+void sendText(); 

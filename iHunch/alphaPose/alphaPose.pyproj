@@ -418,6 +418,7 @@
     <Compile Include="alphapose-pytorch\train_sppe\src\utils\pose.py" />
     <Compile Include="alphapose-pytorch\video_demo.py" />
     <Compile Include="alphapose-pytorch\webcam.py" />
+    <Compile Include="alphapose-pytorch\webcam_measure.py" />
     <Compile Include="alphapose-pytorch\yolo\bbox.py" />
     <Compile Include="alphapose-pytorch\yolo\cam_demo.py" />
     <Compile Include="alphapose-pytorch\yolo\darknet.py" />
