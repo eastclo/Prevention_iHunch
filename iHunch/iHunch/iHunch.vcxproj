@@ -92,6 +92,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="getSkeleton.cpp" />
+    <ClCompile Include="overlay.cpp" />
     <ClCompile Include="popupc.cpp" />
     <ClCompile Include="setupPose.cpp" />
     <QtRcc Include="iHunch.qrc" />
@@ -99,6 +100,7 @@
     <QtMoc Include="iHunch.h" />
     <ClCompile Include="iHunch.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="overlay.ui" />
     <QtUic Include="popupc.ui" />
     <QtUic Include="setupPose.ui" />
   </ItemGroup>
@@ -106,6 +108,7 @@
     <QtMoc Include="setupPose.h" />
     <QtMoc Include="popupc.h" />
     <ClInclude Include="alphapose.h" />
+    <QtMoc Include="overlay.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

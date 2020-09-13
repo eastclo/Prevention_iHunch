@@ -50,6 +50,9 @@
     <ClCompile Include="getSkeleton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="overlay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -71,12 +74,18 @@
     <QtMoc Include="setupPose.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="overlay.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="popupc.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="setupPose.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="overlay.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
