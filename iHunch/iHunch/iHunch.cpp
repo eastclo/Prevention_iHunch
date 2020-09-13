@@ -3,7 +3,7 @@
 
 #define thread std::thread
 
-extern double healthySec, unhealthySec; //����, �����ڼ� �� �ð�
+extern double healthySec, unhealthySec; //건강한시간 안건강한시간
 extern int alarmInterval;
 extern int alarmStart;
 extern int fixDegree;
@@ -114,7 +114,7 @@ void iHunch::timeCalculator()
 		min = 0;
 		hour = 0;
 	}
-	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("시 "))
+	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("시간 "))
 		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("분 "))
 	.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("초"));
 	fullTime->setText(calcul_time);
@@ -140,7 +140,7 @@ void iHunch::timeCalculator()
 		hour = 0;
 	}
 	calcul_time = "";
-	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("시 "))
+	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("시간 "))
 		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("분 "))
 		.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("초"));
 	badTime->setText(calcul_time);
