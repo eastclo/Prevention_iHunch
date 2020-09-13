@@ -213,7 +213,7 @@ def vis_frame(frame, im_res, format='coco'):
         el = math.sqrt(ex**2 + ey**2)
         sl = math.sqrt(sx**2 + sy**2)
         
-        if((4 <= sl / el) and (sl / el <= 6)):
+        if((4.5 <= sl / el) and (sl / el <= 5.5)):
             img = cv2.putText(img, '비율 :' + str(sl/el), (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
         else:
             img = cv2.putText(img, '비율 :' + str(sl/el), (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)

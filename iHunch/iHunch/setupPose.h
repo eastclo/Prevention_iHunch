@@ -9,6 +9,7 @@
 #include <QAbstractVideoSurface>
 #include <QMouseEvent>
 #include <Windows.h>
+#include <QCloseEvent>
 #include "ui_setupPose.h"
 #include <string>
 
@@ -44,7 +45,7 @@ private:
 	int absY;
 	int justOneCount;
 
-private slots:
+public slots:
 	//void onStartBtn();
 	//void onStopBtn();
 	//void onCaptureBtn();
@@ -58,4 +59,5 @@ private slots:
 	void textChanged(string arr);
 	//void initClose();
 	//void setCount(int count);
+	void closeSlot();
 };

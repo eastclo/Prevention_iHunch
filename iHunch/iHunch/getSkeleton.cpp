@@ -18,6 +18,7 @@ std::mutex mtx1, mtx2; //뮤텍스 변수
 bool endSignal; //종료 sign
 bool imported; //import 체크
 bool measureStartBtn; //초기 자세 측정 버튼
+int timer = 11;
 
 queue<Points> poseData; //좌표값 데이터
 double stdPoseRate;    //기준이 되는 초기자세 비율
@@ -27,6 +28,8 @@ double healthySec, unhealthySec; //좋은, 나쁜자세 총 시간
 int alarmInterval; //재알람 간격
 int alarmStart; //안 좋은 자세 n초 지속시 알람
 int fixDegree; //교정강도
+bool measuring;
+bool measureError;
 
 int startFix(void)
 {
@@ -217,10 +220,10 @@ void judgePose() {
                 double lastAlarmed = (curTime - recordedTime.alarmed) / CLOCKS_PER_SEC;
 
                 //재알람시간 되지 않았거나, 알람 울릴 때가 아니라면 스킵
-                if (lastAlarmed < alarmInterval && lastAlarmed < alarmStart) continue; 
+                if (lastAlarmed < alarmInterval) continue; 
 
                 if (continuedSec > alarmStart) {
-                    (*w).alramMessage();
+                    w->alramMessage();
                     recordedTime.alarmed = curTime;
                 }
             }
@@ -246,7 +249,7 @@ void operatorQueue(Points *ret, bool how)
 bool judge(Points cur) {
     double curRate = cur.length(cur.lShoulder, cur.rShoulder) / cur.length(cur.lEye, cur.rEye);
     //TODO fixDegree와 연동되게 변경
-    if (stdPoseRate * 1.2 > curRate && curRate > stdPoseRate * 0.8)
+    if (stdPoseRate * 1.1 > curRate && curRate > stdPoseRate * 0.9)
         return GOOD;
     return BAD;
 }
@@ -357,15 +360,12 @@ int ConnectClient2(HANDLE hNamePipe)
             &sendSize,
             NULL
         );
-
-        Sleep(2000);
-        for (int i = 3; i > 0; i--) {
-            Sleep(1000);
-            w->textChanger(to_string(i));
-        }
+        measureError = false;        
+        thread t(sendText);
+        t.detach();
 
         //3장 평균치 구하기
-        while(cnt < 3) {
+        while(cnt < 20) {
             int n, x, y;
             //recvSize -> NULL 포함한 바이트 수
             ReadFile(
@@ -380,7 +380,8 @@ int ConnectClient2(HANDLE hNamePipe)
             if (n == -1 && x == -1 && y == -1) {
                 eyesDist = cur.length(cur.lEye, cur.rEye);
                 shouldersDist = cur.length(cur.lShoulder, cur.rShoulder);
-                stdPoseRate += shouldersDist / eyesDist;
+                if(cnt > 16)
+                    stdPoseRate += shouldersDist / eyesDist;
                 cnt++;
                 cur = Points();
             }
@@ -410,11 +411,13 @@ int ConnectClient2(HANDLE hNamePipe)
             }
         }
         if (isError) {
-            w->textChanger("자세가 불안정합니다. 다시 시도해주세요.");
+            w->setuppose->textChanged("다시 시도해주세요.");
             //버튼 활성화
+            timer = 11;
             measureStartBtn = false;
             stdPoseRate = 0;
             isError = false;
+            measureError = true;
             cnt = 0;
             continue;
         }
@@ -426,8 +429,17 @@ int ConnectClient2(HANDLE hNamePipe)
     TerminateProcess(ProcessInfo.hProcess, 0);
     CloseHandle(ProcessInfo.hProcess);
     CloseHandle(ProcessInfo.hThread);
+
     //측정창 닫는 함수 호출
-    delete w->setuppose;
+ //   delete w->setuppose;
+    w->closeSignal();
 
     return 1;
+}
+
+void sendText() {
+    for (int i = 10; i > 0; i--) {
+        w->setuppose->textChanged(to_string(i));
+        Sleep(1000);
+    }
 }

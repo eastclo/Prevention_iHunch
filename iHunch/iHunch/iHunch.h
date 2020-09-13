@@ -80,4 +80,5 @@ public slots:
     void alramMessage();
 signals:
     void textChanger(string arr);
+    void closeSignal();
 };

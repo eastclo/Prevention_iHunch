@@ -88,7 +88,7 @@ void iHunch::alramMessage()
 	popup_check = popup_box->isChecked();
 	sound_check = sound_box->isChecked();
 
-    if (popup_check != true) {
+    if (popup_check == true) {
         QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
         m_trayicon->showMessage(
             QString::fromLocal8Bit("Turtle Neck"), QString::fromLocal8Bit("������ �ڼ��� �����ǰ� �־��?"),
@@ -116,6 +116,7 @@ void iHunch::setPose()
     t.detach();
 	setuppose = new setupPose(this);
 	connect(this, SIGNAL(textChanger(char*)), setuppose, SLOT(textChanged(char*)));
+	connect(this, SIGNAL(closeSignal()), setuppose, SLOT(closeSlot()));
 	setuppose->show();
 }
 void iHunch::modeChanged(int mode)

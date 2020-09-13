@@ -1,7 +1,10 @@
 #include "setupPose.h"
+#include "alphapose.h"
 
 extern bool measureStartBtn;
 extern bool imported;
+extern bool measuring;
+extern bool measureError;
 
 setupPose::setupPose(QWidget *parent)
 	: QDialog(parent, Qt::FramelessWindowHint), ui(new Ui::setupPose)
@@ -72,7 +75,6 @@ void setupPose::initPoseBtn()
 {
 	if (imported == true) {
 		measureStartBtn = true;
-		//몇초 기다리는지 출력문
 	}
 	else if (imported == false) {
 		//임포트 안돼있으므로 새로운 창띄우기
@@ -84,6 +86,11 @@ void setupPose::textChanged(string arr)
 	QLabel* info_text = ui->infomtxt;
 	//받은 문자열 qt에서 사용가능하게 변환후 세팅
 	info_text->setText(QString::fromStdString(arr));
+}
+
+void setupPose::closeSlot()
+{
+	this->hide();
 }
 
 //void setupPose::initCamera()
