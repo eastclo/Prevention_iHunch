@@ -16,6 +16,7 @@
 #include <QMediaPlayer>
 #include <QFileDialog>
 
+using namespace std;
 QT_BEGIN_NAMESPACE
 namespace Ui { class iHunchClass; }
 QT_END_NAMESPACE
@@ -30,7 +31,7 @@ public:
     setupPose* setuppose;
     iHunch(QWidget *parent = Q_NULLPTR);
     ~iHunch();
-    //���?Ȯ�� ����
+    //���?Ȯ�� ����
     int modeflag;
     //�˶� ȣ���Լ�
  //   void alramMessage();
@@ -68,7 +69,7 @@ public slots:
     //���۹�ư
     void mybtn();
 
-    //���θ��� �ּ�ȭ, �ݱ���?
+    //���θ��� �ּ�ȭ, �ݱ���?
     void minimum_Btn();
     void close_Btn();
 
@@ -77,7 +78,6 @@ public slots:
     void mouseReleaseEvent(QMouseEvent* event);
 
     void alramMessage();
-
 signals:
     void textChanger(string arr);
 };

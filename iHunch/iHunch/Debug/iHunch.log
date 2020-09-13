@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 ﻿  getSkeleton.cpp
 C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\getSkeleton.cpp(203,50): warning C4805: '!=': 연산에 'int' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+=======
+﻿  moc iHunch.h
+  getSkeleton.cpp
+  iHunch.cpp
+  main.cpp
+  setupPose.cpp
+C:\Users\UserK\source\repos\eastclo\Prevention_iHunch\iHunch\iHunch\getSkeleton.cpp(202,50): warning C4805: '!=': 연산에 'int' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+  moc_iHunch.cpp
+>>>>>>> JINU
 LINK : warning LNK4044: '/utf-8' 옵션을 인식할 수 없습니다. 무시됩니다.
   iHunch.vcxproj -> C:\Users\golde\source\repos\Prevention_iHunch\iHunch\Debug\iHunch.exe

@@ -115,6 +115,7 @@ void iHunch::setPose()
     thread t(setSTDPose);
     t.detach();
 	setuppose = new setupPose(this);
+	connect(this, SIGNAL(textChanger(char*)), setuppose, SLOT(textChanged(char*)));
 	setuppose->show();
 }
 void iHunch::modeChanged(int mode)
