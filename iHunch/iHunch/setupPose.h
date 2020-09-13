@@ -22,17 +22,17 @@ class setupPose : public QDialog
 public:
 	setupPose(QWidget *parent = Q_NULLPTR);
 	~setupPose();
-	void initCamera();
-	void cameraDeviceSearch();
+	//void initCamera();
+	//void cameraDeviceSearch();
 
 private:
 	Ui::setupPose* ui;
-	QCamera* myCamera;
-	QCameraViewfinder* myViewfinder;
-	QCameraImageCapture* myCapture;
-	QList<QByteArray> camDevNameLists;
-	QPushButton* initBtn;
-	QLabel* count;
+	//QCamera* myCamera;
+	//QCameraViewfinder* myViewfinder;
+	//QCameraImageCapture* myCapture;
+	//QList<QByteArray> camDevNameLists;
+	//QPushButton* initBtn;
+	//QLabel* count;
 
 	//window drag and drop move
 	int mouseX;
@@ -42,17 +42,17 @@ private:
 	int justOneCount;
 
 private slots:
-	void onStartBtn();
-	void onStopBtn();
-	void onCaptureBtn();
-	void camError(QCamera::Error error);
-	void imageCapture(int pid, QImage pPriview);
+	//void onStartBtn();
+	//void onStopBtn();
+	//void onCaptureBtn();
+	//void camError(QCamera::Error error);
+	//void imageCapture(int pid, QImage pPriview);
 	void initPoseBtn();
 
 	//window drag and drop move
 	void mouseMoveEvent(QMouseEvent* mouse);
 	void mouseReleaseEvent(QMouseEvent* event);
 
-	void initClose();
-	void setCount(int count);
+	//void initClose();
+	//void setCount(int count);
 };
