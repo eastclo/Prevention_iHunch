@@ -1,20 +1,4 @@
-﻿  Reading Qt configuration (D:\qt\5.15.0\msvc2019\bin\qmake.exe)
-  uic iHunch.ui
-  uic popupc.ui
-  uic setupPose.ui
-  rcc iHunch.qrc
-  moc iHunch.h
-  moc setupPose.h
-  moc popupc.h
-  getSkeleton.cpp
-  popupc.cpp
-  setupPose.cpp
-  iHunch.cpp
-  main.cpp
-C:\Users\UserK\source\repos\eastclo\Prevention_iHunch\iHunch\iHunch\getSkeleton.cpp(202,50): warning C4805: '!=': 연산에 'int' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
-  qrc_iHunch.cpp
-  moc_iHunch.cpp
-  moc_setupPose.cpp
-  moc_popupc.cpp
+﻿  getSkeleton.cpp
+C:\Users\golde\source\repos\Prevention_iHunch\iHunch\iHunch\getSkeleton.cpp(203,50): warning C4805: '!=': 연산에 'int' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
 LINK : warning LNK4044: '/utf-8' 옵션을 인식할 수 없습니다. 무시됩니다.
-  iHunch.vcxproj -> C:\Users\UserK\source\repos\eastclo\Prevention_iHunch\iHunch\Debug\iHunch.exe
+  iHunch.vcxproj -> C:\Users\golde\source\repos\Prevention_iHunch\iHunch\Debug\iHunch.exe

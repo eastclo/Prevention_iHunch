@@ -10,6 +10,7 @@
 #include <QMouseEvent>
 #include <Windows.h>
 #include "ui_setupPose.h"
+#include <string>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class setupPose; }

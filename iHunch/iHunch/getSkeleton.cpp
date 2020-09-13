@@ -1,5 +1,6 @@
 #include "alphapose.h"
 #include "iHunch.h"
+#include "setupPose.h"
 
 #ifdef UNICODE
 #define GetCurrentDirectory  GetCurrentDirectoryW
@@ -283,7 +284,10 @@ int setSTDPose()
     char cpath[128];
     GetCurrentDirectory(128, path); //cwd경로
     WideCharToMultiByte(CP_ACP, 0, path, 128, cpath, 128, NULL, NULL); //TCHAR to char
-    editChildProccessPath(cpath); //실행파일 경로로 만듦
+    int len = strlen(cpath) - 1;
+    char* pp = cpath + len;
+    while (*pp-- != '\\');
+    strcpy(pp + 1, "\\x64\\Debug\\caller2.exe");
     MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, cpath, 128, path, 128); //char to TCHAR
 
     //자식 프로세스 생성
@@ -323,6 +327,7 @@ int ConnectClient2(HANDLE hNamePipe)
     TCHAR Message[100];
     char tmp[100];
     DWORD recvSize;
+    DWORD sendSize;
     Points cur;
     int n, x, y;
     bool isSuccess = false;
@@ -344,16 +349,23 @@ int ConnectClient2(HANDLE hNamePipe)
     while (1) {
         while (!measureStartBtn); //초기 자세 측정 버튼이 눌리면 다음단계로
 
+        //시작 버튼 신호 송신
+        WriteFile(
+            hNamePipe,
+            Message,
+            (_tcslen(Message) + 1) * sizeof(TCHAR),
+            &sendSize,
+            NULL
+        );
+
+        Sleep(2000);
         for (int i = 3; i > 0; i--) {
             Sleep(1000);
-            //TODO 텍스트 띄우는 함수
+            w->textChanger(to_string(i));
         }
 
         //3장 평균치 구하기
         while(cnt < 3) {
-            checkEndSignal(false);
-            if (endSignal) break;
-
             int n, x, y;
             //recvSize -> NULL 포함한 바이트 수
             ReadFile(
@@ -363,8 +375,8 @@ int ConnectClient2(HANDLE hNamePipe)
                 &recvSize,
                 NULL
             );
-
             _stscanf(Message, _T("%d %d %d"), &n, &x, &y);
+
             if (n == -1 && x == -1 && y == -1) {
                 eyesDist = cur.length(cur.lEye, cur.rEye);
                 shouldersDist = cur.length(cur.lShoulder, cur.rShoulder);
@@ -398,7 +410,8 @@ int ConnectClient2(HANDLE hNamePipe)
             }
         }
         if (isError) {
-            //TODO: 에러시 에러메시지 출력 후 재시작
+            w->textChanger("자세가 불안정합니다. 다시 시도해주세요.");
+            //버튼 활성화
             measureStartBtn = false;
             stdPoseRate = 0;
             isError = false;
@@ -413,7 +426,8 @@ int ConnectClient2(HANDLE hNamePipe)
     TerminateProcess(ProcessInfo.hProcess, 0);
     CloseHandle(ProcessInfo.hProcess);
     CloseHandle(ProcessInfo.hThread);
-    //TODO: 측정창 닫는 함수 호출
+    //측정창 닫는 함수 호출
+    delete w->setuppose;
 
     return 1;
 }

@@ -20,11 +20,14 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class iHunchClass; }
 QT_END_NAMESPACE
 
+using namespace std;
+
 class iHunch : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    setupPose* setuppose;
     iHunch(QWidget *parent = Q_NULLPTR);
     ~iHunch();
     //���?Ȯ�� ����
@@ -36,7 +39,6 @@ private:
     Ui::iHunchClass* ui;
     //Ʈ���̾����� Ŭ���� �ν��Ͻ�
     QSystemTrayIcon* m_trayicon;
-    setupPose* setuppose;
     QComboBox* timeIntervalComboBox;
     QComboBox* unHealthComboBox;
     QSlider* poseFixSlider;
@@ -76,4 +78,6 @@ public slots:
 
     void alramMessage();
 
+signals:
+    void textChanger(string arr);
 };
