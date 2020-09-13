@@ -10,6 +10,9 @@
 #include <QMouseEvent>
 #include <Windows.h>
 #include "ui_setupPose.h"
+#include <string>
+
+using namespace std;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class setupPose; }
@@ -52,7 +55,7 @@ private slots:
 	//window drag and drop move
 	void mouseMoveEvent(QMouseEvent* mouse);
 	void mouseReleaseEvent(QMouseEvent* event);
-
+	void textChanged(string arr);
 	//void initClose();
 	//void setCount(int count);
 };

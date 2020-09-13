@@ -16,6 +16,7 @@
 #include <QMediaPlayer>
 #include <QFileDialog>
 
+using namespace std;
 QT_BEGIN_NAMESPACE
 namespace Ui { class iHunchClass; }
 QT_END_NAMESPACE
@@ -75,5 +76,6 @@ public slots:
     void mouseReleaseEvent(QMouseEvent* event);
 
     void alramMessage();
-
+signals:
+    void textChanger(string arr);
 };
