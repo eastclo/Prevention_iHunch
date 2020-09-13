@@ -152,5 +152,3 @@ def run():
     #    except KeyboardInterrupt:
      #       break
     return ret
-while(1):
-    run()

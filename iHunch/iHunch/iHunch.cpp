@@ -101,11 +101,11 @@ iHunch::~iHunch()
 
 void iHunch::debugSlot(int mode)
 {
-	if (mode == 1) {	//안좋은 상태 빨간불
+	if (mode == 0) {	//안좋은 상태 빨간불
 		//debugBtn->setStyleSheet("background-color: rgb(255,0,0);");
 		debugOverlay->setStyleSheet("background-color: red");
 	}
-	else if (mode == 2) { // 좋은상태 초록불
+	else if (mode == 1) { // 좋은상태 초록불
 		//debugBtn->setStyleSheet("background-color: rgb(0,255,0);");
 		debugOverlay->setStyleSheet("background-color: lime");
 	}

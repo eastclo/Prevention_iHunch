@@ -53,9 +53,9 @@ private:
     int absX;
     int absY;
     int justOneCount;
-
+public:
     //디버그용
-    QWidget* debugOverlay = new QWidget(NULL);;
+    QWidget* debugOverlay = new QWidget(NULL);
     QVBoxLayout* vLay = new QVBoxLayout();
     QPushButton* debugBtn = new QPushButton();
 

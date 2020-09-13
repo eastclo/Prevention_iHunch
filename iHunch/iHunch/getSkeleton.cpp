@@ -19,6 +19,7 @@ bool endSignal; //종료 sign
 bool imported; //import 체크
 bool measureStartBtn; //초기 자세 측정 버튼
 bool isError = false;
+bool qEmpty;
 
 queue<Points> poseData; //좌표값 데이터
 double stdPoseRate;    //기준이 되는 초기자세 비율
@@ -182,7 +183,7 @@ void checkEndSignal(bool sign)
 }
 
 void judgePose() {
-    bool curStatus;
+    int curStatus;
     clock_t curTime;
 
     while (1) {
@@ -192,6 +193,7 @@ void judgePose() {
 
         Points cur;
         operatorQueue(&cur, 1); //현재 자세 좌표값 가져오기
+        if (qEmpty) continue;
         curTime = clock(); //현재 시간
         /*좌표 일부가 없을 때 판단*/
 
@@ -226,29 +228,38 @@ void judgePose() {
             recordedTime.status = curStatus;
             recordedTime.prev = curTime;
             recordedTime.alarmed = curTime;
-        }
-        else if (recordedTime.status != curStatus) {
-            //자세가 달라졌을 때
             
-            if (recordedTime.status == GOOD)
-                healthySec += (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
+            w->debugOverlay->setStyleSheet("background-color: lime");
+        }
+        else {
+            if(curStatus)
+                w->debugOverlay->setStyleSheet("background-color: lime");
             else
-                unhealthySec += (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
-            
-            recordedTime.status = curStatus;
-            recordedTime.prev = curTime;
-        }
-        else { //자세가 계속 같을 경우
-            if (recordedTime.status == BAD) {
-                double continuedSec = (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
-                double lastAlarmed = (curTime - recordedTime.alarmed) / CLOCKS_PER_SEC;
+                w->debugOverlay->setStyleSheet("background-color: red");
 
-                //재알람시간 되지 않았거나, 알람 울릴 때가 아니라면 스킵
-                if (lastAlarmed < alarmInterval) continue; 
+            if (recordedTime.status != curStatus) {
+                //자세가 달라졌을 때
 
-                if (continuedSec > alarmStart) {
-                    w->alramMessage();
-                    recordedTime.alarmed = curTime;
+                if (recordedTime.status == GOOD)
+                    healthySec += (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
+                else
+                    unhealthySec += (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
+
+                recordedTime.status = curStatus;
+                recordedTime.prev = curTime;
+            }
+            else { //자세가 계속 같을 경우
+                if (recordedTime.status == BAD) {
+                    double continuedSec = (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
+                    double lastAlarmed = (curTime - recordedTime.alarmed) / CLOCKS_PER_SEC;
+
+                    //재알람시간 되지 않았거나, 알람 울릴 때가 아니라면 스킵
+                    if (lastAlarmed < alarmInterval) continue;
+
+                    if (continuedSec > alarmStart) {
+                        w->alramMessage();
+                        recordedTime.alarmed = curTime;
+                    }
                 }
             }
         }
@@ -263,9 +274,12 @@ void operatorQueue(Points *ret, bool how)
     }
     else { //dequeue
         if (!poseData.empty()) {
+            qEmpty = false;
             *ret = poseData.front();
             poseData.pop();
         }
+        else
+            qEmpty = true;
     }
     mtx2.unlock();
 }
