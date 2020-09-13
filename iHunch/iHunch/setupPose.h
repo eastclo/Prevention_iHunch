@@ -55,4 +55,5 @@ private slots:
 
 	void initClose();
 	void setCount(int count);
+	void threadStarted();
 };
