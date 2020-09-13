@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_setupPose_t {
-    QByteArrayData data[17];
-    char stringdata0[171];
+    QByteArrayData data[20];
+    char stringdata0[196];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,14 +48,18 @@ QT_MOC_LITERAL(12, 113, 14), // "mouseMoveEvent"
 QT_MOC_LITERAL(13, 128, 12), // "QMouseEvent*"
 QT_MOC_LITERAL(14, 141, 5), // "mouse"
 QT_MOC_LITERAL(15, 147, 17), // "mouseReleaseEvent"
-QT_MOC_LITERAL(16, 165, 5) // "event"
+QT_MOC_LITERAL(16, 165, 5), // "event"
+QT_MOC_LITERAL(17, 171, 9), // "initClose"
+QT_MOC_LITERAL(18, 181, 8), // "setCount"
+QT_MOC_LITERAL(19, 190, 5) // "count"
 
     },
     "setupPose\0onStartBtn\0\0onStopBtn\0"
     "onCaptureBtn\0camError\0QCamera::Error\0"
     "error\0imageCapture\0pid\0pPriview\0"
     "initPoseBtn\0mouseMoveEvent\0QMouseEvent*\0"
-    "mouse\0mouseReleaseEvent\0event"
+    "mouse\0mouseReleaseEvent\0event\0initClose\0"
+    "setCount\0count"
 };
 #undef QT_MOC_LITERAL
 
@@ -65,7 +69,7 @@ static const uint qt_meta_data_setupPose[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -73,14 +77,16 @@ static const uint qt_meta_data_setupPose[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   54,    2, 0x08 /* Private */,
-       3,    0,   55,    2, 0x08 /* Private */,
-       4,    0,   56,    2, 0x08 /* Private */,
-       5,    1,   57,    2, 0x08 /* Private */,
-       8,    2,   60,    2, 0x08 /* Private */,
-      11,    0,   65,    2, 0x08 /* Private */,
-      12,    1,   66,    2, 0x08 /* Private */,
-      15,    1,   69,    2, 0x08 /* Private */,
+       1,    0,   64,    2, 0x08 /* Private */,
+       3,    0,   65,    2, 0x08 /* Private */,
+       4,    0,   66,    2, 0x08 /* Private */,
+       5,    1,   67,    2, 0x08 /* Private */,
+       8,    2,   70,    2, 0x08 /* Private */,
+      11,    0,   75,    2, 0x08 /* Private */,
+      12,    1,   76,    2, 0x08 /* Private */,
+      15,    1,   79,    2, 0x08 /* Private */,
+      17,    0,   82,    2, 0x08 /* Private */,
+      18,    1,   83,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -91,6 +97,8 @@ static const uint qt_meta_data_setupPose[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 13,   14,
     QMetaType::Void, 0x80000000 | 13,   16,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   19,
 
        0        // eod
 };
@@ -109,6 +117,8 @@ void setupPose::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 5: _t->initPoseBtn(); break;
         case 6: _t->mouseMoveEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
         case 7: _t->mouseReleaseEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 8: _t->initClose(); break;
+        case 9: _t->setCount((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -154,13 +164,13 @@ int setupPose::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 10;
     }
     return _id;
 }

@@ -51,8 +51,10 @@ public:
     QFrame *frame;
     QCheckBox *soundAlram_checkbox;
     QCheckBox *popup_checkbox;
+    QComboBox *alarmIntervalComboBox;
+    QLabel *label_11;
     QGroupBox *groupBox_2;
-    QSlider *horizontalSlider;
+    QSlider *poseFixDegreeSlider;
     QLabel *label_4;
     QLabel *label_5;
     QWidget *myTitleBar;
@@ -60,6 +62,8 @@ public:
     QPushButton *minBtn;
     QLabel *label_3;
     QPushButton *pushButton_3;
+    QComboBox *unHealthComboBox;
+    QLabel *label_12;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -132,7 +136,7 @@ public:
         comboBox->setGeometry(QRect(10, 390, 151, 41));
         modeAlarm = new QWidget(centralWidget);
         modeAlarm->setObjectName(QString::fromUtf8("modeAlarm"));
-        modeAlarm->setGeometry(QRect(170, 370, 162, 91));
+        modeAlarm->setGeometry(QRect(170, 370, 261, 91));
         label_10 = new QLabel(modeAlarm);
         label_10->setObjectName(QString::fromUtf8("label_10"));
         label_10->setGeometry(QRect(9, 9, 52, 16));
@@ -147,18 +151,29 @@ public:
         popup_checkbox = new QCheckBox(frame);
         popup_checkbox->setObjectName(QString::fromUtf8("popup_checkbox"));
         popup_checkbox->setGeometry(QRect(75, 10, 59, 16));
+        alarmIntervalComboBox = new QComboBox(modeAlarm);
+        alarmIntervalComboBox->addItem(QString());
+        alarmIntervalComboBox->addItem(QString());
+        alarmIntervalComboBox->addItem(QString());
+        alarmIntervalComboBox->setObjectName(QString::fromUtf8("alarmIntervalComboBox"));
+        alarmIntervalComboBox->setGeometry(QRect(160, 60, 51, 22));
+        label_11 = new QLabel(modeAlarm);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+        label_11->setGeometry(QRect(160, 30, 101, 20));
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
         groupBox_2->setGeometry(QRect(10, 130, 401, 91));
         QFont font1;
         font1.setPointSize(10);
         groupBox_2->setFont(font1);
-        horizontalSlider = new QSlider(groupBox_2);
-        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
-        horizontalSlider->setGeometry(QRect(50, 30, 301, 31));
-        horizontalSlider->setMinimum(1);
-        horizontalSlider->setMaximum(5);
-        horizontalSlider->setOrientation(Qt::Horizontal);
+        poseFixDegreeSlider = new QSlider(groupBox_2);
+        poseFixDegreeSlider->setObjectName(QString::fromUtf8("poseFixDegreeSlider"));
+        poseFixDegreeSlider->setGeometry(QRect(50, 30, 301, 31));
+        poseFixDegreeSlider->setMinimum(1);
+        poseFixDegreeSlider->setMaximum(100);
+        poseFixDegreeSlider->setOrientation(Qt::Horizontal);
+        poseFixDegreeSlider->setTickPosition(QSlider::TicksBelow);
+        poseFixDegreeSlider->setTickInterval(10);
         label_4 = new QLabel(groupBox_2);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(30, 60, 56, 12));
@@ -195,6 +210,20 @@ public:
         pushButton_3->setStyleSheet(QString::fromUtf8("border: none;"));
         pushButton_3->setIcon(icon);
         pushButton_3->setIconSize(QSize(32, 32));
+        unHealthComboBox = new QComboBox(centralWidget);
+        unHealthComboBox->addItem(QString());
+        unHealthComboBox->addItem(QString());
+        unHealthComboBox->addItem(QString());
+        unHealthComboBox->addItem(QString());
+        unHealthComboBox->addItem(QString());
+        unHealthComboBox->addItem(QString());
+        unHealthComboBox->addItem(QString());
+        unHealthComboBox->addItem(QString());
+        unHealthComboBox->setObjectName(QString::fromUtf8("unHealthComboBox"));
+        unHealthComboBox->setGeometry(QRect(490, 150, 91, 22));
+        label_12 = new QLabel(centralWidget);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setGeometry(QRect(420, 149, 111, 21));
         iHunchClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(iHunchClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -207,8 +236,8 @@ public:
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         iHunchClass->setStatusBar(statusBar);
 #if QT_CONFIG(shortcut)
-        label_4->setBuddy(horizontalSlider);
-        label_5->setBuddy(horizontalSlider);
+        label_4->setBuddy(poseFixDegreeSlider);
+        label_5->setBuddy(poseFixDegreeSlider);
 #endif // QT_CONFIG(shortcut)
 
         retranslateUi(iHunchClass);
@@ -249,6 +278,12 @@ public:
         label_10->setText(QCoreApplication::translate("iHunchClass", "\354\225\214\353\236\214 \354\204\244\354\240\225", nullptr));
         soundAlram_checkbox->setText(QCoreApplication::translate("iHunchClass", "\352\262\275\352\263\240\354\235\214", nullptr));
         popup_checkbox->setText(QCoreApplication::translate("iHunchClass", "\355\214\235\354\227\205\354\260\275", nullptr));
+        alarmIntervalComboBox->setItemText(0, QCoreApplication::translate("iHunchClass", "5", nullptr));
+        alarmIntervalComboBox->setItemText(1, QCoreApplication::translate("iHunchClass", "7", nullptr));
+        alarmIntervalComboBox->setItemText(2, QCoreApplication::translate("iHunchClass", "10", nullptr));
+
+        alarmIntervalComboBox->setCurrentText(QCoreApplication::translate("iHunchClass", "5", nullptr));
+        label_11->setText(QCoreApplication::translate("iHunchClass", "\354\236\254 \354\225\214\353\236\214 \354\213\234\352\260\204(\354\264\210)", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("iHunchClass", "\352\265\220\354\240\225 \352\260\220\353\217\204 \354\204\244\354\240\225", nullptr));
         label_4->setText(QCoreApplication::translate("iHunchClass", "\354\225\275\355\225\230\352\262\214", nullptr));
         label_5->setText(QCoreApplication::translate("iHunchClass", "\352\260\225\355\225\230\352\262\214", nullptr));
@@ -262,6 +297,17 @@ public:
         minBtn->setText(QString());
         label_3->setText(QCoreApplication::translate("iHunchClass", "Turtle Neck Slice", nullptr));
         pushButton_3->setText(QString());
+        unHealthComboBox->setItemText(0, QCoreApplication::translate("iHunchClass", " 3\354\264\210 \354\247\200\354\206\215\354\213\234", nullptr));
+        unHealthComboBox->setItemText(1, QCoreApplication::translate("iHunchClass", " 4\354\264\210 \354\247\200\354\206\215\354\213\234", nullptr));
+        unHealthComboBox->setItemText(2, QCoreApplication::translate("iHunchClass", " 5\354\264\210 \354\247\200\354\206\215\354\213\234", nullptr));
+        unHealthComboBox->setItemText(3, QCoreApplication::translate("iHunchClass", " 6\354\264\210 \354\247\200\354\206\215\354\213\234", nullptr));
+        unHealthComboBox->setItemText(4, QCoreApplication::translate("iHunchClass", " 7\354\264\210 \354\247\200\354\206\215\354\213\234", nullptr));
+        unHealthComboBox->setItemText(5, QCoreApplication::translate("iHunchClass", " 8\354\264\210 \354\247\200\354\206\215\354\213\234", nullptr));
+        unHealthComboBox->setItemText(6, QCoreApplication::translate("iHunchClass", " 9\354\264\210 \354\247\200\354\206\215\354\213\234", nullptr));
+        unHealthComboBox->setItemText(7, QCoreApplication::translate("iHunchClass", "10\354\264\210 \354\247\200\354\206\215\354\213\234", nullptr));
+
+        unHealthComboBox->setCurrentText(QCoreApplication::translate("iHunchClass", " 3\354\264\210 \354\247\200\354\206\215\354\213\234", nullptr));
+        label_12->setText(QCoreApplication::translate("iHunchClass", "\354\225\210 \354\242\213\354\235\200 \354\236\220\354\204\270", nullptr));
     } // retranslateUi
 
 };
