@@ -78,37 +78,13 @@ iHunch::iHunch(QWidget* parent)
 	startBtn->setIcon(ButtonIcon);
 	startBtn->setIconSize(QSize(32,32));
 
-	//디버깅용 오버레이
-	/*************************************************/
-	//debugOverlay = new QWidget(NULL ,Qt::FramelessWindowHint);
-	//vLay = new QVBoxLayout();
-	//debugBtn = new QPushButton();
-	debugOverlay->setGeometry(QRect(0, 0, 30, 30));
-	debugOverlay->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-//	debugOverlay->setLayout(vLay);
-//	vLay->addWidget(debugBtn);
-	debugOverlay->show();
-	debugSlot(2);
-	connect(this, SIGNAL(debugSignal()), debugOverlay, SLOT(debugSlot()));
-	/*************************************************/
-	//디버깅용 오버레이
+	over = new overlay();
+	over->show();
 }
 
 iHunch::~iHunch()
 {
 	delete ui;
-}
-
-void iHunch::debugSlot(int mode)
-{
-	if (mode == 0) {	//안좋은 상태 빨간불
-		//debugBtn->setStyleSheet("background-color: rgb(255,0,0);");
-		debugOverlay->setStyleSheet("background-color: red");
-	}
-	else if (mode == 1) { // 좋은상태 초록불
-		//debugBtn->setStyleSheet("background-color: rgb(0,255,0);");
-		debugOverlay->setStyleSheet("background-color: lime");
-	}
 }
 
 void iHunch::timeCalculator()
