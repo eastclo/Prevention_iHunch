@@ -54,6 +54,11 @@ private:
     int absY;
     int justOneCount;
 
+    //디버그용
+    QWidget* debugOverlay = new QWidget(NULL);;
+    QVBoxLayout* vLay = new QVBoxLayout();
+    QPushButton* debugBtn = new QPushButton();
+
 
 public slots:
     //시스템 트레이 아이콘 클릭 이벤트로부터 시그널을 처리하는 slot함수
@@ -78,8 +83,10 @@ public slots:
     void modeChanged(int mode);
 
     void timeCalculator();
+    void debugSlot(int mode);
 
 signals:
     void textChanger(string arr);
     void closeSignal();
+    void debugSignal(int mode);
 };
