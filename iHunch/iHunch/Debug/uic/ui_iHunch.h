@@ -40,9 +40,9 @@ public:
     QLabel *label_6;
     QLabel *label_7;
     QLabel *label_8;
-    QProgressBar *progressBar;
-    QTextBrowser *textBrowser;
-    QTextBrowser *textBrowser_2;
+    QProgressBar *poseRatio;
+    QTextBrowser *fullTimeTextBar;
+    QTextBrowser *badTimeTextBar;
     QPushButton *pushButton_2;
     QLabel *label_9;
     QComboBox *comboBox;
@@ -82,7 +82,7 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         label = new QLabel(centralWidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(20, 20, 211, 51));
+        label->setGeometry(QRect(190, 20, 211, 51));
         QFont font;
         font.setPointSize(15);
         font.setBold(true);
@@ -90,10 +90,10 @@ public:
         label->setFont(font);
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(10, 90, 121, 16));
+        label_2->setGeometry(QRect(200, 90, 121, 16));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(110, 80, 111, 41));
+        pushButton->setGeometry(QRect(300, 80, 111, 41));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setGeometry(QRect(10, 230, 401, 121));
@@ -112,20 +112,24 @@ public:
         label_8->setObjectName(QString::fromUtf8("label_8"));
         label_8->setGeometry(QRect(30, 90, 24, 16));
         label_8->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-        progressBar = new QProgressBar(groupBox);
-        progressBar->setObjectName(QString::fromUtf8("progressBar"));
-        progressBar->setGeometry(QRect(110, 91, 141, 20));
-        progressBar->setValue(30);
-        progressBar->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-        textBrowser = new QTextBrowser(groupBox);
-        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
-        textBrowser->setGeometry(QRect(110, 22, 256, 29));
-        textBrowser_2 = new QTextBrowser(groupBox);
-        textBrowser_2->setObjectName(QString::fromUtf8("textBrowser_2"));
-        textBrowser_2->setGeometry(QRect(110, 57, 256, 28));
+        poseRatio = new QProgressBar(groupBox);
+        poseRatio->setObjectName(QString::fromUtf8("poseRatio"));
+        poseRatio->setGeometry(QRect(110, 91, 141, 20));
+        poseRatio->setValue(0);
+        poseRatio->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        fullTimeTextBar = new QTextBrowser(groupBox);
+        fullTimeTextBar->setObjectName(QString::fromUtf8("fullTimeTextBar"));
+        fullTimeTextBar->setGeometry(QRect(110, 22, 256, 29));
+        badTimeTextBar = new QTextBrowser(groupBox);
+        badTimeTextBar->setObjectName(QString::fromUtf8("badTimeTextBar"));
+        badTimeTextBar->setGeometry(QRect(110, 57, 256, 28));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(450, 410, 131, 61));
+        pushButton_2->setGeometry(QRect(440, 380, 131, 71));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/iHunch/play.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_2->setIcon(icon1);
+        pushButton_2->setIconSize(QSize(32, 32));
         label_9 = new QLabel(centralWidget);
         label_9->setObjectName(QString::fromUtf8("label_9"));
         label_9->setGeometry(QRect(10, 370, 91, 21));
@@ -169,7 +173,7 @@ public:
         poseFixDegreeSlider = new QSlider(groupBox_2);
         poseFixDegreeSlider->setObjectName(QString::fromUtf8("poseFixDegreeSlider"));
         poseFixDegreeSlider->setGeometry(QRect(50, 30, 301, 31));
-        poseFixDegreeSlider->setMinimum(1);
+        poseFixDegreeSlider->setMinimum(0);
         poseFixDegreeSlider->setMaximum(100);
         poseFixDegreeSlider->setOrientation(Qt::Horizontal);
         poseFixDegreeSlider->setTickPosition(QSlider::TicksBelow);
@@ -190,17 +194,17 @@ public:
         closeBtn->setGeometry(QRect(570, 10, 20, 20));
         closeBtn->setFocusPolicy(Qt::TabFocus);
         closeBtn->setStyleSheet(QString::fromUtf8("border: none;"));
-        QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/iHunch/close_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        closeBtn->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/iHunch/close_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        closeBtn->setIcon(icon2);
         minBtn = new QPushButton(myTitleBar);
         minBtn->setObjectName(QString::fromUtf8("minBtn"));
         minBtn->setGeometry(QRect(540, 10, 20, 20));
         minBtn->setFocusPolicy(Qt::TabFocus);
         minBtn->setStyleSheet(QString::fromUtf8("border: none;"));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/iHunch/minimum_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        minBtn->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/iHunch/minimum_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        minBtn->setIcon(icon3);
         label_3 = new QLabel(myTitleBar);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(40, 10, 101, 16));
@@ -220,10 +224,10 @@ public:
         unHealthComboBox->addItem(QString());
         unHealthComboBox->addItem(QString());
         unHealthComboBox->setObjectName(QString::fromUtf8("unHealthComboBox"));
-        unHealthComboBox->setGeometry(QRect(490, 150, 91, 22));
+        unHealthComboBox->setGeometry(QRect(490, 181, 91, 22));
         label_12 = new QLabel(centralWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setGeometry(QRect(420, 149, 111, 21));
+        label_12->setGeometry(QRect(420, 180, 111, 21));
         iHunchClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(iHunchClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -260,17 +264,17 @@ public:
         label_6->setText(QCoreApplication::translate("iHunchClass", "\354\240\204\354\262\264 \354\213\234\352\260\204", nullptr));
         label_7->setText(QCoreApplication::translate("iHunchClass", "\354\225\210 \354\242\213\354\235\200 \354\236\220\354\204\270", nullptr));
         label_8->setText(QCoreApplication::translate("iHunchClass", "\353\271\204\354\234\250", nullptr));
-        textBrowser->setHtml(QCoreApplication::translate("iHunchClass", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        fullTimeTextBar->setHtml(QCoreApplication::translate("iHunchClass", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Gulim'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">10\354\213\234\352\260\204 0\353\266\204 0\354\264\210</p></body></html>", nullptr));
-        textBrowser_2->setHtml(QCoreApplication::translate("iHunchClass", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0\354\213\234\352\260\204 0\353\266\204 0\354\264\210</p></body></html>", nullptr));
+        badTimeTextBar->setHtml(QCoreApplication::translate("iHunchClass", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Gulim'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">7\354\213\234\352\260\204 0\353\266\204 0\354\264\210</p></body></html>", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("iHunchClass", "\354\270\241\354\240\225 \354\213\234\354\236\221", nullptr));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0\354\213\234\352\260\204 0\353\266\204 0\354\264\210</p></body></html>", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("iHunchClass", "  \354\270\241\354\240\225 \354\213\234\354\236\221", nullptr));
         label_9->setText(QCoreApplication::translate("iHunchClass", "\353\252\250\353\223\234 \354\204\244\354\240\225", nullptr));
         comboBox->setItemText(0, QCoreApplication::translate("iHunchClass", "\352\264\200\354\260\260 \353\252\250\353\223\234", nullptr));
         comboBox->setItemText(1, QCoreApplication::translate("iHunchClass", "\352\265\220\354\240\225 \353\252\250\353\223\234", nullptr));

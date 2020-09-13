@@ -3,6 +3,7 @@
 
 #define thread std::thread
 
+extern double healthySec, unhealthySec; //건강한시간 안건강한시간
 extern int alarmInterval;
 extern int alarmStart;
 extern int fixDegree;
@@ -29,6 +30,7 @@ iHunch::iHunch(QWidget* parent)
 	QAction* quitAction = new QAction(QString::fromLocal8Bit("닫기"), this);
 
 	connect(viewWindow, SIGNAL(triggered()), this, SLOT(showNormal()));
+	connect(viewWindow, SIGNAL(triggered()), this, SLOT(timeCalculator()));
 	connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
 
 	menu->addAction(viewWindow);
@@ -46,11 +48,6 @@ iHunch::iHunch(QWidget* parent)
 	ui->mainToolBar->hide();
 	QStatusBar* myStatusBar = ui->statusBar;
 	myStatusBar->showMessage("Developed by asd", 0);
-
-	//모드 관련 설정
-    QWidget* modeAlarm = ui->modeAlarm;
-    modeAlarm->hide();
-    modeflag = 0;
 
 	//효과음관련
 	m_player = new QMediaPlayer();
@@ -73,11 +70,111 @@ iHunch::iHunch(QWidget* parent)
 	unHealthComboBox = ui->unHealthComboBox;
 	poseFixSlider = ui->poseFixDegreeSlider;
 
+	modeChanged(0);
+
+	QPixmap pixmap("play.png");
+	QIcon ButtonIcon(pixmap);
+	QPushButton* startBtn = ui->pushButton_2;
+	startBtn->setIcon(ButtonIcon);
+	startBtn->setIconSize(QSize(32,32));
+
+	//디버깅용 오버레이
+	/*************************************************/
+	//debugOverlay = new QWidget(NULL ,Qt::FramelessWindowHint);
+	//vLay = new QVBoxLayout();
+	//debugBtn = new QPushButton();
+	debugOverlay->setGeometry(QRect(0, 0, 30, 30));
+	debugOverlay->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+//	debugOverlay->setLayout(vLay);
+//	vLay->addWidget(debugBtn);
+	debugOverlay->show();
+	debugSlot(2);
+	connect(this, SIGNAL(debugSignal()), debugOverlay, SLOT(debugSlot()));
+	/*************************************************/
+	//디버깅용 오버레이
 }
 
 iHunch::~iHunch()
 {
 	delete ui;
+}
+
+void iHunch::debugSlot(int mode)
+{
+	if (mode == 1) {	//안좋은 상태 빨간불
+		//debugBtn->setStyleSheet("background-color: rgb(255,0,0);");
+		debugOverlay->setStyleSheet("background-color: red");
+	}
+	else if (mode == 2) { // 좋은상태 초록불
+		//debugBtn->setStyleSheet("background-color: rgb(0,255,0);");
+		debugOverlay->setStyleSheet("background-color: lime");
+	}
+}
+
+void iHunch::timeCalculator()
+{
+	QString calcul_time;
+	QTextBrowser* fullTime = ui->fullTimeTextBar;
+	QTextBrowser* badTime = ui->badTimeTextBar;
+	QProgressBar* poseRatio = ui->poseRatio;
+	
+	int ratio;
+	int hour, min, sec, temp;
+
+	//fulltime
+	temp = healthySec + unhealthySec;
+	if (temp >= 60) {
+		sec = (int)temp % 60;
+		min = (int)temp / 60;
+		if (min >= 60) {
+			hour = (int)min / 60;
+			min = (int)min % 60;
+		}
+		else {
+			//sec = sec;
+			min = min;
+			hour = 0;
+		}
+	} 
+	else {
+		sec = temp;
+		min = 0;
+		hour = 0;
+	}
+	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("시간 "))
+		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("분 "))
+	.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("초"));
+	fullTime->setText(calcul_time);
+
+	//badtime
+	temp = unhealthySec;
+	if (temp >= 60) {
+		sec = (int)temp % 60;
+		min = (int)temp / 60;
+		if (min >= 60) {
+			hour = (int)min / 60;
+			min = (int)min % 60;
+		}
+		else {
+			//sec = sec;
+			min = min;
+			hour = 0;
+		}
+	}
+	else {
+		sec = temp;
+		min = 0;
+		hour = 0;
+	}
+	calcul_time = "";
+	calcul_time.append(QByteArray::number(hour)).append(QString::fromLocal8Bit("시간 "))
+		.append(QByteArray::number(min)).append(QString::fromLocal8Bit("분 "))
+		.append(QByteArray::number(sec)).append(QString::fromLocal8Bit("초"));
+	badTime->setText(calcul_time);
+
+	//pose ratio
+	ratio = unhealthySec / (healthySec + unhealthySec);
+	poseRatio->setValue(ratio);
 }
 
 void iHunch::alramMessage()
@@ -103,8 +200,22 @@ void iHunch::alramMessage()
 
 void iHunch::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-	if (reason == QSystemTrayIcon::DoubleClick)
+	if (reason == QSystemTrayIcon::DoubleClick) {
+		this->timeCalculator();
 		this->show();
+	}
+}
+
+void iHunch::modeChanged(int mode)
+{
+	QComboBox* modeBox = ui->comboBox;
+
+	if (modeBox->currentIndex() == 0)	{
+		ui->frame->setEnabled(false);
+	}
+	else if (modeBox->currentIndex() == 1) {
+		ui->frame->setEnabled(true);
+	}
 }
 
 void iHunch::setPose()
@@ -118,20 +229,6 @@ void iHunch::setPose()
 	connect(this, SIGNAL(closeSignal()), setuppose, SLOT(closeSlot()));
 	setuppose->show();
 }
-void iHunch::modeChanged(int mode)
-{
-	QComboBox* modeBox = ui->comboBox;
-	QWidget* modeAlarm = ui->modeAlarm;
-
-	if (modeBox->currentIndex() == 0) {
-		modeAlarm->hide();
-		modeflag = 0;
-	}
-	else if (modeBox->currentIndex() == 1) {
-		modeAlarm->show();
-		modeflag = 1;
-	}
-}
 
 void iHunch::mybtn()
 {
@@ -139,7 +236,7 @@ void iHunch::mybtn()
 	QPushButton* initPoseBtn = ui->pushButton;
 	if (started == false) {
 
-		btn->setText(QString::fromLocal8Bit("측정 종료"));
+		btn->setText(QString::fromLocal8Bit("  측정 종료"));
 		initPoseBtn->setEnabled(false);
 		int temp = timeIntervalComboBox->currentIndex();
 		switch (temp) {
@@ -169,6 +266,12 @@ void iHunch::mybtn()
 				QIcon("gb.png"),
 				500);
 		}
+
+		QPixmap pixmap("pause.png");
+		QIcon ButtonIcon(pixmap);
+		btn->setIcon(ButtonIcon);
+		btn->setIconSize(QSize(32, 32));
+
 	}
 	else if (started == true) {
 		timeIntervalComboBox->setEnabled(true);
@@ -181,8 +284,12 @@ void iHunch::mybtn()
 		CloseHandle(ProcessInfo.hThread);
 
 		started = false;
-		btn->setText(QString::fromLocal8Bit("측정 시작"));
+		btn->setText(QString::fromLocal8Bit("  측정 시작"));
 
+		QPixmap pixmap("play.png");
+		QIcon ButtonIcon(pixmap);
+		btn->setIcon(ButtonIcon);
+		btn->setIconSize(QSize(32, 32));
 	}
 }
 

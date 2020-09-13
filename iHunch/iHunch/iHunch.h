@@ -31,10 +31,6 @@ public:
     setupPose* setuppose;
     iHunch(QWidget *parent = Q_NULLPTR);
     ~iHunch();
-    //모드 확인 변수
-    int modeflag;
-    //알람 호출함수
- //   void alramMessage();
 
 private:
     Ui::iHunchClass* ui;
@@ -58,13 +54,18 @@ private:
     int absY;
     int justOneCount;
 
+    //디버그용
+    QWidget* debugOverlay = new QWidget(NULL);;
+    QVBoxLayout* vLay = new QVBoxLayout();
+    QPushButton* debugBtn = new QPushButton();
+
+
 public slots:
     //시스템 트레이 아이콘 클릭 이벤트로부터 시그널을 처리하는 slot함수
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
     //자세 설정 창 띄우기
     void setPose();
-    void modeChanged(int mode);
 
     //시작버튼
     void mybtn();
@@ -78,7 +79,14 @@ public slots:
     void mouseReleaseEvent(QMouseEvent* event);
 
     void alramMessage();
+
+    void modeChanged(int mode);
+
+    void timeCalculator();
+    void debugSlot(int mode);
+
 signals:
     void textChanger(string arr);
     void closeSignal();
+    void debugSignal(int mode);
 };
