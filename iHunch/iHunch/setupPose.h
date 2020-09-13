@@ -31,6 +31,8 @@ private:
 	QCameraViewfinder* myViewfinder;
 	QCameraImageCapture* myCapture;
 	QList<QByteArray> camDevNameLists;
+	QPushButton* initBtn;
+	QLabel* count;
 
 	//window drag and drop move
 	int mouseX;
@@ -50,4 +52,7 @@ private slots:
 	//window drag and drop move
 	void mouseMoveEvent(QMouseEvent* mouse);
 	void mouseReleaseEvent(QMouseEvent* event);
+
+	void initClose();
+	void setCount(int count);
 };

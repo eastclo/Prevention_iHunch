@@ -45,7 +45,7 @@
   <widget class="QWidget" name="camOut" native="true">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>60</x>
      <y>100</y>
      <width>400</width>
      <height>300</height>
@@ -116,10 +116,10 @@
     <string>capture</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="testBtn">
+  <widget class="QPushButton" name="initBtn">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>280</x>
      <y>20</y>
      <width>181</width>
      <height>51</height>
@@ -132,7 +132,7 @@
   <widget class="QLabel" name="info_text">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>0</x>
      <y>480</y>
      <width>501</width>
      <height>31</height>
@@ -153,7 +153,7 @@
   <widget class="QLabel" name="info_text_2">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>10</x>
      <y>420</y>
      <width>501</width>
      <height>31</height>
@@ -183,7 +183,7 @@
   <widget class="QLabel" name="info_text_3">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>10</x>
      <y>450</y>
      <width>501</width>
      <height>31</height>
@@ -208,6 +208,43 @@
    </property>
    <property name="indent">
     <number>0</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="count">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>100</y>
+     <width>131</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>3</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="errorMessage">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>250</y>
+     <width>111</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>에러 메세지 출력 공간</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
@@ -263,7 +300,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>testBtn</sender>
+   <sender>initBtn</sender>
    <signal>clicked()</signal>
    <receiver>setupPose</receiver>
    <slot>initPoseBtn()</slot>

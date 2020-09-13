@@ -1,6 +1,7 @@
 #include "setupPose.h"
 
 extern bool measureStartBtn;
+extern bool imported;
 
 setupPose::setupPose(QWidget *parent)
 	: QDialog(parent, Qt::FramelessWindowHint), ui(new Ui::setupPose)
@@ -8,8 +9,6 @@ setupPose::setupPose(QWidget *parent)
 	ui->setupUi(this);
 	this->initCamera();
 	this->cameraDeviceSearch();
-
-	this->onStartBtn();
 	
 	QComboBox* comboBox = ui->comboBox;
 	QPushButton* startBtn = ui->startBtn;
@@ -27,6 +26,11 @@ setupPose::setupPose(QWidget *parent)
 	mouseY = this->geometry().y();
 	absY = this->geometry().y();
 	absX = this->geometry().x();
+
+	initBtn = ui->initBtn;
+	initBtn->setEnabled(false);
+
+	count = ui->count;
 }
 
 setupPose::~setupPose()
@@ -85,6 +89,7 @@ void setupPose::onStartBtn()
 
 	connect(myCapture, SIGNAL(imageCaptured(int, QImage)), this, SLOT(imageCaptured(int, QImage)));
 
+	initBtn->setEnabled(true);
 	myCamera->start();
 }
 
@@ -138,4 +143,18 @@ void setupPose::mouseMoveEvent(QMouseEvent* mouse)
 void setupPose::mouseReleaseEvent(QMouseEvent*)
 {
 	justOneCount = 0; //���콺�� Ŭ�� �����ϸ� �ٽ� 0�����Ͽ� �ݺ���밡��?
+}
+
+void setupPose::initClose()
+{
+	myCamera->stop();
+	this->hide();
+	delete ui;
+}
+
+void setupPose::setCount(int count)
+{	
+	//if complete immediate end
+
+	//else not complete re shoot
 }
