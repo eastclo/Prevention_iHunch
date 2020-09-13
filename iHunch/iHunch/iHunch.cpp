@@ -109,7 +109,6 @@ void iHunch::iconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void iHunch::setPose()
 {   
-    imported = false;
     measureStartBtn = false;
 
     thread t(setSTDPose);

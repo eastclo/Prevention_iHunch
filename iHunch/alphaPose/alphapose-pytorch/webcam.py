@@ -86,6 +86,9 @@ def run():
         ckpt_time, det_time = getTime(start_time)
         runtime_profile['dt'].append(det_time)
         # Pose Estimation
+        if(inps == None):
+            writer.save(boxes, scores, [], pt1, pt2, orig_img, im_name.split('/')[-1])
+            return []
         datalen = inps.size(0)
         leftover = 0
         if (datalen) % batchSize:
@@ -149,3 +152,5 @@ def run():
     #    except KeyboardInterrupt:
      #       break
     return ret
+while(1):
+    run()

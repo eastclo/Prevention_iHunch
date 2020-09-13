@@ -99,10 +99,12 @@ int main(void)
                                 tmp2 = PySequence_GetItem(tmp, 2);
                                 y = PyLong_AsLong(tmp2);
                                 sendMessage(n, x, y);   //파이프로 메시지 전송
+                                printf("1 %d, %d, %d\n", n, x, y);
                             }
                         }
                     }
                     sendMessage(-1, -1, -1);   //파이프로 구분자 메시지 전송
+                    printf("-1, -1, -1\n");
                 }
             }
         }

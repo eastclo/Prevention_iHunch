@@ -1,6 +1,8 @@
 ﻿#include "setupPose.h"
 #include "alphapose.h"
 
+#define thread std::thread
+
 extern bool measureStartBtn;
 extern bool imported;
 extern bool measuring;
@@ -85,7 +87,13 @@ void setupPose::textChanged(string arr)
 {
 	QLabel* info_text = ui->infomtxt;
 	//받은 문자열 qt에서 사용가능하게 변환후 세팅
-	info_text->setText(QString::fromStdString(arr));
+	if (arr.find("-1") != -1) {
+		info_text->setText(QString::fromLocal8Bit("자세가 불안정합니다. 잠시 후 다시 시도해주세요."));
+		thread t(setSTDPose);
+		t.detach();
+	}
+	else
+		info_text->setText(QString::fromStdString(arr));
 }
 
 void setupPose::closeSlot()

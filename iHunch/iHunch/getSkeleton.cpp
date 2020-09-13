@@ -18,18 +18,17 @@ std::mutex mtx1, mtx2; //뮤텍스 변수
 bool endSignal; //종료 sign
 bool imported; //import 체크
 bool measureStartBtn; //초기 자세 측정 버튼
-int timer = 11;
+bool isError = false;
 
 queue<Points> poseData; //좌표값 데이터
 double stdPoseRate;    //기준이 되는 초기자세 비율
+Points stdPosePoints;
 
 RecordTime recordedTime;    //자세와 시간기록
 double healthySec, unhealthySec; //좋은, 나쁜자세 총 시간
 int alarmInterval; //재알람 간격
 int alarmStart; //안 좋은 자세 n초 지속시 알람
 int fixDegree; //교정강도
-bool measuring;
-bool measureError;
 
 int startFix(void)
 {
@@ -193,10 +192,35 @@ void judgePose() {
 
         Points cur;
         operatorQueue(&cur, 1); //현재 자세 좌표값 가져오기
-        if (cur.lEye.x == -1 || cur.lShoulder.x == -1) continue;
-        
-        curStatus = judge(cur); //자세 판단
         curTime = clock(); //현재 시간
+        /*좌표 일부가 없을 때 판단*/
+
+        //모든 좌표 인식 가능
+        if (cur.isPointExist(cur.Nose) && cur.isPointExist(cur.Neck) && cur.isPointExist(cur.lEye) && cur.isPointExist(cur.rEye) &&
+            cur.isPointExist(cur.lEar) && cur.isPointExist(cur.rEar) && cur.isPointExist(cur.lShoulder) && cur.isPointExist(cur.rShoulder))
+            curStatus = judge(cur); //자세 판단
+        else { //하나라도 없을 경우 : 나쁜 자세 or 자리떠남(컴퓨터 화면과 관련 없음)
+            if (!cur.isPointExist(cur.Nose))  //코 없으면 자리떠남(코가 캠에 안 보이면서 화면을 볼 수가 없음. 억지로 하지 않는 이상)
+                curStatus = SKIP;
+            else if (cur.isPointExist(cur.lShoulder) && cur.isPointExist(cur.rShoulder)) //코가 있고 양 어깨가 있으면, 화면에는 들어오고 고개를 돌린 상황
+                curStatus = SKIP;                                                       //양옆으로 기울인 자세는 어깨부터 나갈 수 밖에 없다.
+            else if (!cur.isPointExist(cur.lShoulder) && !cur.isPointExist(cur.rShoulder)) //코가 있고, 양 어깨가 없다면 등을 기대고 엉덩이를 앞으로 쭉 뺀 자세.
+                curStatus = BAD;
+            else  //한 쪽 어깨가 안 찍히고, 코가 있으면 무조건 
+                curStatus = BAD;
+        }
+        
+        if (curStatus == SKIP) {
+            if (recordedTime.status == -1)
+                continue;
+            if (recordedTime.status == GOOD)
+                healthySec += (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
+            else
+                unhealthySec += (curTime - recordedTime.prev) / CLOCKS_PER_SEC;
+            recordedTime.status = -1;
+        }
+
+        /*기록 및 알람*/
         if (recordedTime.status == -1) {
             //최초 기록일 때
             recordedTime.status = curStatus;
@@ -247,9 +271,16 @@ void operatorQueue(Points *ret, bool how)
 }
 
 bool judge(Points cur) {
+    if (abs(cur.lEar.y - cur.rEar.y) > 30)
+        return BAD;
+    if (abs(cur.lShoulder.y - cur.rShoulder.y) > 30)
+        return BAD;
+
     double curRate = cur.length(cur.lShoulder, cur.rShoulder) / cur.length(cur.lEye, cur.rEye);
     //TODO fixDegree와 연동되게 변경
-    if (stdPoseRate * 1.1 > curRate && curRate > stdPoseRate * 0.9)
+    double alpha = 0.75 - 0.005 * fixDegree ;
+
+    if (stdPoseRate + alpha > curRate && curRate > stdPoseRate - 2*alpha)
         return GOOD;
     return BAD;
 }
@@ -334,9 +365,9 @@ int ConnectClient2(HANDLE hNamePipe)
     Points cur;
     int n, x, y;
     bool isSuccess = false;
-    bool isError = false;
     int cnt = 0;
     double eyesDist = 0, shouldersDist = 0;
+    isError = false;
 
     ReadFile(
         hNamePipe,
@@ -349,89 +380,90 @@ int ConnectClient2(HANDLE hNamePipe)
 
     imported = true; //import 완료
 
-    while (1) {
-        while (!measureStartBtn); //초기 자세 측정 버튼이 눌리면 다음단계로
 
-        //시작 버튼 신호 송신
-        WriteFile(
+    while (!measureStartBtn); //초기 자세 측정 버튼이 눌리면 다음단계로
+
+    //시작 버튼 신호 송신
+    WriteFile(
+        hNamePipe,
+        Message,
+        (_tcslen(Message) + 1) * sizeof(TCHAR),
+        &sendSize,
+        NULL
+    );
+    thread t(sendText);
+    t.detach();
+
+    //3장 평균치 구하기
+    while (cnt < 18) {
+        int n, x, y;
+        //recvSize -> NULL 포함한 바이트 수
+        ReadFile(
             hNamePipe,
             Message,
-            (_tcslen(Message) + 1) * sizeof(TCHAR),
-            &sendSize,
+            sizeof(Message) - sizeof(TCHAR) * 1,
+            &recvSize,
             NULL
         );
-        measureError = false;        
-        thread t(sendText);
-        t.detach();
+        _stscanf(Message, _T("%d %d %d"), &n, &x, &y);
 
-        //3장 평균치 구하기
-        while(cnt < 20) {
-            int n, x, y;
-            //recvSize -> NULL 포함한 바이트 수
-            ReadFile(
-                hNamePipe,
-                Message,
-                sizeof(Message) - sizeof(TCHAR) * 1,
-                &recvSize,
-                NULL
-            );
-            _stscanf(Message, _T("%d %d %d"), &n, &x, &y);
-
-            if (n == -1 && x == -1 && y == -1) {
+        if (n == -1 && x == -1 && y == -1) {
+            if (cur.lShoulder.x == -1 || cur.lShoulder.y == -1 || cur.rShoulder.x == -1 ||
+                cur.rShoulder.y == -1 || cur.lEye.x == -1 || cur.lEye.y == -1 ||
+                cur.rEye.x == -1 || cur.rEye.y == -1)
+                isError = true;
+            else {
                 eyesDist = cur.length(cur.lEye, cur.rEye);
                 shouldersDist = cur.length(cur.lShoulder, cur.rShoulder);
-                if(cnt > 16)
+                if (cnt > 14) {
+                    stdPosePoints = stdPosePoints + cur;
                     stdPoseRate += shouldersDist / eyesDist;
-                cnt++;
-                cur = Points();
-            }
-            else if (x == -1 || y == -1) {
-                isError = true;
-                break;
-            }
-            else {
-                switch (n) {
-                case 1:
-                    cur.lEye.x = x;
-                    cur.lEye.y = y;
-                    break;
-                case 2:
-                    cur.rEye.x = x;
-                    cur.rEye.y = y;
-                    break;
-                case 5:
-                    cur.lShoulder.x = x;
-                    cur.lShoulder.y = y;
-                    break;
-                case 6:
-                    cur.rShoulder.x = x;
-                    cur.rShoulder.y = y;
-                    break;
                 }
             }
+            cnt++;
+            cur = Points();
         }
-        if (isError) {
-            w->setuppose->textChanged("다시 시도해주세요.");
-            //버튼 활성화
-            timer = 11;
-            measureStartBtn = false;
-            stdPoseRate = 0;
-            isError = false;
-            measureError = true;
-            cnt = 0;
-            continue;
+        else {
+            switch (n) {
+            case 1:
+                cur.lEye.x = x;
+                cur.lEye.y = y;
+                break;
+            case 2:
+                cur.rEye.x = x;
+                cur.rEye.y = y;
+                break;
+            case 5:
+                cur.lShoulder.x = x;
+                cur.lShoulder.y = y;
+                break;
+            case 6:
+                cur.rShoulder.x = x;
+                cur.rShoulder.y = y;
+                break;
+            }
         }
-
-        stdPoseRate /= 3;
-        break;
     }
 
+    if (isError) {
+        //버튼 활성화
+        imported = false;
+        measureStartBtn = false;
+        stdPoseRate = 0;
+        cnt = 0;
+        TerminateProcess(ProcessInfo.hProcess, 0);
+        CloseHandle(ProcessInfo.hProcess);
+        CloseHandle(ProcessInfo.hThread);
+        return 1;
+    }
+
+    stdPoseRate /= 3;
+    stdPosePoints = stdPosePoints / 3;
     TerminateProcess(ProcessInfo.hProcess, 0);
     CloseHandle(ProcessInfo.hProcess);
     CloseHandle(ProcessInfo.hThread);
 
     //측정창 닫는 함수 호출
- //   delete w->setuppose;
     w->closeSignal();
 
     return 1;
@@ -441,5 +473,8 @@ void sendText() {
     for (int i = 10; i > 0; i--) {
         w->setuppose->textChanged(to_string(i));
         Sleep(1000);
+    }
+    if(isError) {
+        w->setuppose->textChanged(to_string(-1));
     }
 }

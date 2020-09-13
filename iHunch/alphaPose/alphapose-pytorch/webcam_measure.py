@@ -86,6 +86,9 @@ def run():
         ckpt_time, det_time = getTime(start_time)
         runtime_profile['dt'].append(det_time)
         # Pose Estimation
+        if(inps == None):
+            writer.save(boxes, scores, [], pt1, pt2, orig_img, im_name.split('/')[-1])
+            return []
         datalen = inps.size(0)
         leftover = 0
         if (datalen) % batchSize:
@@ -114,28 +117,28 @@ def run():
                      continue
                 cor_x, cor_y = int(kp_preds[n, 0]), int(kp_preds[n, 1])
                 if(n == 0):
-                    print('코' + ': ' + str(cor_x) + ', ' + str(cor_y))
+ #                   print('코' + ': ' + str(cor_x) + ', ' + str(cor_y))
                     ret.append([n, cor_x, cor_y])
                 if(n == 1):
-                    print('왼눈' + ': ' + str(cor_x) + ', ' + str(cor_y))
+   #                 print('왼눈' + ': ' + str(cor_x) + ', ' + str(cor_y))
                     ret.append([n, cor_x, cor_y])
                 if(n == 2):
-                    print('오눈' + ': ' + str(cor_x) + ', ' + str(cor_y))
+    #                print('오눈' + ': ' + str(cor_x) + ', ' + str(cor_y))
                     ret.append([n, cor_x, cor_y])
                 if(n == 3):
-                    print('왼귀' + ': ' + str(cor_x) + ', ' + str(cor_y))
+    #                print('왼귀' + ': ' + str(cor_x) + ', ' + str(cor_y))
                     ret.append([n, cor_x, cor_y])
                 if(n == 4):
-                    print('오귀' + ': ' + str(cor_x) + ', ' + str(cor_y))
+    #                print('오귀' + ': ' + str(cor_x) + ', ' + str(cor_y))
                     ret.append([n, cor_x, cor_y])
                 if(n == 5):
-                    print('왼어' + ': ' + str(cor_x) + ', ' + str(cor_y))
+     #               print('왼어' + ': ' + str(cor_x) + ', ' + str(cor_y))
                     ret.append([n, cor_x, cor_y])
                 if(n == 6):
-                    print('오어' + ': ' + str(cor_x) + ', ' + str(cor_y))
+     #               print('오어' + ': ' + str(cor_x) + ', ' + str(cor_y))
                     ret.append([n, cor_x, cor_y])
                 if(n == 17):
-                    print('목' + ': ' + str(cor_x) + ', ' + str(cor_y))
+      #              print('목' + ': ' + str(cor_x) + ', ' + str(cor_y))
                     ret.append([n, cor_x, cor_y])
         writer.save(boxes, scores, hm, pt1, pt2, orig_img, im_name.split('/')[-1])
         ckpt_time, post_time = getTime(ckpt_time)

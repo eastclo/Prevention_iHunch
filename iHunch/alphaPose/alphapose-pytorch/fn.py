@@ -197,26 +197,7 @@ def vis_frame(frame, im_res, format='coco'):
             # Now create a mask of logo and create its inverse mask also
             transparency = float(max(0, min(1, kp_scores[n])))
             img = cv2.addWeighted(bg, transparency, img, 1-transparency, 0)
-            if(n == 1):
-                tmp.append([cor_x, cor_y])
-            if(n == 2):
-                tmp.append([cor_x, cor_y])
-            if(n == 5):
-                tmp.append([cor_x, cor_y])
-            if(n == 6):
-                tmp.append([cor_x, cor_y])
-        # Draw limbs
-        ex = tmp[0][0] - tmp[1][0]
-        ey = tmp[0][1] - tmp[1][1]
-        sx = tmp[2][0] - tmp[3][0]
-        sy = tmp[2][1] - tmp[2][1]
-        el = math.sqrt(ex**2 + ey**2)
-        sl = math.sqrt(sx**2 + sy**2)
-        
-        if((4.5 <= sl / el) and (sl / el <= 5.5)):
-            img = cv2.putText(img, '비율 :' + str(sl/el), (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
-        else:
-            img = cv2.putText(img, '비율 :' + str(sl/el), (50,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+
     img = cv2.resize(img,(width,height),interpolation=cv2.INTER_CUBIC)
     return img
 
