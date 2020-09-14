@@ -411,7 +411,7 @@ int ConnectClient2(HANDLE hNamePipe)
     t.detach();
 
     //3장 평균치 구하기
-    while (cnt < 18) {
+    while (cnt < 15) {
         int n, x, y;
         //recvSize -> NULL 포함한 바이트 수
         ReadFile(
@@ -428,7 +428,7 @@ int ConnectClient2(HANDLE hNamePipe)
                 cur.isPointExist(cur.lEar) && cur.isPointExist(cur.rEar) && cur.isPointExist(cur.lShoulder) && cur.isPointExist(cur.rShoulder)) {
                 eyesDist = cur.length(cur.lEye, cur.rEye);
                 shouldersDist = cur.length(cur.lShoulder, cur.rShoulder);
-                if (cnt > 14) {
+                if (cnt > 11) {
                     stdPosePoints = stdPosePoints + cur;
                     stdPoseRate += shouldersDist / eyesDist;
                 }

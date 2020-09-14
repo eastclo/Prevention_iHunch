@@ -70,7 +70,7 @@
     </font>
    </property>
    <property name="text">
-    <string>촬영 버튼을 누르면 5초 뒤 촬영됩니다.</string>
+    <string>촬영 버튼을 누르면 10초 뒤 촬영됩니다.</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
